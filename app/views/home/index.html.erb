@@ -1,0 +1,41 @@
+<div id="landing_shell">
+	<div id="landing_banner">
+		<h1>Registration Landing page</h1>
+	</div>
+	<div id="landing_announcement">
+		<h2>THIS IS A DEVELOPMENT ENVIRONMENT - Alpha software stability at best</h2><br/><hr/>
+		<p>In the absence of a workflow manager this will be a completely manual process driven workflow for now.</p>
+		<p>
+			<b>If there are any mission critical pieces missing please let Rich or Chris know so they can get worked in.</b>
+		</p>
+	</div>
+	<div id="landing_content"></div>
+		<% if user_signed_in? %>
+			<p><b>Currently the following activity is functional:</b>
+			<ul>
+			<li>User Can Create Account [User]</li>
+			<li>User Can Login to Account</li>
+			<li>User Can Create Participants (campers) [Person]</li>
+			<li>User Can create contacts [SimpleContact] and associated items like phones, emails and insurances</li>
+			<li>User Can Create Reservation for an event [Person/Registration association]</li>
+			</ul>
+			<br/> There could be a number of requests and observations about the app that should be considered. Please direct your feedback to Rich and Chris.
+			<br/> Thank you for your time and help as we bring the application together. 
+			<br/> As a programmer there are probably a lot of things I take for granted that you might not. 
+			</p>
+			<p>
+				Next Steps:
+				<ul>
+					<li> Primary focus is getting the invoice/payment portion implemented.</li>
+					<li> Continually respond to data and workflow improvements. (with your help)</li>
+				</ul>
+				
+			</p>
+		<% else %>
+			<b>You must log in to access data</b><br/><br/>
+			<%= link_to "Sign up", new_user_registration_path %><br/><br/>
+			<%= link_to "Sign in", new_user_session_path %>
+		<% end %>
+
+	</div>
+</div>

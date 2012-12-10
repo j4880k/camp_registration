@@ -1,0 +1,45 @@
+<%= form_for(@address) do |f| %>
+  <% if @address.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@address.errors.count, "error") %> prohibited this address from being saved:</h2>
+
+      <ul>
+      <% @address.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :Street1 %><br />
+    <%= f.text_field :Street1 %>
+  </div>
+  <div class="field">
+    <%= f.label :Street2 %><br />
+    <%= f.text_field :Street2 %>
+  </div>
+  <div class="field">
+    <%= f.label :Street3 %><br />
+    <%= f.text_field :Street3 %>
+  </div>
+  <div class="field">
+    <%= f.label :City %><br />
+    <%= f.text_field :City %>
+  </div>
+  <div class="field">
+    <%= f.label :State %><br />
+    <%= f.text_field :State %>
+  </div>
+  <div class="field">
+    <%= f.label :zipcode %><br />
+    <%= f.text_field :zipcode %>
+  </div>
+  <div class="field">
+    <%= f.label :notes %><br />
+    <%= f.text_field :notes %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

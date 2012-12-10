@@ -1,0 +1,252 @@
+//= require scaffolds
+/** line above gets scaffolds up the stream so we don't get overridden **/
+$app_bgcolor: #B3FADC;
+$app_headercolor: #f0f0f0;
+$yield_color: #B8C2F7;
+$theme_medium: #A6CD58;
+$theme_default_border: #858D68;
+$global_background: image-url("djlandscape/bg.jpg");
+$header_background:	image-url("djlandscape/header.jpg");
+$header_shadow: image-url("djlandscape/header_shadow.png");
+
+html, body { 
+	background-image: $global_background;
+	background-repeat: repeat-x;
+	margin: 0; 
+	padding: 0;
+	font-family: Tahoma, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+    line-height: 1.5;
+	color: #858585;
+}
+
+fieldset {
+	border: 1px solid $theme_default_border;
+	
+}
+/****************************** IMPORTED STYLES **************************/
+/***These are styles I brought into the application.html.erb *************/
+/***for a **somewhat** global scheme**************************************/
+#empty  { 
+	width: 1000px; 
+	height: 209px;
+	}
+	
+#header { 
+	width: 1000px; 
+	background: $header_shadow top left no-repeat; 
+	height: 302px;}
+	
+#header_l { 
+	position: absolute; 
+	z-index: 2; 
+	align: center;
+	width: 100%; 
+	}
+	
+#header_r { 
+	width: 1000px; 
+	height: 209px;  
+	background:image-url("djlandscape/header_window.png") top center no-repeat;
+	}
+	
+#header_in  { 
+	position: absolute; 
+	z-index: 1; 
+	width: 100%;
+	}
+	
+#header_box {width: 936px; height: 209px;}
+#logo_box { float: left; width: 468px; }
+
+#logo {  
+	padding: 15px 0 0 20px; 
+	}
+	
+#logo a {
+	float: left;  
+	height: 58px; 
+	width: 185px; 
+	background:url("djlandscape/logo.png") top left no-repeat; cursor: pointer;
+	}
+	
+#logo a span { display: none;}
+
+#header_mod{
+	width: 936px; 
+	height: 209px; 
+	// padding-top: 18px;
+	margin-top: 18px;
+	background: $header_background no-repeat;
+	h1 {
+		font-style: verdana;
+	}
+}
+
+#topmod_box {float: right; width: 468px;}
+
+#topmod { 
+	height: 160px; 
+	width: 215px; 
+	padding: 16px 10px 0 0; 
+	float: right; 
+	overflow: hidden;
+	}
+	
+#top_l { width: 1000px; background:image-url("djlandscape/top_l.jpg") top left no-repeat;}
+#top_r { width: 1000px; background: image-url("djlandscape/top_r.jpg") top right no-repeat;}
+#top { width: 936px; height: 73px; }
+#menu_box { float: left; width: 700px;}
+#menu { height: 30px; margin-top: 5px; padding: 0 10px;  float: left;}
+
+table.contentpaneopen {
+	padding: 0px;width:98%; 
+	border-collapse: collapse;
+	border-spacing: 0px;
+	margin: 0px;
+}
+table.contentpaneopen {width:98%; }
+
+#foot_l { width: 1000px; background: url("djlandscape/foot_l.jpg") top left no-repeat;}
+#foot_r { width: 1000px; background: url("djlandscape/foot_r.jpg") top right no-repeat;}
+#foot { width: 936px; height: 83px; color: #ffffff; text-align: left;}
+#license_box { float: left; width: 468px;}
+#license { padding: 40px 0 0 10px; text-align: left; float: left;}
+#copyright_box { float: right; width: 468px;}
+#copyright { padding: 55px 10px 0 0; text-align: right;}
+
+#topmod div.moduletable { 
+	padding:0;  margin: 0;
+	background:none; 
+	color: #ffffff;
+	font-size: 10px;
+	text-align: right;
+}
+#topmod div.moduletable h3 {
+	font-family: "Trebuchet MS", Tahoma, Helvetica, sans-serif;
+	line-height: 25px;
+	margin-bottom: 10px;
+	color: #ffffff;
+	font-size: 14px;
+	font-weight: bold;
+	background:none;
+	text-align:right;
+}
+#topmod a:link, #topmod a:visited {color:#ffffff;  text-decoration: none;}
+#topmod a:hover {color:#ffffff;  text-decoration: underline;}
+/*************************************************************************/
+/************************** END IMPORTED STYLES **************************/
+/*************************************************************************/
+
+#application_header {
+	// background-color: $app_headercolor;
+	// height: 100px;
+	width: 100%;
+	// margin: 0px;
+	// padding: 0px;
+	// width: 1000px;
+	// background: $header_shadow top left no-repeat; 
+	// height: 302px;
+	// align: center;
+	h1 {
+		font-style: verdana;
+	}
+	table{
+		height: 100%;
+		width: 100%;
+		v-align: middle;
+		text-align: center;
+	}
+	td {
+		border: none;
+	}
+	
+}
+
+#application_shell{
+	width: 100%;
+	// width: 1080px;
+	// margin: auto;
+	p, ol, ul, td{
+		font-family: Tahoma, Arial, Helvetica, sans-serif;
+		font-size: 11px;
+	    line-height: 1.5;		
+	}
+}
+
+#application_content{
+	color: navy;
+	// border: 3px double black;
+	margin-top: -50px;
+	// background-color: $app_bgcolor;
+}
+
+#inner_content{
+	width: 1000px;
+	text-align: left;
+	// border: 3px double blue;
+	// padding-left: 50px;
+}
+
+#nav_shell{
+	// width:250px;
+	// height:500px;
+	// border: 3px double green;
+	// float: left;	
+}
+
+#split_content{
+	// width:745px;
+	// height:500px;
+	// border: 3px double black;	
+	// margin-left: 250px;
+}
+
+.notice {
+	font-weight: bold;
+	color: red;
+}
+#application_yielded{
+	// background-color: $yield_color;
+	padding-left: 30px;
+	padding-right: 30px;
+}
+
+#application_footer{
+	width: 100%;
+	// margin-top: -50px;
+}
+#landing_shell{
+	// background-color: #ffe2dc;
+}
+
+#landing_banner{
+	// background-color: #ffe2dc;
+}
+
+#landing_announcement{
+	// background-color: #FFE2DC;
+}
+
+#landing_auth{
+	// background-color:darken($yield_color, 10%);
+}
+
+#landing_content{}
+	
+#insurance_grid table, #insurance_grid tr, #insurance_grid td {
+	border: none;
+	vertical-align: top;	
+}
+
+#medical_note_history_content {
+	height: 100px;
+	overflow: auto;
+	border: 1px solid $theme_default_border;
+	
+}
+
+#reservations_locked {
+	border: 1px solid $theme_default_border;
+	padding: 10px;
+}

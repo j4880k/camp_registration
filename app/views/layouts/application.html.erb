@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>RegistrationManager</title>
+	<%= stylesheet_link_tag    "application", :media => "all" %>
+	<%= javascript_include_tag "application" %>
+	<!-- %= stylesheet_link_tag	"z_global", :media => "all" % -->
+	
+	<%= csrf_meta_tags %>
+	<!-- jquery tab addin -->
+	<script>
+	  $(document).ready(function() {
+	    $("#persontabs").tabs();
+	  });
+	  </script>
+	
+</head>
+<body>
+	<div id="application_shell">
+		<div id="application_header">
+			<div id="header_in">
+				<div align="center">
+					<div id="header_mod">
+						
+					</div>
+				</div>
+			</div>
+			<div id="header_l">
+				<div align="center">
+					<div id="header_r">
+						<div id="header_box">
+							<div id="logo_box">
+								<div id="logo">
+									<h1>
+										<a onfocus="blur()" href="<%= root_path %>">
+											<span>::The Camp:: Tidbits</span></a>
+									</h1>
+								</div> <!-- end logo -->
+							</div> <!-- end logo_box -->
+							<div id="topmod_box">
+								<div id="topmod">
+									<div class="moduletable">
+										<h3>
+											::The Camp:: Tidbits
+										</h3>
+										<table class="contentpaneopen" summary="Content Panel">
+											<tr>
+												<td valign="top">
+													<p>
+														::The Camp:: hosts sessions and events and is a lot of fun. I think a person better at marketing should type this section of the app though.
+													</p>
+												</td>
+											</tr>
+											<tr>
+												<td valign="top"></td>
+											</tr>
+										</table>
+									</div> <!-- end moduletable -->
+								</div> <!-- end topmod -->
+							</div> <!-- end topmod_box -->
+						</div> <!-- end header_box -->
+					</div> <!-- end header_r -->
+				</div><!-- end center -->
+			</div> <!-- end header_l -->
+			<div id="bg">
+				<div align="center">
+					<div id="header">
+						<div id="empty"></div>
+						<div id="top_l">
+							<div id="top_r">
+								<div id="top">
+									<div id="menu_box">
+										
+										<div id="menu">
+											<div id="cssMenu1" class="horizontal">
+												<ul class="menu">
+													<% if user_signed_in? %>
+													<% if (can? :read, Person) or (can? :create, Person) or (can? :update, Person) %>
+														<li><%= link_to "View Registrants", people_path %></li>
+													<% end %>
+
+													<% if (can? :read, Reservation) or (can? :create, Reservation) or (can? :update, Reservation) %>		
+														<li><%= link_to "View Event Reservations", reservations_path %></li>
+													<% end %>
+
+													<% if (can? :read, Event) or (can? :create, Event) or (can? :update, Event) %>		
+														<li><%= link_to "View Events", events_path %></li>
+													<% end %>
+
+													<% if (can? :read, Resource) or (can? :create, Resource) or (can? :update, Resource) %>		
+														<li><%= link_to "View Resources", resources_path %></li>
+													<% end %>
+													<!-- li -->
+														<!-- a href="#">You are at the Event Registration and Reservation site for ::The Camp::</a -->
+														<!-- <ul class="menu">
+															<li>
+																<a href="/index.php?option=com_content&amp;view=article&amp;id=52&amp;Itemid=56">Facilities</a>
+															</li>
+															<li>
+																<a href="/index.php?option=com_content&amp;view=article&amp;id=63&amp;Itemid=85">Chapel Renovations</a>
+															</li>
+														</ul> -->
+													<!-- /li -->
+													<!-- <li>
+														<a href="/index.php?option=com_content&amp;view=article&amp;id=61&amp;Itemid=79">Donations</a>
+														<ul class="menu">
+															<li>
+																<a href="/index.php?option=com_jdonation&amp;view=campaigns&amp;Itemid=90">Donation Goals</a>
+															</li>
+														</ul>
+													</li> -->
+													<!-- <li>
+														<a href="/index.php?option=com_content&amp;view=article&amp;id=53&amp;Itemid=57">Directions</a>
+													</li> -->
+													<!-- <li>
+														<a href="/index.php?option=com_content&amp;view=article&amp;id=65&amp;Itemid=76">Contact Us</a>
+													</li> -->
+													<% else %>
+														<li>
+															<a href="<%= new_user_session_path %>">Log In Please</a>
+															<!-- <ul class="menu">
+																<li>
+																	<a href="/index.php?option=com_content&amp;view=article&amp;id=52&amp;Itemid=56">Facilities</a>
+																</li>
+																<li>
+																	<a href="/index.php?option=com_content&amp;view=article&amp;id=63&amp;Itemid=85">Chapel Renovations</a>
+																</li>
+															</ul> -->
+														</li>
+													<% end %>
+												</ul><br />
+												<script type="text/javascript">
+												//<![CDATA[
+												<!--
+												var obj_cssMenu1 = new CSSMenu("cssMenu1");
+												obj_cssMenu1.setTimeouts(400, 200, 800);
+												obj_cssMenu1.setSubMenuOffset(0, 0, 0, 0);
+												obj_cssMenu1.setHighliteCurrent(true);
+												obj_cssMenu1.setAnimation('none');
+												obj_cssMenu1.show();
+												//-->
+												//]]>
+												</script>
+											</div>
+										</div> <!-- end menu -->										
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					</div> <!-- end header -->
+				</div> <!-- end center -->
+			</div> <!-- end bg -->
+			
+					
+		</div> <!-- end application header div -->
+
+		<div id="application_content">
+			<div align="center">
+				<div id="inner_content">
+					<p class="notice"><%= notice %></p>
+					<p class="alert"><%= alert %></p>
+					<div id="application_yielded">
+						<%= yield %>
+						<div id="landing_auth">
+							 <% if user_signed_in? %>
+								<p>
+									<br/>Signed in as <%= current_user.email %> (<%= current_user.role ||= "no role assigned"%>)
+									<br/><%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+								</p>
+							 <% end %>
+						</div>	
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="application_footer">
+			<div align="center">
+				<div id="foot_l">
+					<div id="foot_r">
+						<div id="foot">
+							<div id="license_box">
+								<div id="license" align="left"></div>
+							</div>
+							<div id="copyright_box">
+								<div id="copyright">
+									Copyright 2012 <a href="#">::The Camp::</a>, Inc. All rights reserved.
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>			
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,10 @@
+<p class="organization_fields">
+	<fieldset>	
+		<div class="field">
+	  		<%= f.label :name %><br />
+	  		<%= f.text_field :name, :size=>100 %>
+			<%= f.hidden_field :_destroy %>
+			<%= link_to "remove", '#', class: "remove_fields" %>
+		</div>	
+	</fieldset>
+</p>

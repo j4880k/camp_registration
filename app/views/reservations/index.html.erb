@@ -1,0 +1,48 @@
+<h1>Reservations</h1>
+<!-- %= link_to "Go Back to Main Page", root_path % -->
+<br/>
+<table>
+  <tr>
+    <th>Person</th>
+    <th>Event</th>
+    <!-- <th>Is deleted</th> -->
+    <!-- <th>Is staffing</th> -->
+    <th>Notes</th>
+    <th>Discount</th>
+    <th>Cost</th>
+	<th>Amount Due</th>
+    <th></th>
+    <th></th>
+	<th></th>
+  </tr>
+
+<% @reservations.each do |reservation| %>
+  <tr>
+    <td><%= reservation.person.firstname %> <%= reservation.person.lastname %> (<%= reservation.person.nickname %>)</td>
+    <td><%= reservation.event.eventname %></td>
+    <!-- <td><%= reservation.is_deleted %></td> -->
+    <!-- <td><%= reservation.is_staffing %></td> -->
+    <td><%= reservation.notes %></td>
+    <td><%= reservation.all_discounts %></td>
+    <td><%= reservation.amountpaid %></td>
+	<td><%= reservation.amount_due %></td>
+    <td><%= link_to 'Show', reservation %></td>
+	<td>
+	<% if can? :update, reservation %>
+		<% unless reservation.locked==true %>
+    		<%= link_to 'Edit', edit_reservation_path(reservation) %>
+		<% end %>
+	<% end %>
+	</td>
+	<td>
+	<% if can? :destroy, reservation %>
+    	<%= link_to 'Destroy', reservation, confirm: 'Are you sure?', method: :delete %>
+	<% end %>
+	</td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<!-- %= link_to 'New Reservation', new_reservation_path % -->

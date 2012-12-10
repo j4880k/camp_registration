@@ -1,0 +1,31 @@
+<h1>Listing events</h1>
+<%= link_to "Go Back to Main Page", root_path %><br/>
+<table>
+  <tr>
+    <th>Event Name</th>
+    <th>Date begin</th>
+    <th>Date end</th>
+    <th>Price</th>
+    <th>Notes</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @events.each do |event| %>
+  <tr>
+    <td><%= event.eventname %></td>
+    <td><%= event.date_begin.localtime.to_formatted_s(:long) %></td>
+    <td><%= event.date_end.localtime.to_formatted_s(:long) %></td>
+    <td><%= number_to_currency(event.price) %></td>
+    <td><%= event.notes %></td>
+    <td><%= link_to 'Show', event %></td>
+    <td><%= link_to 'Edit', edit_event_path(event) %></td>
+    <td><%= link_to 'Destroy', event, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Event', new_event_path %>

@@ -1,0 +1,56 @@
+<%= form_for(@reservation) do |f| %>
+  <% if @reservation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@reservation.errors.count, "error") %> prohibited this reservation from being saved:</h2>
+
+      <ul>
+      <% @reservation.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- <div class="field">
+    <%= f.label :person_id %><br />
+    <%= f.number_field :person_id %>
+  </div>
+  <div class="field">
+    <%= f.label :event_id %><br />
+    <%= f.number_field :event_id %>
+  </div> -->
+	<div>
+	  <b>Person:</b>
+	  <%= @reservation.person.fullname %>
+	</div>
+
+	<div>
+	  <b>Event:</b>
+	  <%= @reservation.event.eventname %>
+	</div>
+	<!-- <div class="field">
+	  <%= f.label :is_deleted %><br />
+	  <%= f.check_box :is_deleted %>
+	</div>
+	<div class="field">
+	  <%= f.label :is_staffing %><br />
+	  <%= f.check_box :is_staffing %>
+	</div> -->
+	<div class="field">
+	  <%= f.label :notes %><br />
+	  <%= f.text_area :notes %>
+	</div>
+	<div class="field">
+	  <b><%= f.label :discount %>:</b><br />
+	  <!-- %= f.text_field :discount % -->
+	discount coupons not yet implemented
+	</div>
+	<div class="field">
+	  <%= f.label :amountpaid %><br />
+	  <!-- %= f.text_field :amountpaid % -->
+	the amount paid will be applied at checkout
+	</div>
+	<div class="actions">
+	  <%= f.submit %>
+	</div>
+<% end %>

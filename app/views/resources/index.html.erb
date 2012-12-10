@@ -1,0 +1,29 @@
+<h1>Listing resources</h1>
+<%= link_to "Go Back to Main Page", root_path %><br/>
+<table>
+  <tr>
+    <th>Type</th>
+    <th>Name</th>
+    <th>Occupancy</th>
+    <th>Notes</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @resources.each do |resource| %>
+  <tr>
+    <td><%= resource.resourcetype %></td>
+    <td><%= resource.name %></td>
+    <td><%= resource.occupancy %></td>
+    <td><%= resource.notes %></td>
+    <td><%= link_to 'Show', resource %></td>
+    <td><%= link_to 'Edit', edit_resource_path(resource) %></td>
+    <td><%= link_to 'Destroy', resource, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Resource', new_resource_path %>

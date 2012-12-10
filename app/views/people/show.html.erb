@@ -1,0 +1,158 @@
+<p id="notice"><%= notice %></p>
+<h1><%= @person.fullname %></h1>
+
+<p><%= link_to 'Edit', edit_person_path(@person) %> |
+<%= link_to 'Back to Person Listing', people_path %><br/></p>
+<div id="persontabs">
+    <ul>
+        <li><a href="#fragment-1"><span>Basic Info</span></a></li>
+        <li><a href="#fragment-2"><span>Contacts</span></a></li>
+        <li><a href="#fragment-3"><span>Medical</span></a></li>
+        <li><a href="#fragment-4"><span>Events</span></a></li>
+    </ul>
+    <div id="fragment-1">
+		<fieldset><legend><b>Camper Information</b></legend>
+			<fieldset><legend><b><%= @person.firstname %>&nbsp;<%= @person.lastname %>&nbsp;(<%= @person.nickname %>)</b></legend>
+				<p>
+				  <b>Firstname:</b>
+				  <%= @person.firstname %>
+				&nbsp;&nbsp;
+				  <b>Lastname:</b>
+				  <%= @person.lastname %>
+				&nbsp;&nbsp;
+				  <b>Middleinit:</b>
+				  <%= @person.middleinit %>
+				&nbsp;&nbsp;
+				  <b>Nickname:</b>
+				  <%= @person.nickname %>
+				</p>
+
+				<p>
+				  <b>Birthdate:</b>
+				  <%= @person.birthdate %>
+				&nbsp;&nbsp;
+				  <b>Gender:</b>
+				  <%= @person.gender %>
+				&nbsp;&nbsp;
+					<b>Shirt Size:</b>
+					<%= @person.shirtsize %>
+				</p>
+
+				<!-- <p> -->
+				  <!-- <b>Password:</b> -->
+				  <!-- <%= @person.password %> -->
+				<!-- </p> -->
+			</fieldset>
+			<br/>
+			<fieldset><legend><b>Address Information</b></legend>
+				<% for address in @person.addresses %>
+					<br/>
+					<fieldset>
+						Street Address Line 1: <b><%= address.Street1 %></b><br/>
+						Street Address Line 2: <b><%= address.Street2 %></b><br/>
+						Street Address Line 3: <b><%= address.Street3 %></b><br/>
+						&nbsp;&nbsp;&nbsp;City, State Zipcode: <b><%= address.City %>,
+						  <%= address.State %>&nbsp;&nbsp;
+						  <%= address.zipcode %></b><br/><br/>
+						Notes:<br/>
+						<i><%= address.notes %></i><br/>
+					</fieldset>
+				<% end %>
+			</fieldset>
+			<fieldset><legend><b>Email</b></legend>
+				<% for email in @person.emails %>
+					<br/>
+					<fieldset>
+						Nickname: <b><%= email.nickname %></b>&nbsp;&nbsp;&nbsp;Email Address: <b><%= email.emailAddress %></b>
+					</fieldset>
+				<% end %>
+			</fieldset>
+			<fieldset><legend><b>Organization Information</b></legend>
+				<% for organization in @person.organizations %>
+					<br/>
+					<fieldset>
+						Church/Organization: <b><%= organization.name %></b>
+					</fieldset>
+				<% end %>	
+			</fieldset>
+		</fieldset>
+    </div>
+    <div id="fragment-2">
+		<fieldset><legend><b>Contact Information</b></legend>
+			<% for simplecontact in @person.simple_contacts %>
+			<br/><fieldset><legend>
+				<b><%= simplecontact.firstname %>&nbsp;<%= simplecontact.lastname %> - <%= simplecontact.contacttype %> (<%= simplecontact.relationship %>)</b></legend>
+				<% for scphone in simplecontact.simple_contact_phones %>
+					 <b>Phone: (<%= scphone.scphonetype %>) Phone:</b> <%= number_to_phone(scphone.scphonenumber) %><br/>
+				<% end %>
+				<% for scemail in simplecontact.simple_contact_emails %>
+					 <b>Email: (<%= scemail.nickname %>) Address:</b> <%= scemail.emailaddress %><br/>
+				<% end %>
+				<% for scins in simplecontact.simple_contact_insurances %>
+					<fieldset><legend>Insurance: <b><%= scins.provider %></b></legend>
+					 Employer: <%= scins.employer %> <br/>
+					Policy Number: <%= scins.policynumber %> &nbsp;&nbsp;Group Name: <%= scins.groupname %>&nbsp;&nbsp;Group Number: <%= scins.groupnumber %><br/>
+					</fieldset>
+				<% end %>
+				</fieldset>
+			<% end %>	
+		</fieldset>
+    </div>
+    <div id="fragment-3">
+		<fieldset><legend><b>Medical Information</b></legend>
+			<!-- Immunizations are current? Yes/No -->
+			<fieldset><legend>Medications</legend>
+				<% for meds in @person.person_medications %>
+					<fieldset>
+					 <b>Med: <%= meds.medicationname %> (<%= meds.medication_type %>)</b> - Notes: <%= meds.notes %> 
+					</fieldset>
+				<% end %>		
+			</fieldset>
+			<fieldset><legend>Allergies</legend>
+				<% for allergy in @person.person_allergies %>
+					<fieldset>
+					 <b>Allergy: <%= allergy.allergyname %></b> - Notes: <%= allergy.notes %>
+					</fieldset>
+				<% end %>		
+			</fieldset>
+			<fieldset><legend>Medical Notes</legend>
+				<% for mednotes in @person.person_medical_notes.order("person_medical_notes.created_at DESC") %>
+					<fieldset><legend><%= mednotes.created_at.localtime.to_formatted_s(:long) %></legend>
+					 <%= mednotes.notes %>
+					</fieldset>
+				<% end %>		
+			</fieldset>
+		</fieldset>
+    </div>
+	<div id="fragment-4">
+		<fieldset><legend><b>Registered Events</b></legend>
+			<% for res in @person.reservations %>
+				<fieldset><legend><b><%= res.event.eventname%></b></legend>
+					Birthdate: <%= @person.birthdate %><br/>
+					Campdate: <%= res.event.date_begin.to_date %><br/>
+					Age at camp: <%= distance_of_time_in_words(@person.birthdate, res.event.date_begin.to_date) %><br/>
+					Cabin Assigned: 
+					<% for cabin in res.resources %>
+						 <%= cabin.name %> (<%= cabin.notes %>) 
+					<% end %>
+				</fieldset>
+			<% end %>
+		</fieldset>		
+	</div>
+</div>
+
+
+
+
+
+
+
+
+<%= link_to 'Edit', edit_person_path(@person) %> |
+<%= link_to 'Back to Person Listing', people_path %>
+<p>
+  <b>Date created:</b>
+  <%= @person.created_at %>
+</p>
+
+

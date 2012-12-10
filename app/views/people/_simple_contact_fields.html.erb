@@ -1,0 +1,49 @@
+<p class="simple_contact_fields">
+<fieldset class="simplecontactouter">
+	<div class="field">
+		<%= f.label "Contact Type:" %>
+	    <%= f.select :contacttype, ['Parent','Guardian','Emergency Contact', 'Pick-up'] %>
+		&nbsp;&nbsp;&nbsp;<br/>
+	  	<%= f.label "First Name: " %>
+	  	<%= f.text_field :firstname, :size => 25 %>
+		&nbsp;&nbsp;&nbsp;
+	  	<%= f.label "Last Name: " %>
+	  	<%= f.text_field :lastname, :size => 25 %>
+		&nbsp;&nbsp;&nbsp;
+	  	<%= f.label "Relationship: " %>
+	  	<%= f.text_field :relationship, :size => 25 %>
+		<br/>
+	  	<%= f.label :notes %><br />
+	  	<!-- %= f.text_field :notes, :size=>202 % -->
+		<%= f.text_area :notes, "rows"=>4, "cols"=>100 %><br/>
+		<%= f.hidden_field :_destroy %>
+		<fieldset><legend>Phone Numbers</legend>
+		<%= f.fields_for :simple_contact_phones do |builder| %>
+			<%= render "simple_contact_phone_fields", f: builder %>
+		<% end %>
+		<%= link_to_add_fields "Add Phone", f, :simple_contact_phones %>
+		</fieldset>
+		<fieldset><legend>Email Addresses</legend>
+		<%= f.fields_for :simple_contact_emails do |builder| %>
+			<%= render "simple_contact_email_fields", f: builder %>
+		<% end %>
+		<%= link_to_add_fields "Add Email", f, :simple_contact_emails %>
+		</fieldset>
+		<fieldset><legend>Insurance</legend>
+		<%= f.fields_for :simple_contact_insurances do |builder| %>
+			<%= render "simple_contact_insurance_fields", f: builder %>
+		<% end %>
+		<%= link_to_add_fields "Add Insurance", f, :simple_contact_insurances %>
+		</fieldset>
+		
+		
+		&nbsp;&nbsp;
+		
+		<%= link_to "Remove this contact and its information", '#', class: "remove_fields" %>
+		&nbsp;&nbsp;
+		
+			
+	</div>
+	
+</fieldset>
+</p>

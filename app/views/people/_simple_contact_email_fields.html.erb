@@ -1,0 +1,13 @@
+<p class="simple_contact_email_fields">
+	<fieldset>
+		<div class="field">
+			<%= f.label "Email Account" %>
+			<%= f.text_field :nickname %>
+&nbsp;&nbsp;
+			<%= f.label "Email Address" %>
+			<%= f.text_field :emailaddress, :size=>60 %>
+			<%= f.hidden_field :_destroy %>
+			<%= link_to "Remove Email", '#', class: "remove_fields" %>
+		</div>
+	</fieldset>
+</p>

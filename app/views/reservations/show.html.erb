@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Person:</b>
+  <%= @reservation.person.fullname %>
+</p>
+
+<p>
+  <b>Event:</b>
+  <%= @reservation.event.eventname %>
+</p>
+
+<!-- <p>
+  <b>Is deleted:</b>
+  <%= @reservation.is_deleted %>
+</p>
+
+<p>
+  <b>Is staffing:</b>
+  <%= @reservation.is_staffing %>
+</p> -->
+
+<p>
+  <b>Notes:</b>
+  <%= @reservation.notes %>
+</p>
+
+<p>
+  <b>Discount:</b>
+  <%= @reservation.discount %>
+</p>
+
+<p>
+  <b>Amountpaid:</b>
+  <%= @reservation.amountpaid %>
+</p>
+
+
+<%= link_to 'Edit', edit_reservation_path(@reservation) %> |
+<%= link_to 'Back', reservations_path %>

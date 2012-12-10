@@ -1,0 +1,141 @@
+<%= form_for(@person, :remote => true) do |f| %>
+<!-- THIS IS THE FIELD FORM FOR PERSON (PEOPLE) -->
+  <% if @person.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@person.errors.count, "error") %> prohibited this person from being saved:</h2>
+
+      <ul>
+      <% @person.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<!-- %= render "layouts/sidebarnav" % -->
+<!-- div id="split_content" -->
+	<div id="persontabs">
+	    <ul>
+	        <li><a href="#fragment-1"><span>Basic Info</span></a></li>
+	        <li><a href="#fragment-2"><span>Contacts</span></a></li>
+	        <li><a href="#fragment-3"><span>Medical</span></a></li>
+	        <li><a href="#fragment-4"><span>Events</span></a></li>
+	    </ul>
+	    <div id="fragment-1">
+			<fieldset><legend><b>Registrant Information</b></legend>
+				<fieldset><legend><b>Personal Information</b></legend>
+				  <p class="field">
+				    <%= f.label "First Name" %>
+				    <%= f.text_field :firstname %>
+				&nbsp;&nbsp;
+				    <%= f.label "Last Name" %>
+				    <%= f.text_field :lastname %>
+				&nbsp;&nbsp;
+				    <%= f.label "Middle Init" %>
+				    <%= f.text_field :middleinit, :size=>2 %>
+				&nbsp;&nbsp;
+					<%= f.label "Nickname" %>
+					<%= f.text_field :nickname %>
+					</p>  <!-- </div> -->
+				  <p class="field">  <!-- <div class="field"> -->
+				    <%= f.label :birthdate %>
+				    <%= f.date_select :birthdate, :start_year=>1935%>
+				&nbsp;&nbsp;
+				    <%= f.label :gender %>
+				    <%= f.select :gender, ['Male','Female'] %>
+					</p>  <!-- </div> -->
+				  <p class="field">
+				    <%= f.label "T-Shirt Size" %><br />
+				    <%= f.select :shirtsize, ['YS','YM','YL','S','M','L','XL','XXL'] %>
+					</p>
+				  <!-- <div class="field"> -->
+				</fieldset><br/>
+				<fieldset><legend><b>Address Information</b></legend>
+				  <%= f.fields_for :addresses do |builder| %>
+				    <%= render "address_fields", f: builder %>
+				  <% end %>
+					<!-- %= link_to_add_fields "Add Address", f , :addresses % -->
+				</fieldset>
+				<fieldset><legend><b>Email</b></legend>
+					<%= f.fields_for :emails do |builder| %>
+						<%= render "email_fields", f: builder %>
+					<% end %>
+					<%= link_to_add_fields "Add Email", f, :emails %>
+				</fieldset>
+				<fieldset><legend><b>Organization Information</b></legend>
+					<%= f.fields_for :organizations do |builder| %>
+						<%= render "organization_fields", f: builder %>
+					<% end %>
+					<%= link_to_add_fields "Add Home Church / Organization", f, :organizations %>	
+				</fieldset>
+			</fieldset>	
+		</div>
+		<div id="fragment-2">
+			<fieldset><legend><b>Contact Info</b></legend>
+				<%= f.fields_for :simple_contacts do |builder| %>
+					<%= render "simple_contact_fields", f: builder %>
+				<% end %>
+			<%= link_to_add_fields "Add A Contact", f, :simple_contacts %>		
+			</fieldset>		
+		</div>
+		<div id="fragment-3">
+
+			<fieldset><legend><b>Medical Information</b></legend>
+				<!-- Immunizations are current? Yes/No -->
+				<fieldset><legend>Medications</legend>
+					<%= f.fields_for :person_medications do |builder| %>
+						<%= render "person_medication_fields", f: builder %>
+					<% end %>
+					<%= link_to_add_fields "Add Med", f, :person_medications %>		
+				</fieldset>
+				<fieldset><legend>Allergies</legend>
+					<%= f.fields_for :person_allergies do |builder| %>
+						<%= render "person_allergy_fields", f: builder %>
+					<% end %>
+					<%= link_to_add_fields "Add Allergy", f, :person_allergies %>		
+				</fieldset>
+				<fieldset><legend>Medical Notes</legend>
+					<p>Due to the nature of medical notes they are committed and locked at each save</p>
+					<div id="medical_note_history_content">
+						<%= div_for @person.person_medical_notes.reject{|mn|mn.new_record?} do |omn| %>
+							<p><b>
+							<%= omn.created_at.localtime.strftime("%m/%d/%Y at %I:%M%p") %>
+							</b> : 
+							<%= omn.notes %></p>
+						<% end %>
+					</div>
+					<%= f.fields_for :person_medical_notes, @person.person_medical_notes.select{|ref|ref.new_record?} do |builder| %>
+						<%= render "person_medical_note_fields", f: builder, :locals => {:builder => builder } %>
+					<% end %>
+					<%= link_to_add_fields "Add Note", f, :person_medical_notes %>		
+				</fieldset>
+			</fieldset>		
+		</div>
+		<div id="fragment-4">
+			<fieldset><legend><b>Registered Events</b></legend>
+				<div id="reservations_locked">
+					<%= div_for @person.reservations.select{|res| res.locked } do |lres| %>
+					<!-- when the invoice piece is done this should come from invoices so we can have access to discounts too -->
+						<p>
+							<b><%= lres.event.eventname %> reservation on:</b> <%= lres.created_at.localtime.strftime("%m/%d/%Y at %I:%M%p") %>
+							<br/> <b>Dates:</b> <%= lres.event.date_begin.localtime.strftime("%m/%d/%Y")  %> - <%= lres.event.date_end.localtime.strftime("%m/%d/%Y") %>
+							<br/> <b>Description:</b> <%= lres.event.notes %>
+							<br/> <b>Your Notes:</b><br/><%= lres.notes %>
+						</p>			
+					<% end %>
+				</div>
+			
+				<%= f.fields_for :reservations, @person.reservations.reject{|res| res.locked } do |builder| %>
+					<%= render "reservation_fields", f: builder %>
+				<% end %>
+				<%= link_to_add_fields "Add Registration", f, :reservations %>	
+
+			</fieldset>		
+		</div>
+	</div>
+
+	<div class="actions">
+    	<%= f.submit :class=>"makeperson", :value=>"Save All"%>
+  	</div>
+<!-- /div -->
+<% end %>

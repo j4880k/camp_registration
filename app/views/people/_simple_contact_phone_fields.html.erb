@@ -1,0 +1,13 @@
+<p class="simple_contact_phone_fields">
+	<fieldset>
+		<div class="field">
+			<%= f.label "Type" %>
+			<%= f.text_field :scphonetype %>
+&nbsp;&nbsp;
+			<%= f.label "Phone Number" %>
+			<%= f.text_field :scphonenumber, :size=>60 %>
+			<%= f.hidden_field :_destroy %>
+			<%= link_to "Remove Phone", '#', class: "remove_fields" %>
+		</div>
+	</fieldset>
+</p>

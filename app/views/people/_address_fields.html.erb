@@ -1,0 +1,30 @@
+<p class="address_fields">
+<fieldset>	
+	<div class="field">
+	  <%= f.label :Street1 %><br />
+	  <%= f.text_field :Street1, :size => 100 %>
+	</div>
+	<div class="field">
+	  <%= f.label :Street2 %><br />
+	  <%= f.text_field :Street2, :size => 100 %>
+	</div>
+	<div class="field">
+	  <%= f.label :Street3 %><br />
+	  <%= f.text_field :Street3, :size => 100 %>
+	</div>
+	<div class="field">
+	  <%= f.label :City %>
+	  <%= f.text_field :City %>&nbsp;&nbsp; 
+	  <%= f.label :State %>
+	  <%= f.text_field :State %> &nbsp;&nbsp;
+	  <%= f.label :zipcode %>
+	  <%= f.text_field :zipcode %>
+	</div>
+	<div class="field">
+	  <%= f.label :notes %><br />
+	  <%= f.text_area :notes, "rows"=>10, "cols"=>97 %>
+	</div>
+	<%= f.hidden_field :_destroy %>
+	<!-- %= link_to "remove", '#', class: "remove_fields" % -->	
+</fieldset>
+</p>
