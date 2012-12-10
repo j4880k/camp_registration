@@ -1,0 +1,11 @@
+These don't all have tests written, but should
+
+* User Can Create Account [User]
+* User Can Login to Account
+* User Can Create Participants (campers) [Person]
+* User Can create contacts [SimpleContact]
+	- currently created as part of a registration
+	- create or select simple contact during event registration
+	- create simple contact from account preferences
+* User Can Create Registration [Person/Registration association]
+* User Can 
