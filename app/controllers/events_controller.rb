@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  # load_and_authorize_resource
+  load_and_authorize_resource
   
   # GET /events
   # GET /events.json
