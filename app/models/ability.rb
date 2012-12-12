@@ -21,10 +21,14 @@ class Ability
         can :read, Reservation do |reg|
                 reg.try(:person).try(:user) == user
               end
-        can :create, Reservation
+        can :add_to_cart, Reservation
         can :update, Reservation do |reg|
-                reg.try(:person).try(:user) == user
+                (reg.try(:person).try(:user) == user) and (reg.try(:locked) != true)
               end
+        can :read, ReservationCart do |rc| 
+            (rc.try(:person).try(:user) == user)
+        end
+
       end
     #
     # The first argument to `can` is the action you are giving the user permission to do.

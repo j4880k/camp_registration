@@ -1,5 +1,28 @@
 class ReservationsController < ApplicationController
   load_and_authorize_resource
+  def add_to_cart
+    # Awesomesauce in the reservation view
+    #   link_to_remote "Add to cart",
+    #   :url => add_to_cart_url(reservation),
+    #   :update => { :success => "cart", :failure => "error" }  
+    # ReservationCart
+    #   :reservation_id (link back to everything important)
+    #   :status (new or paid)
+    #   :reference_code (all cart items paid at one time will get this value, it's what we send the clearinghouse as a reference id)
+    #     *schema will be <random(2).to_upper><user_id>-<yy><mm><dd>-<random(2).to_upper>-<hh><mm><nn>
+    #   :invoice_id (the invoice it all translates into... this is what they will print) ;)   
+    puts params
+    puts @reservation.inspect
+    @existing_instance = ReservationCart.find_by_reservation_id(params[:id])
+    if @existing_instance.nil?
+      cart = ReservationCart.new
+      cart.reservation_id = params[:id]
+      cart.status = "new" 
+      cart.save  
+    end  
+    render json: cart
+  end
+   
   # GET /reservations
   # GET /reservations.json
   def index

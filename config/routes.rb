@@ -1,9 +1,15 @@
 RegistrationManager::Application.routes.draw do
+  resources :reservation_carts
+
   devise_for :users
 
   resources :resources
 
   resources :reservations
+  
+  resource :reservation do
+    post 'add_to_cart'
+  end
 
   get "home/index"
 

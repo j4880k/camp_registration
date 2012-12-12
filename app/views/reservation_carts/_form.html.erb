@@ -1,0 +1,33 @@
+<%= form_for(@reservation_cart) do |f| %>
+  <% if @reservation_cart.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@reservation_cart.errors.count, "error") %> prohibited this reservation_cart from being saved:</h2>
+
+      <ul>
+      <% @reservation_cart.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :reservation_id %><br />
+    <%= f.number_field :reservation_id %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br />
+    <%= f.text_field :status %>
+  </div>
+  <div class="field">
+    <%= f.label :reference_code %><br />
+    <%= f.text_field :reference_code %>
+  </div>
+  <div class="field">
+    <%= f.label :invoice_id %><br />
+    <%= f.number_field :invoice_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

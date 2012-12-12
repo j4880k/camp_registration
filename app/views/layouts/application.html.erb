@@ -83,6 +83,10 @@
 														<li><%= link_to "View Event Reservations", reservations_path %></li>
 													<% end %>
 
+													<% if ((can? :read, ReservationCart) or (can? :create, ReservationCart) or (can? :update, ReservationCart)) and (current_user.role != "admin") %>		
+														<li><%= link_to "Your Cart", reservation_carts_path %></li>
+													<% end %>
+
 													<% if (can? :read, Event) or (can? :create, Event) or (can? :update, Event) %>		
 														<li><%= link_to "View Events", events_path %></li>
 													<% end %>
@@ -165,7 +169,7 @@
 						<div id="landing_auth">
 							 <% if user_signed_in? %>
 								<p>
-									<br/>Signed in as <%= current_user.email %> (<%= current_user.role ||= "no role assigned"%>)
+									<br/>Signed in as <%= current_user.email %> <br/> <%= current_user.role %>
 									<br/><%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
 								</p>
 							 <% end %>

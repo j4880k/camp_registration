@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121205032704) do
+ActiveRecord::Schema.define(:version => 20121212223031) do
 
   create_table "addresses", :force => true do |t|
     t.string   "Street1"
@@ -209,6 +209,16 @@ ActiveRecord::Schema.define(:version => 20121205032704) do
     t.datetime "updated_at",  :null => false
   end
 
+  create_table "reservation_carts", :force => true do |t|
+    t.integer  "reservation_id"
+    t.string   "status"
+    t.string   "reference_code"
+    t.integer  "invoice_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.integer  "coupon_id"
+  end
+
   create_table "reservation_resources", :force => true do |t|
     t.integer  "reservation_id"
     t.integer  "resource_id"
@@ -224,10 +234,11 @@ ActiveRecord::Schema.define(:version => 20121205032704) do
     t.text     "notes"
     t.float    "discount"
     t.float    "amountpaid"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
     t.boolean  "locked"
     t.integer  "updated_by"
+    t.string   "billing_status"
   end
 
   create_table "resources", :force => true do |t|

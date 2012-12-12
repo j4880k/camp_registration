@@ -1,0 +1,45 @@
+<h1>Listing reservation_carts</h1>
+
+<% if @reservation_carts.empty? %>
+
+	<h2> Your cart is empty </h2>
+
+<% else %>
+
+	<table>
+	  <tr>
+	    <th>Reservation Event</th>
+		<th>Registrant</th>
+	    <th>Status</th>
+	    <th>Reference code</th>
+	    <th>Event Price</th>
+	    <!-- <th></th> -->
+	    <!-- <th></th> -->
+	    <!-- <th></th> -->
+	  </tr>
+		<% @total_amount = 0 %>
+		<% @total_discount = 0 %>
+		<% @reservation_carts.each do |reservation_cart| %>
+			<% @total_amount = @total_amount + reservation_cart.reservation.event.price %>
+			<% @total_discount = @total_discount + reservation_cart.reservation.all_discounts %>			
+		  <tr>
+		    <td><%= link_to reservation_cart.reservation.event.eventname, reservation_cart.reservation %></td>
+			<td><%= link_to reservation_cart.reservation.person.fullname, reservation_cart.reservation.person  %> </td>
+		    <td><%= reservation_cart.status %></td>
+		    <td><%= reservation_cart.reference_code %></td>
+		    <td><%= number_to_currency(reservation_cart.reservation.event.price) %></td>
+		    <!-- <td><%= link_to 'Show', reservation_cart %></td> -->
+		    <!-- <td><%= link_to 'Edit', edit_reservation_path(reservation_cart.reservation) %></td> -->
+		    <!-- <td><%= link_to 'Destroy', reservation_cart, confirm: 'Are you sure?', method: :delete %></td> -->
+		  </tr>
+
+		<% end %>
+		<% @total_due = @total_amount - @total_discount %>
+		<tr><td colspan="4" align="right"><b>Discounts applied</b></td><td> <%= number_to_currency(@total_discount) %> </td></tr>
+		<tr><td colspan="4" align="right"><b>Total Due</b></td><td><%=number_to_currency(@total_due)  %></td></tr>
+	</table>
+
+<% end %>
+<br />
+
+<!-- <%= link_to 'New Reservation cart', new_reservation_cart_path %> -->

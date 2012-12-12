@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Reservation:</b>
+  <%= @reservation_cart.reservation_id %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @reservation_cart.status %>
+</p>
+
+<p>
+  <b>Reference code:</b>
+  <%= @reservation_cart.reference_code %>
+</p>
+
+<p>
+  <b>Invoice:</b>
+  <%= @reservation_cart.invoice_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_reservation_cart_path(@reservation_cart) %> |
+<%= link_to 'Back', reservation_carts_path %>
