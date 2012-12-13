@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :role, :id
   has_many :people
+  has_many :invoices
   
   #these roles are tightly coupled to controllers and views in a one to many stored in the user
   #influenced by ryan bates for simplicity sake until something more is needed

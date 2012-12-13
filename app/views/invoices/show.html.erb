@@ -1,0 +1,87 @@
+<p id="notice"><%= notice %></p>
+<br/>
+<h1>Checkout</h1>
+<table>
+	
+	<table>
+	  <tr>
+	    <th>Reservation Event</th>
+		<th>Registrant</th>
+	    <th>Status</th>
+	    <th>Reference code</th>
+	    <th>Event Price</th>
+	  </tr>
+		<% @total_amount = 0 %>
+		<% @total_discount = 0 %>
+		<% @stub_id = 0 %>
+	<% ReservationCart.where( :invoice_id => @invoice.id ).each do |inv| %>
+		<% @total_amount = @total_amount + inv.reservation.event.price %>
+		<% @total_discount = @total_discount + inv.reservation.all_discounts %>			
+	  <tr>
+	    <td><%= link_to inv.reservation.event.eventname, inv.reservation %></td>
+		<td><%= link_to inv.reservation.person.fullname, inv.reservation.person  %> </td>
+	    <td><%= inv.status %></td>
+	    <td><%= inv.reference_code %></td>
+	    <td><%= number_to_currency(inv.reservation.event.price) %></td>
+	  </tr>
+	  <tr>
+	  </tr>
+	<% end %>
+	<% @total_due = @total_amount - @total_discount %>
+	<tr><td colspan="4" align="right"><b>Discounts applied</b></td><td> <%= number_to_currency(@total_discount) %> </td></tr>
+	<tr><td colspan="4" align="right"><b>Total Due</b></td><td><%=number_to_currency(@total_due)  %></td></tr>
+	</table>
+
+<br/><br/>
+
+	<div>
+		
+		<% if (@invoice.status == 'new') %>
+		<input id="coupon_code" name="coupon_code" type="text"/>
+		 <%= link_to "Apply Coupon", {:controller=>"invoices", :id=>@invoice.id, :action=>"apply_coupon_code"}, :method=>"post" %>
+		<% end %>
+	</div>
+<!-- <p>
+  <b>User:</b>
+  <%= @invoice.user_id %>
+</p>
+
+<p>
+  <b>Reference code:</b>
+  <%= @invoice.reference_code %>
+</p>
+
+<p>
+  <b>Items hash:</b>
+  <%= @invoice.items_hash %>
+</p>
+
+<p>
+  <b>Payment type:</b>
+  <%= @invoice.payment_type %>
+</p>
+
+<p>
+  <b>Payment date:</b>
+  <%= @invoice.payment_date %>
+</p>
+
+<p>
+  <b>Is confirmed:</b>
+  <%= @invoice.is_confirmed %>
+</p>
+
+<p>
+  <b>Broker stream:</b>
+  <%= @invoice.broker_stream %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @invoice.status %>
+</p> -->
+
+<!-- 
+<%= link_to 'Edit', edit_invoice_path(@invoice) %> |
+<%= link_to 'Back', invoices_path %>
+-->

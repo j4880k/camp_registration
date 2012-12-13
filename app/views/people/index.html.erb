@@ -5,46 +5,51 @@
 		<h1>Registrants</h1>
 		<!-- = link_to "Go Back to Main Page", root_path % -->
 		<br/>
-		<table>
-		  <tr>
-		    <th>Firstname</th>
-		    <th>Lastname</th>
-		    <th>Middleinit</th>
-		    <th>Birthdate</th>
-		    <th>Age at camp</th>
-		    <th>Nickname</th>
-		    <th>Gender</th>
-		    <th>Date created</th>
-		    <th></th>
-		    <th></th>
-		    <th></th>
-		  </tr>
+		<% if @people.empty? %>
 
-		<% @people.each do |person| %>
-		  <tr>
-		    <td><%= person.firstname %></td>
-		    <td><%= person.lastname %></td>
-		    <td><%= person.middleinit %></td>
-		    <td><%= person.birthdate %></td>
-		    <td><%= if person.reservations.first.try(:event); distance_of_time_in_words(person.birthdate, person.reservations.first().event.date_begin.to_date); else; 'No Data'; end %></td>
-		    <td><%= person.nickname %></td>
-		    <td><%= person.gender %></td>
-		    <td><%= person.created_at.in_time_zone("Eastern Time (US & Canada)")%></td>
-		    <td><%= link_to 'Show', person %></td>
-		    <td>
-			<% if can? :update, person %>
-				<%= link_to 'Edit', edit_person_path(person) %>
-			<% end %>
-			</td>
-		    <td>
-				<% if can? :destroy, person %>		
-					<%= link_to 'Destroy', person, :confirm => 'Are you sure?', :method => :delete %>
+			<h2> You haven't created any registrants yet</h2>
+
+		<% else %>		
+			<table>
+			  <tr>
+			    <th>Firstname</th>
+			    <th>Lastname</th>
+			    <th>Middleinit</th>
+			    <th>Birthdate</th>
+			    <th>Age at camp</th>
+			    <th>Nickname</th>
+			    <th>Gender</th>
+			    <th>Date created</th>
+			    <th></th>
+			    <th></th>
+			    <th></th>
+			  </tr>
+
+			<% @people.each do |person| %>
+			  <tr>
+			    <td><%= person.firstname %></td>
+			    <td><%= person.lastname %></td>
+			    <td><%= person.middleinit %></td>
+			    <td><%= person.birthdate %></td>
+			    <td><%= if person.reservations.first.try(:event); distance_of_time_in_words(person.birthdate, person.reservations.first().event.date_begin.to_date); else; 'No Data'; end %></td>
+			    <td><%= person.nickname %></td>
+			    <td><%= person.gender %></td>
+			    <td><%= person.created_at.in_time_zone("Eastern Time (US & Canada)")%></td>
+			    <td><%= link_to 'Show', person %></td>
+			    <td>
+				<% if can? :update, person %>
+					<%= link_to 'Edit', edit_person_path(person) %>
 				<% end %>
-			</td>
-		  </tr>
+				</td>
+			    <td>
+					<% if can? :destroy, person %>		
+						<%= link_to 'Destroy', person, :confirm => 'Are you sure?', :method => :delete %>
+					<% end %>
+				</td>
+			  </tr>
+			<% end %>
+			</table>
 		<% end %>
-		</table>
-
 		<br />
 
 		<%= link_to 'New Registrant', new_person_path %>

@@ -21,13 +21,26 @@ class Ability
         can :read, Reservation do |reg|
                 reg.try(:person).try(:user) == user
               end
-        can :add_to_cart, Reservation
         can :update, Reservation do |reg|
                 (reg.try(:person).try(:user) == user) and (reg.try(:locked) != true)
               end
+        can :add_to_cart, Reservation
+              
         can :read, ReservationCart do |rc| 
-            (rc.try(:person).try(:user) == user)
+            (rc.try(:reservation).try(:person).try(:user) == user)
         end
+        # can [:edit, :update, :save], ReservationCart do |rc| 
+        #     (rc.try(:reservation).try(:person).try(:user) == user)
+        # end      
+        can :destroy, ReservationCart do |rc| 
+            (rc.try(:reservation).try(:person).try(:user) == user)
+        end
+        can :proceed_to_checkout, ReservationCart
+        
+        can :read, Invoice do |inv|
+          (inv.try(:user)== user)
+        end
+        can :apply_coupon_code, Invoice
 
       end
     #

@@ -1,20 +1,6 @@
 RegistrationManager::Application.routes.draw do
-  resources :reservation_carts
-
   devise_for :users
-
   resources :resources
-
-  resources :reservations
-  
-  resource :reservation do
-    post 'add_to_cart'
-  end
-
-  get "home/index"
-
-  get "registration/index"
-
   resources :addresses
   resources :person_addresses
   resources :people
@@ -23,7 +9,27 @@ RegistrationManager::Application.routes.draw do
   resources :person_organizations
   resources :person_emails
   resources :events
-
+ 
+  resources :reservations
+  resource :reservation do
+    post 'add_to_cart'
+  end 
+ 
+  resources :reservation_carts
+  resource :reservation_cart do
+    post 'proceed_to_checkout'
+  end
+  
+  resources :invoices
+  resource :invoice do
+    post 'apply_coupon_code'
+  end
+  # get 'reservation_carts/proceed_to_checkout'
+   
+  
+  get "home/index"
+  get "registration/index"
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

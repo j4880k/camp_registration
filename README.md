@@ -15,3 +15,4 @@ Notes:
  From paranoia I left some files out that you will need to create if you build this up like :
  config/initializers/secret_token.rb
 
+ 2012.12.12 - Decent progress on a simple shopping cart experience.

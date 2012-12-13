@@ -1,7 +1,6 @@
 include ActionView::Helpers::NumberHelper
 class Reservation < ActiveRecord::Base
   belongs_to :person
-  # has_one :user, :through => :person
   belongs_to :event
   has_many :reservation_resources
   has_many :resources, :through => :reservation_resources
@@ -14,7 +13,6 @@ class Reservation < ActiveRecord::Base
   
   def all_discounts
     #in reality discount will be applied at checkout
-    # number_to_currency( -5.00 )
     5
   end
 end
