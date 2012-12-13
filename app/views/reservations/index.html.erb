@@ -17,6 +17,7 @@
 	    <th>Discount</th>
 	    <th>Cost</th>
 		<th>Amount Due</th>
+		<th>Status</th>
 	    <th></th>
 	    <th></th>
 		<th></th>
@@ -32,6 +33,7 @@
 	    <td><%= reservation.all_discounts %></td>
 	    <td><%= reservation.amountpaid %></td>
 		<td><%= reservation.amount_due %></td>
+		<td><%= reservation.reservation_cart.try(:status) %>
 	    <td><%= link_to 'Show', reservation %></td>
 		<td>
 		<% if can? :update, reservation %>
