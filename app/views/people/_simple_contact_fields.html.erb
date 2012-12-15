@@ -18,6 +18,7 @@
 		<%= f.text_area :notes, "rows"=>4, "cols"=>100 %><br/>
 		<%= f.hidden_field :_destroy %>
 		<fieldset><legend>Phone Numbers</legend>
+		<b>Please create at least 2 contact phone numbers</b><br />
 		<%= f.fields_for :simple_contact_phones do |builder| %>
 			<%= render "simple_contact_phone_fields", f: builder %>
 		<% end %>

@@ -75,6 +75,14 @@
 					</fieldset>
 				<% end %>	
 			</fieldset>
+			<fieldset><legend><b>Camp Media Permission</b></legend>
+				<% if @person.photo_allowed == true %>
+				  Promotional Photos Allowed
+				<% else %>
+				<b>I DO NOT give permission for my child’s image (either by video or photograph) to be
+				used in any manner by Atlanta Bible Camp for promotional or informational purposes.</b>
+				<% end %>
+			</fieldset>
 		</fieldset>
     </div>
     <div id="fragment-2">
@@ -117,7 +125,7 @@
 			</fieldset>
 			<fieldset><legend>Medical Notes</legend>
 				<% for mednotes in @person.person_medical_notes.order("person_medical_notes.created_at DESC") %>
-					<fieldset><legend><%= mednotes.created_at.localtime.to_formatted_s(:long) %></legend>
+					<fieldset><legend>On <%= mednotes.created_at.localtime.to_formatted_s(:long) %> <%= mednotes.created_by_name %> wrote </legend>
 					 <%= mednotes.notes %>
 					</fieldset>
 				<% end %>		
@@ -140,13 +148,6 @@
 		</fieldset>		
 	</div>
 </div>
-
-
-
-
-
-
-
 
 <%= link_to 'Edit', edit_person_path(@person) %> |
 <%= link_to 'Back to Person Listing', people_path %>

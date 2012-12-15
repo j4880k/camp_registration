@@ -18,7 +18,8 @@ class Person < ActiveRecord::Base
   has_many :reservations
   belongs_to :user
   
-  accepts_nested_attributes_for :addresses, :emails, 
+  accepts_nested_attributes_for :addresses, 
+    :emails, 
     :organizations, 
     :simple_contacts, 
     :person_medications, 
@@ -30,6 +31,8 @@ class Person < ActiveRecord::Base
     # :reservations,
     # :allow_destroy => false
     #, :reject_if => lambda { |a| a[:content].blank? }, :allow_destroy => true
+    
+ 
   def fullname
     fn = self.firstname || 'unknown_firstname'
     ln = self.lastname || 'unknown_lastname'

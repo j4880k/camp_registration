@@ -2,8 +2,9 @@
 	<fieldset>
 		<div class="field">
 			<%= f.label "Notes" %>
-				<%= f.text_area :notes, "rows"=>4, "cols"=>100 %>
+				<%= f.text_area :notes, "rows"=>10, "cols"=>100 %>
 			<%= f.hidden_field :_destroy %>
+			<%= f.hidden_field :created_by, :value => current_user.id %>
 			<!-- % if current_user.role? :admin % -->
 			<%= link_to "Remove Note", '#', class: "remove_fields" %>
 			<!-- % end % -->

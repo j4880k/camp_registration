@@ -26,7 +26,8 @@ class AddressesController < ApplicationController
   # GET /addresses/new.json
   def new
     @address = Address.new
-
+    @email = Email.new
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render :json => @address }
@@ -42,7 +43,8 @@ class AddressesController < ApplicationController
   # POST /addresses.json
   def create
     @address = Address.new(params[:address])
-
+    @email = Email.new(params[:email])
+    
     respond_to do |format|
       if @address.save
         format.html { redirect_to @address, :notice => 'Address was successfully created.' }

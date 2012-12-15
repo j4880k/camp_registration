@@ -37,7 +37,7 @@ class Ability
         end
         can :proceed_to_checkout, ReservationCart
         
-        can :read, Invoice do |inv|
+        can [:read, :update], Invoice do |inv|
           (inv.try(:user)== user)
         end
         can :apply_coupon_code, Invoice

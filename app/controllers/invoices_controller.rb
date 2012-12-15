@@ -2,7 +2,18 @@ class InvoicesController < ApplicationController
   load_and_authorize_resource
   
   def apply_coupon_code
-    redirect_to @invoice
+    note="Error: nothing sent in"
+    unless params[:user_coupon_code].nil?
+      @coupon=Coupon.find_by_code(params[:user_coupon_code].upcase)
+      unless @coupon.nil?
+        #get the specifics
+        
+      end
+      
+      
+      redirect_to @invoice, notice: "You tried to apply coupon #{params[:user_coupon_code].upcase}"      
+    end
+
   end
 
   # GET /invoices

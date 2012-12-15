@@ -11,7 +11,48 @@
     </div>
   <% end %>
 
-  <div class="field">
+<table>
+
+	<table>
+	  <tr>
+	    <th>Reservation Event</th>
+		<th>Registrant</th>
+	    <th>Status</th>
+	    <th>Reference code</th>
+	    <th>Event Price</th>
+	  </tr>
+		<% @total_amount = 0 %>
+		<% @total_discount = 0 %>
+		<% @stub_id = 0 %>
+	<% ReservationCart.where( :invoice_id => @invoice.id ).each do |inv| %>
+		<% @total_amount = @total_amount + inv.reservation.event.price %>
+		<% @total_discount = @total_discount + inv.reservation.all_discounts %>			
+	  <tr>
+	    <td><%= link_to inv.reservation.event.eventname, inv.reservation %></td>
+		<td><%= link_to inv.reservation.person.fullname, inv.reservation.person  %> </td>
+	    <td><%= inv.status %></td>
+	    <td><%= inv.reference_code %></td>
+	    <td><%= number_to_currency(inv.reservation.event.price) %></td>
+	  </tr>
+	  <tr>
+	  </tr>
+	<% end %>
+	<% @total_due = @total_amount - @total_discount %>
+	<tr><td colspan="4" align="right"><b>Discounts applied</b></td><td> <%= number_to_currency(@total_discount) %> </td></tr>
+	<tr><td colspan="4" align="right"><b>Total Due</b></td><td><%=number_to_currency(@total_due)  %></td></tr>
+	</table>
+
+<br/><br/>
+
+<div class="field">
+  <%= f.label 'Coupon Code:' %><br />
+  <%= f.text_field :user_coupon_code, :class => 'user_coupon_code'%>
+	<% if (@invoice.status == 'new') %>
+	 <%= link_to "Apply Coupon", {:controller=>"invoices", :action=>"apply_coupon_code", :id=>@invoice.id, :user_coupon_code=>"!#{f.user_coupon_code}!"}, :method=>"post" %>
+	<% end %>
+</div>
+
+  <!-- <div class="field">
     <%= f.label :user_id %><br />
     <%= f.number_field :user_id %>
   </div>
@@ -45,5 +86,5 @@
   </div>
   <div class="actions">
     <%= f.submit %>
-  </div>
+  </div> -->
 <% end %>

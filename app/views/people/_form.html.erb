@@ -16,39 +16,38 @@
 <!-- div id="split_content" -->
 	<div id="persontabs">
 	    <ul>
-	        <li><a href="#fragment-1"><span>Basic Info</span></a></li>
+	        <li><a href="#fragment-1"><span>Attendee Info</span></a></li>
 	        <li><a href="#fragment-2"><span>Contacts</span></a></li>
 	        <li><a href="#fragment-3"><span>Medical</span></a></li>
-	        <li><a href="#fragment-4"><span>Events</span></a></li>
+	        <li><a href="#fragment-4"><span>Session Reservation</span></a></li>
 	    </ul>
 	    <div id="fragment-1">
 			<fieldset><legend><b>Registrant Information</b></legend>
 				<fieldset><legend><b>Personal Information</b></legend>
 				  <p class="field">
-				    <%= f.label "First Name" %>
-				    <%= f.text_field :firstname %>
-				&nbsp;&nbsp;
-				    <%= f.label "Last Name" %>
-				    <%= f.text_field :lastname %>
-				&nbsp;&nbsp;
-				    <%= f.label "Middle Init" %>
-				    <%= f.text_field :middleinit, :size=>2 %>
-				&nbsp;&nbsp;
-					<%= f.label "Nickname" %>
-					<%= f.text_field :nickname %>
+						<table class="person_info">
+							<tr>
+								<td class="person_info_label"><%= f.label "First Name" %></td><td><%= f.text_field :firstname %></td>
+								<td class="person_info_label"><%= f.label "Last Name" %></td><td><%= f.text_field :lastname %></td>
+								<td class="person_info_label"><%= f.label "Middle Init" %></td><td><%= f.text_field :middleinit, :size=>2 %></td>
+								</tr>
+							<tr>
+								<td class="person_info_label"><%= f.label "Nickname" %></td><td><%= f.text_field :nickname %></td>
+								<td class="person_info_label"><%= f.label :birthdate %></td><td> <%= f.date_select :birthdate, :start_year=>1935, :order => [:month, :day, :year] %></td>
+								<td></td><td></td>
+							</tr>
+							<tr>
+								<td class="person_info_label"><%= f.label :gender %></td><td><%= f.select :gender, ['Male','Female'] %></td>
+								<td></td><td></td>
+								<td></td><td></td>
+							</tr>
+							<tr>
+								<td class="person_info_label"><%= f.label "T-Shirt Size" %><br /></td><td> <%= f.select :shirtsize, ['YS','YM','YL','S','M','L','XL','XXL'] %></td>
+								<td></td><td></td>
+								<td></td><td></td>
+							</tr>
+						</table>						
 					</p>  <!-- </div> -->
-				  <p class="field">  <!-- <div class="field"> -->
-				    <%= f.label :birthdate %>
-				    <%= f.date_select :birthdate, :start_year=>1935%>
-				&nbsp;&nbsp;
-				    <%= f.label :gender %>
-				    <%= f.select :gender, ['Male','Female'] %>
-					</p>  <!-- </div> -->
-				  <p class="field">
-				    <%= f.label "T-Shirt Size" %><br />
-				    <%= f.select :shirtsize, ['YS','YM','YL','S','M','L','XL','XXL'] %>
-					</p>
-				  <!-- <div class="field"> -->
 				</fieldset><br/>
 				<fieldset><legend><b>Address Information</b></legend>
 				  <%= f.fields_for :addresses do |builder| %>
@@ -66,7 +65,12 @@
 					<%= f.fields_for :organizations do |builder| %>
 						<%= render "organization_fields", f: builder %>
 					<% end %>
-					<%= link_to_add_fields "Add Home Church / Organization", f, :organizations %>	
+					<%= link_to_add_fields "Add Home Church / Organization Name", f, :organizations %>	
+				</fieldset>
+				<fieldset><legend><b>Camp Media Permission</b></legend>
+					<%= f.check_box :photo_allowed %>
+					I DO NOT give permission for the registrant's image (either by video or photograph) to be
+					used in any manner by Atlanta Bible Camp for promotional or informational purposes.
 				</fieldset>
 			</fieldset>	
 		</div>
@@ -99,7 +103,7 @@
 					<div id="medical_note_history_content">
 						<%= div_for @person.person_medical_notes.reject{|mn|mn.new_record?} do |omn| %>
 							<p><b>
-							<%= omn.created_at.localtime.strftime("%m/%d/%Y at %I:%M%p") %>
+							<%= omn.created_at.localtime.strftime("%m/%d/%Y at %I:%M%p") %> by <%= omn.created_by_name %>
 							</b> : 
 							<%= omn.notes %></p>
 						<% end %>
@@ -128,14 +132,14 @@
 				<%= f.fields_for :reservations, @person.reservations.reject{|res| res.locked } do |builder| %>
 					<%= render "reservation_fields", f: builder %>
 				<% end %>
-				<%= link_to_add_fields "Add Registration", f, :reservations %>	
+				<%= link_to_add_fields "Sign Up For another Session", f, :reservations %>	
 
 			</fieldset>		
 		</div>
 	</div>
 
 	<div class="actions">
-    	<%= f.submit :class=>"makeperson", :value=>"Save All"%>
+    	<%= f.submit :class=>"makeperson", :value=>"Save"%>
   	</div>
 <!-- /div -->
 <% end %>

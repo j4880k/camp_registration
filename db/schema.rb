@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121213130947) do
+ActiveRecord::Schema.define(:version => 20121215035938) do
 
   create_table "addresses", :force => true do |t|
     t.string   "Street1"
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(:version => 20121213130947) do
     t.date     "effective_end_date"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
+    t.integer  "event_id"
   end
 
   create_table "emails", :force => true do |t|
@@ -92,8 +93,9 @@ ActiveRecord::Schema.define(:version => 20121213130947) do
     t.boolean  "is_confirmed"
     t.text     "broker_stream"
     t.string   "status"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.string   "user_coupon_code"
   end
 
   create_table "keywords", :force => true do |t|
@@ -127,10 +129,11 @@ ActiveRecord::Schema.define(:version => 20121213130947) do
     t.string   "gender"
     t.date     "date_created"
     t.string   "password"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.string   "shirtsize"
     t.integer  "user_id"
+    t.boolean  "photo_allowed"
   end
 
   create_table "people_addresses", :force => true do |t|

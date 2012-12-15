@@ -2,10 +2,11 @@
 	<fieldset>
 		<div class="field">
 			<%= f.label "Type" %>
-			<%= f.text_field :scphonetype %>
+			<!-- <%= f.text_field :scphonetype %> -->
+			<%= f.select :scphonetype, ['Home','Work','Mobile 1','Mobile 2'] %>
 &nbsp;&nbsp;
 			<%= f.label "Phone Number" %>
-			<%= f.text_field :scphonenumber, :size=>60 %>
+			<%= f.phone_field :scphonenumber, :size=>60, class: "phone_fld" %>
 			<%= f.hidden_field :_destroy %>
 			<%= link_to "Remove Phone", '#', class: "remove_fields" %>
 		</div>

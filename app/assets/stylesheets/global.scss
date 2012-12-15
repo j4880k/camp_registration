@@ -250,3 +250,17 @@ table.contentpaneopen {width:98%; }
 	border: 1px solid $theme_default_border;
 	padding: 10px;
 }
+
+.person_info table, .person_info td {
+	border: none;
+	// width: 100%;
+	
+}
+
+.person_info_label {
+	font-weight: bold;
+	border: none;
+	width: 70px;
+	text-align:right;
+	
+}

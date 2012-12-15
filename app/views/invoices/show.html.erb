@@ -33,14 +33,32 @@
 	</table>
 
 <br/><br/>
+<%= form_for(@invoice) do |f| %>
+<script>
+    function coupon_url_patch() {
+	//<a href="/invoice/apply_coupon_code?id=54&amp;user_coupon_code=COUPONCODEHERE" data-method="post" id="coupon_checker" rel="nofollow">Apply Coupon</a>
 
-	<div>
+        var select = document.getElementById('coupon_checker');
+		alert(select.href);
+        // document.location = url + '/' + id;
+    };
+	$().ready(function(){
+	    $('#coupon_checker').click(function(){
+		 	
+	        $(this).attr('href', $(this).attr('href') + '&amp;user_coupon_code=' + $('.user_coupon_code').val());
 		
-		<% if (@invoice.status == 'new') %>
-		<input id="coupon_code" name="coupon_code" type="text"/>
-		 <%= link_to "Apply Coupon", {:controller=>"invoices", :id=>@invoice.id, :action=>"apply_coupon_code"}, :method=>"post" %>
-		<% end %>
-	</div>
+	    });
+	});
+</script>
+<div class="field">
+  <%= f.label 'Coupon Code:' %><br />
+  <%= f.text_field :user_coupon_code, :class => 'user_coupon_code'%>
+	<% if (@invoice.status == 'new') %>
+	 <%= link_to "Apply Coupon", {:controller=>"invoices", :action=>"apply_coupon_code", :id=>@invoice.id},:id=>'coupon_checker', :method=>"post" %>
+	<% end %>
+</div>
+
+<% end %>
 <!-- <p>
   <b>User:</b>
   <%= @invoice.user_id %>
