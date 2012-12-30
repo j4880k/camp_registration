@@ -8,12 +8,20 @@
 	
 	<%= csrf_meta_tags %>
 	<!-- jquery tab addin -->
-	<script>
+	<script type="text/javascript">
 	  $(document).ready(function() {
 	    $("#persontabs").tabs();
 	  });
+	
+		jQuery(function($){
+			$(".date").mask("99/99/9999");
+			// $(".phone_fld").mask("(999) 999-9999? x999999");
+			$(".phone_fld").mask("999-999-9999");
+			$(".ssn").mask("999-99-9999");
+		});	
 	  </script>
 	
+
 </head>
 <body>
 	<div id="application_shell">

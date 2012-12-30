@@ -45,12 +45,18 @@
 	
 <% end %>
 <br />
-<% @user_invoices = Invoice.where(:user_id => current_user.id, :status => 'new') %>
-<% unless @user_invoices.nil? %>
+<% @unpaid_user_invoices = Invoice.where(:user_id => current_user.id, :status => 'new') %>
+<% @paid_user_invoices = Invoice.where(:user_id => current_user.id, :status => 'paid') %>
+<% unless @unpaid_user_invoices.nil? %>
 	You have the following invoices that need to be paid:
-	<% @user_invoices.each do |uinv| %>
+	<% @unpaid_user_invoices.each do |uinv| %>
 		<br/><%= link_to uinv.reference_code, uinv %> - Balance: <%= uinv.total_balance %>
-	<% end %>
-	
+	<% end %>	
+<% end %>
+<% unless @paid_user_invoices.nil? %>
+	You have the following PAID Invoices:
+	<% @paid_user_invoices.each do |pinv| %>
+		<br/><%= link_to pinv.reference_code, pinv %> - Balance: <%= pinv.total_balance %>
+	<% end %>	
 <% end %>
 <!-- <%= link_to 'New Reservation cart', new_reservation_cart_path %> -->

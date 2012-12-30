@@ -134,14 +134,16 @@
     </div>
 	<div id="fragment-4">
 		<fieldset><legend><b>Registered Events</b></legend>
-			<% for res in @person.reservations %>
+			<% for res in @person.reservations.date_desc %>
 				<fieldset><legend><b><%= res.event.eventname%></b></legend>
-					Birthdate: <%= @person.birthdate %><br/>
-					Campdate: <%= res.event.date_begin.to_date %><br/>
-					Age at camp: <%= distance_of_time_in_words(@person.birthdate, res.event.date_begin.to_date) %><br/>
-					Cabin Assigned: 
+					<b>Birthdate:</b> <%= @person.birthdate %><br/>
+					<b>Campdate:</b> <%= res.event.date_begin.to_date %><br/>
+					<b>Age at camp:</b> <%= distance_of_time_in_words(@person.birthdate, res.event.date_begin.to_date) %><br/>
+					<% @res_status = res.reservation_cart.nil? ? 'new' : res.reservation_cart.try(:status) %>
+					<b>Status:</b> <%= @res_status %><br />
+					<b>Cabin Assigned:</b> 
 					<% for cabin in res.resources %>
-						 <%= cabin.name %> (<%= cabin.notes %>) 
+						 <%= cabin.name %>
 					<% end %>
 				</fieldset>
 			<% end %>

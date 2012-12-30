@@ -12,17 +12,16 @@
 	    <th>Event Price</th>
 	  </tr>
 		<% @total_amount = 0 %>
-		<% @total_discount = 0 %>
+		<% @total_discount = @invoice.discount_total %>
 		<% @stub_id = 0 %>
-	<% ReservationCart.where( :invoice_id => @invoice.id ).each do |inv| %>
-		<% @total_amount = @total_amount + inv.reservation.event.price %>
-		<% @total_discount = @total_discount + inv.reservation.all_discounts %>			
+	<% ReservationCart.where( :invoice_id => @invoice.id ).each do |rescart| %>
+		<% @total_amount = @total_amount + rescart.reservation.event.price %>
 	  <tr>
-	    <td><%= link_to inv.reservation.event.eventname, inv.reservation %></td>
-		<td><%= link_to inv.reservation.person.fullname, inv.reservation.person  %> </td>
-	    <td><%= inv.status %></td>
-	    <td><%= inv.reference_code %></td>
-	    <td><%= number_to_currency(inv.reservation.event.price) %></td>
+	    <td><%= link_to rescart.reservation.event.eventname, rescart.reservation %></td>
+		<td><%= link_to rescart.reservation.person.fullname, rescart.reservation.person  %> </td>
+	    <td><%= rescart.status %></td>
+	    <td><%= rescart.reference_code %></td>
+	    <td><%= number_to_currency(rescart.reservation.event.price) %></td>
 	  </tr>
 	  <tr>
 	  </tr>
@@ -36,28 +35,33 @@
 <%= form_for(@invoice) do |f| %>
 <script>
     function coupon_url_patch() {
-	//<a href="/invoice/apply_coupon_code?id=54&amp;user_coupon_code=COUPONCODEHERE" data-method="post" id="coupon_checker" rel="nofollow">Apply Coupon</a>
-
         var select = document.getElementById('coupon_checker');
 		alert(select.href);
         // document.location = url + '/' + id;
     };
+
 	$().ready(function(){
 	    $('#coupon_checker').click(function(){
-		 	
 	        $(this).attr('href', $(this).attr('href') + '&amp;user_coupon_code=' + $('.user_coupon_code').val());
-		
 	    });
 	});
 </script>
-<div class="field">
-  <%= f.label 'Coupon Code:' %><br />
-  <%= f.text_field :user_coupon_code, :class => 'user_coupon_code'%>
-	<% if (@invoice.status == 'new') %>
-	 <%= link_to "Apply Coupon", {:controller=>"invoices", :action=>"apply_coupon_code", :id=>@invoice.id},:id=>'coupon_checker', :method=>"post" %>
+	<div>
+		<p>
+	<% unless @invoice.user_coupon_code.nil? %>
+		You have applied a coupon to this invoice : <b><%= "#{@invoice.user_coupon_code}"%></b>
 	<% end %>
-</div>
-
+		</p>
+	</div>
+	<% unless @invoice.status=="paid" %>
+		<div class="field">
+		  <%= f.label 'Coupon Code:' %><br />
+		  <%= f.text_field :user_coupon_code, :class => 'user_coupon_code'%>
+			<% if (@invoice.status == 'new') %>
+			 <%= link_to "Apply Coupon", {:controller=>"invoices", :action=>"apply_coupon_code", :id=>@invoice.id},:id=>'coupon_checker', :method=>"post", :confirm => "Applying this new coupon will remove the existing coupon.\n\nYou can only have one coupon per invoice, the coupon will automatically apply to all appropriate reservations. \n\nDo you wish to continue?" %>
+			<% end %>
+		</div>
+	<% end %>
 <% end %>
 <!-- <p>
   <b>User:</b>

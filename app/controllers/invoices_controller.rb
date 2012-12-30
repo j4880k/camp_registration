@@ -1,19 +1,61 @@
 class InvoicesController < ApplicationController
   load_and_authorize_resource
   
+  def items_matching_coupon
+    @invoice.reservation_carts.joins(:reservation => :event).where( :events => {:id => @coupon.event_id})
+  end
+  
+  def invoice_has_items_for_coupon?
+     items_matching_coupon.count > 0
+  end
+  
   def apply_coupon_code
     note="Error: nothing sent in"
     unless params[:user_coupon_code].nil?
       @coupon=Coupon.find_by_code(params[:user_coupon_code].upcase)
+      notice_text = "There was a problem retrieving your coupon. #{params[:user_coupon_code]} does not appear to be valid at this time."
       unless @coupon.nil?
-        #get the specifics
+        coupon_tag = @coupon.code_mask ? "**SPECIAL DISCOUNT**" : @coupon.code
+        notice_text= "Coupon #{params[:user_coupon_code]} has returned a coupon described as '#{@coupon.description_with_dates}' "
+        
+        #Is the coupon restricted for certain event?
+        if @coupon.usable_coupon?
+          if @coupon.event_restricted? && 
+            if invoice_has_items_for_coupon?
+              notice_text += "You have #{items_matching_coupon.count} reservations in your basket that could use this coupon"
+              @invoice.user_coupon_code = params[:user_coupon_code].upcase
+              @invoice.save
+            else
+              notice_text += "There are no items in your cart eligible for the coupon"
+            end
+          else
+            @invoice.user_coupon_code = params[:user_coupon_code].upcase
+            @invoice.save
+            notice_text += "You have #{@invoice.reservation_carts.count} reservations in your basket that this coupon applies to"     
+          end
+        else
+          notice_text += " The coupon code you used is not valid."
+        end
+        
+        #Is the coupon for this date?
+        # if @coupon.is_valid_today?
+        #   notice_text += " The coupon's effective date range makes it valid today."
+        # else
+        #   notice_text += " The coupon is not currently active."
+        # end 
+        
+        #Is the coupon restricted in uses?
+        # if @coupon.has_remaining?
+        #    notice_text += " There are coupons still available"
+        #  else
+        #    notice_text += " There are no more coupons left for this code."
+        #  end
+        
+        #Coupon type appled to amount due
         
       end
-      
-      
-      redirect_to @invoice, notice: "You tried to apply coupon #{params[:user_coupon_code].upcase}"      
+      redirect_to @invoice, notice: notice_text
     end
-
   end
 
   # GET /invoices
@@ -31,7 +73,7 @@ class InvoicesController < ApplicationController
   # GET /invoices/1.json
   def show
     # @invoice = Invoice.find(params[:id])
-
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @invoice }

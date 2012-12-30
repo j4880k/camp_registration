@@ -4,8 +4,7 @@
 			<%= f.label "Type:" %>
 	    	<%= f.select :medication_type, ['Allowed','Required'] %>
 			<%= f.label "Medication" %>
-			<%= f.text_field :medicationname %>
-&nbsp;&nbsp;
+			<%= f.text_field :medicationname %><br />
 			<%= f.label "Details" %>
 			<%= f.text_field :notes, :size=>60 %>
 			<%= f.hidden_field :_destroy %>

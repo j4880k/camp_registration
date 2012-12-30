@@ -118,21 +118,17 @@
 		<div id="fragment-4">
 			<fieldset><legend><b>Registered Events</b></legend>
 				<div id="reservations_locked">
-					<%= div_for @person.reservations.select{|res| res.locked } do |lres| %>
-					<!-- when the invoice piece is done this should come from invoices so we can have access to discounts too -->
+					<%= div_for @person.reservations.date_desc do |lres| %>
 						<p>
-							<b><%= lres.event.eventname %> reservation on:</b> <%= lres.created_at.localtime.strftime("%m/%d/%Y at %I:%M%p") %>
+							<b><%= lres.event.eventname %> reservation created on:</b> <%= lres.created_at.localtime.strftime("%m/%d/%Y at %I:%M%p") %>
 							<br/> <b>Dates:</b> <%= lres.event.date_begin.localtime.strftime("%m/%d/%Y")  %> - <%= lres.event.date_end.localtime.strftime("%m/%d/%Y") %>
 							<br/> <b>Description:</b> <%= lres.event.notes %>
-							<br/> <b>Your Notes:</b><br/><%= lres.notes %>
+							<% @res_status = lres.reservation_cart.nil? ? 'new' : lres.reservation_cart.try(:status) %>
+							<br /><b>Status:</b> <%= @res_status %>
+							<!-- <br/> <b>Your Notes:</b><br/><%= lres.notes %> -->
 						</p>			
 					<% end %>
-				</div>
-			
-				<%= f.fields_for :reservations, @person.reservations.reject{|res| res.locked } do |builder| %>
-					<%= render "reservation_fields", f: builder %>
-				<% end %>
-				<%= link_to_add_fields "Sign Up For another Session", f, :reservations %>	
+				</div>	
 
 			</fieldset>		
 		</div>

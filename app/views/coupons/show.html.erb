@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+<p>
+  <b>Coupon Name:</b> 
+  <%= @coupon.name %>
+	</p>
+
+<p>
+  <b>Coupon Code:</b> 
+  <%= @coupon.code %>
+</p>
+
+<p>
+  <b>Discount Type</b> 
+	<%= @coupon.discount_type%>
+</p>
+
+<p>
+  <b>Discount Amount</b> 
+	<% if @coupon.discount_type=="PERCENT" %>
+		%<%= @coupon.discount_value %>
+	<% else %>
+		<%= number_to_currency(@coupon.discount_value) %>
+	<% end %>
+	
+</p>
+
+<p>
+	<b>Coupon Code Masked</b> 
+	<% if @coupon.code_mask == true %>
+		Yes
+	<% else %>
+		No
+	<% end %>
+</p>
+
+<p>
+  <b>Use Limit</b> 
+	<%= @coupon.use_limit%>
+</p>
+
+<p>
+  <b>Description:</b> 
+	<%= @coupon.description%>
+</p>
+
+<p>
+  <b>Coupon Effective Start:</b> 
+	<%= "#{@coupon.effective_start_date.strftime("%m/%d/%Y")}" %>
+</p>
+
+<p>
+  <b>Coupon Effective Start:</b> 
+	<%= "#{@coupon.effective_end_date.strftime("%m/%d/%Y")}" %>
+</p>
+
+<p>
+  <b>For Event:</b> 
+	<% unless @coupon.event_id.nil? %>
+	<%= @coupon.event.event_with_dates %>
+	<% end %> 
+</p>
+
+<%= link_to 'Edit', edit_coupon_path(@coupon) %> |
+<%= link_to 'Back', coupons_path %>

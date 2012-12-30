@@ -16,14 +16,65 @@
 	  <%= f.label :City %>
 	  <%= f.text_field :City %>&nbsp;&nbsp; 
 	  <%= f.label :State %>
-	  <%= f.text_field :State %> &nbsp;&nbsp;
+	<%= f.select :State, ['AK',
+				'AL',
+				'AR',
+				'AZ',
+				'CA',
+				'CO',
+				'CT',
+				'DC',
+				'DE',
+				'FL',
+				'GA',
+				'HI',
+				'IA',
+				'ID',
+				'IL',
+				'IN',
+				'KS',
+				'KY',
+				'LA',
+				'MA',
+				'MD',
+				'ME',
+				'MI',
+				'MN',
+				'MO',
+				'MS',
+				'MT',
+				'NC',
+				'ND',
+				'NE',
+				'NH',
+				'NJ',
+				'NM',
+				'NV',
+				'NY',
+				'OH',
+				'OK',
+				'OR',
+				'PA',
+				'RI',
+				'SC',
+				'SD',
+				'TN',
+				'TX',
+				'UT',
+				'VA',
+				'VT',
+				'WA',
+				'WI',
+				'WV',
+				'WY'], 
+				:include_blank => true %>
 	  <%= f.label :zipcode %>
 	  <%= f.text_field :zipcode %>
 	</div>
-	<div class="field">
+	<!-- <div class="field">
 	  <%= f.label :notes %><br />
 	  <%= f.text_area :notes, "rows"=>10, "cols"=>97 %>
-	</div>
+	</div> -->
 	<%= f.hidden_field :_destroy %>
 	<!-- %= link_to "remove", '#', class: "remove_fields" % -->	
 </fieldset>

@@ -6,5 +6,6 @@ class ReservationCart < ActiveRecord::Base
   #     *schema will be <random(2).to_upper><user_id>-<yy><mm><dd>-<random(2).to_upper>-<hh><mm><nn>
   #   :invoice_id (the invoice it all translates into... this is what they will print) ;)
   belongs_to :reservation
+  belongs_to :invoice
   
 end

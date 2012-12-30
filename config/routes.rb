@@ -9,6 +9,7 @@ RegistrationManager::Application.routes.draw do
   resources :person_organizations
   resources :person_emails
   resources :events
+  resources :coupons
  
   resources :reservations
   resource :reservation do

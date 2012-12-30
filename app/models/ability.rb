@@ -24,6 +24,7 @@ class Ability
         can :update, Reservation do |reg|
                 (reg.try(:person).try(:user) == user) and (reg.try(:locked) != true)
               end
+        can :create, Reservation
         can :add_to_cart, Reservation
               
         can :read, ReservationCart do |rc| 

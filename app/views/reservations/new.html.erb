@@ -1,5 +1,51 @@
 <h1>New reservation</h1>
+<% @events_available = Event.where('date_begin > ?',  @today).count > 0 %>
+<% @people_available = Person.where(:user_id => current_user.id).count > 0 %>
+<%= form_for(@reservation) do |f| %>
+	 <% if @reservation.errors.any? %>
+	   <div id="error_explanation">
+	     <h2><%= pluralize(@reservation.errors.count, "error") %> prohibited this reservation from being saved:</h2>
 
-<%= render 'form' %>
+	     <ul>
+	     <% @reservation.errors.full_messages.each do |msg| %>
+	       <li><%= msg %></li>
+	     <% end %>
+	     </ul>
+	   </div>
+	 <% end %>
 
-<%= link_to 'Back', reservations_path %>
+	 <div class="field">
+	   <%= f.label :person_id %><br />
+		<% if @people_available %>
+			<%= f.collection_select(:person_id, Person.where(:user_id => current_user.id), :id, :fullname ) %>
+		<% else %>
+			You have not created any Registrants yet.
+		<% end %>
+	 </div>
+
+	 <div class="field">
+	   <%= f.label :event_id %><br />
+		<% if  @events_available %>
+			<%= f.collection_select(:event_id, Event.where('date_begin > ?',  @today), :id, :event_with_dates_and_price ) %>
+		<% else %>
+			There are no active events to register for.
+		<% end %>
+	 </div>
+
+	<!-- <div class="field">
+	  <%= f.label :is_deleted %><br />
+	  <%= f.check_box :is_deleted %>
+	</div>
+	<div class="field">
+	  <%= f.label :is_staffing %><br />
+	  <%= f.check_box :is_staffing %>
+	</div> -->
+	<% if  @events_available && @people_available %>
+		<div class="actions">
+		  <%= f.submit %>
+		</div>
+	<% end %>
+<% end %>
+
+
+<%= link_to 'Cancel', reservations_path %>

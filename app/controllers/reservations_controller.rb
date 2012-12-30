@@ -20,7 +20,9 @@ class ReservationsController < ApplicationController
       cart.status = "new" 
       cart.save  
     end  
-    render json: cart
+    # render json: cart
+    redirect_to '/reservation_carts/'
+    
   end
    
   # GET /reservations
@@ -85,14 +87,21 @@ class ReservationsController < ApplicationController
   # POST /reservations.json
   def create
     # @reservation = Reservation.new(params[:reservation])
-
-    respond_to do |format|
-      if @reservation.save
-        format.html { redirect_to @reservation, notice: 'Reservation was successfully created.' }
-        format.json { render json: @reservation, status: :created, location: @reservation }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @reservation.errors, status: :unprocessable_entity }
+    if @reservation.person.reservations.where(:event_id => @reservation.event_id).count > 0
+      @reservation.errors.add(:base, "A #{@reservation.event.event_with_dates} reservation already exists for #{@reservation.person.fullname}" )
+      respond_to do |format|
+          format.html { render action: "new" }
+          format.json { render json: @reservation.errors, status: :unprocessable_entity }
+      end      
+    else
+      respond_to do |format|
+        if @reservation.save
+          format.html { redirect_to @reservation, notice: 'Reservation was successfully created.' }
+          format.json { render json: @reservation, status: :created, location: @reservation }
+        else
+          format.html { render action: "new" }
+          format.json { render json: @reservation.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
