@@ -54,11 +54,17 @@
 		</p>
 	</div>
 	<% unless @invoice.status=="paid" %>
+		
 		<div class="field">
 		  <%= f.label 'Coupon Code:' %><br />
 		  <%= f.text_field :user_coupon_code, :class => 'user_coupon_code'%>
 			<% if (@invoice.status == 'new') %>
 			 <%= link_to "Apply Coupon", {:controller=>"invoices", :action=>"apply_coupon_code", :id=>@invoice.id},:id=>'coupon_checker', :method=>"post", :confirm => "Applying this new coupon will remove the existing coupon.\n\nYou can only have one coupon per invoice, the coupon will automatically apply to all appropriate reservations. \n\nDo you wish to continue?" %>
+			<% end %>
+		</div>
+		<div class="action">
+			<% if (@invoice.status=='new') %>
+			 <%= link_to "Cancel this Invoice", {:controller=>"invoices", :id=>@invoice.id, :action=>"cancel_invoice"}, :method=>"post" %>
 			<% end %>
 		</div>
 	<% end %>

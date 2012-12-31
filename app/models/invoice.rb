@@ -12,25 +12,38 @@ class Invoice < ActiveRecord::Base
         coupon_object=coupon_collection.first
         puts "we have a coupon : #{coupon_object.code}"
         if ((coupon_object.use_limit.to_i<1) or (coupon_object.use_limit.to_i>0 and coupon_object.has_remaining?)) and (coupon_object.is_valid_today?)
-          if coupon_object.event_restricted?
-            self.reservation_carts.joins(:reservation => :event).where( :events => {:id => coupon_object.event_id}).each do |ci|
-              puts "applying an event restricted coupon to a reservation : #{ci.reservation.event.eventname}"
-              if coupon_object.discount_type=='FIXED'
-                @discount_amount += coupon_object.discount_value
-              else
-                @discount_amount += (ci.reservation.event.price*(coupon_object.discount_value/100).round(2))
+          @num_remaining=coupon_object.number_remaining
+          
+            if coupon_object.event_restricted?
+              self.reservation_carts.joins(:reservation => :event).where( :events => {:id => coupon_object.event_id}).each do |ci|
+                
+                if @num_remaining > 0
+                  puts "applying an event restricted coupon to a reservation : #{ci.reservation.event.eventname}"
+                  if coupon_object.discount_type=='FIXED'
+                    @discount_amount += coupon_object.discount_value
+                  else
+                    @discount_amount += (ci.reservation.event.price*(coupon_object.discount_value/100).round(2))
+                  end
+                  @num_remaining=@num_remaining-1
+                end
+              
+              end
+            else
+              self.reservation_carts.each do |ci|
+                
+                if @num_remaining > 0
+                  puts "applying a coupon to a reservation : #{ci.reservation.event.eventname}"
+                  if coupon_object.discount_type=='FIXED'
+                    @discount_amount += coupon_object.discount_value
+                  else
+                    @discount_amount += (ci.reservation.event.price*(coupon_object.discount_value/100).round(2))
+                  end
+                  @num_remaining=@num_remaining-1
+                end
+                
               end
             end
-          else
-            self.reservation_carts.each do |ci|
-              puts "applying a coupon to a reservation : #{ci.reservation.event.eventname}"
-              if coupon_object.discount_type=='FIXED'
-                @discount_amount += coupon_object.discount_value
-              else
-                @discount_amount += (ci.reservation.event.price*(coupon_object.discount_value/100).round(2))
-              end
-            end
-          end
+
         end
       end
     end

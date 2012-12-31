@@ -3,6 +3,10 @@
 		<div class="field">
 			<table id="insurance_grid">
 			<tr>
+				<td></td>
+				<td><%= f.check_box :is_primary %> &nbsp;<b>Check here if insurance is primary.</b></td>
+			</tr>
+			<tr>
 			<td><%= f.label "Provider", :size=>50 %></td>
 			<td><%= f.text_field :provider, :size=>60 %></td>
 			</tr>

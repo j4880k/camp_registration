@@ -1,5 +1,5 @@
 <h1>Listing coupons</h1>
-
+It is vitally important that coupons are not deleted or changed after creating them since it would have a terrible accuracy impact on historical data.
 <table>
   <tr>
     <th>Name</th>
@@ -28,7 +28,7 @@
 	<td><%= coupon.description %></td>
 	<td><%= coupon.effective_start_date.strftime('%m/%d/%Y') %></td>
 	<td><%= coupon.effective_end_date.strftime('%m/%d/%Y') %></td>
-	<td><%= coupon.event_id %></td>
+	<td><%= coupon.try(:event).try(:event_with_dates_and_price) %></td>
     <td><%= link_to 'Show', coupon %></td>
     <td><%= link_to 'Edit', edit_coupon_path(coupon) %></td>
     <td><%= link_to 'Destroy', coupon, confirm: 'Are you sure?', method: :delete %></td>

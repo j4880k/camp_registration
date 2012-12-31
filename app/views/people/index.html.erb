@@ -16,10 +16,11 @@
 			    <th>Lastname</th>
 			    <th>Middleinit</th>
 			    <th>Birthdate</th>
-			    <th>Age at camp</th>
+			    <!-- <th>Age at camp</th> -->
 			    <th>Nickname</th>
 			    <th>Gender</th>
 			    <th>Date created</th>
+				<th>% complete</th>
 			    <th></th>
 			    <th></th>
 			    <th></th>
@@ -31,10 +32,11 @@
 			    <td><%= person.lastname %></td>
 			    <td><%= person.middleinit %></td>
 			    <td><%= person.birthdate %></td>
-			    <td><%= if person.reservations.first.try(:event); distance_of_time_in_words(person.birthdate, person.reservations.first().event.date_begin.to_date); else; 'No Data'; end %></td>
+			    <!-- <td></td> -->
 			    <td><%= person.nickname %></td>
 			    <td><%= person.gender %></td>
 			    <td><%= person.created_at.in_time_zone("Eastern Time (US & Canada)")%></td>
+				<td>&nbsp;&nbsp;<%= person.requirement_progress %>%
 			    <td><%= link_to 'Show', person %></td>
 			    <td>
 				<% if can? :update, person %>

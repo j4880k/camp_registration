@@ -15,8 +15,8 @@
 	    <!-- <th>Is deleted</th> -->
 	    <!-- <th>Is staffing</th> -->
 	    <!-- <th>Notes</th> -->
-	    <!-- <th>Discount</th> -->
-	    <!-- <th>Cost</th> -->
+	    <th>Age Number at event</th>
+	    <th>Age at Event</th>
 		<th>Price</th>
 		<th>Status</th>
 	    <th></th>
@@ -26,40 +26,59 @@
 	  </tr>
 
 	<% @reservations.each do |reservation| %>
-	  <tr>
-	    <td><%= reservation.person.firstname %> <%= reservation.person.lastname %> (<%= reservation.person.nickname %>)</td>
-	    <td><%= reservation.event.eventname %></td>
-		<td><%= reservation.event.event_dates%></td>
-	    <!-- <td><%= reservation.is_deleted %></td> -->
-	    <!-- <td><%= reservation.is_staffing %></td> -->
-	    <!-- <td><%= reservation.notes %></td> -->
-	    <!-- <td><%= reservation.all_discounts %></td> -->
-	    <!-- <td><%= reservation.amountpaid %></td> -->
-		<td><%= reservation.amount_due %></td>
-		<% if reservation.reservation_cart.try(:status) == 'new'%>
-			<td>Added to cart</td>
-		<% else %>
-			<td><%= reservation.reservation_cart.try(:status) %></td>
-		<% end %>
-	    <td><%= link_to 'Show', reservation %></td>
-		<td>
-		<% if can? :update, reservation %>
-			<% unless reservation.locked==true %>
-	    		<%= link_to 'Edit', edit_reservation_path(reservation) %>
+		<% 
+		@readable_age_at_event = distance_of_time_in_words(reservation.person.birthdate, reservation.event.date_begin.to_date) 
+		@event_date = reservation.event.date_begin.to_date
+		@person_birthdate = reservation.person.birthdate
+		@age_at_event = @event_date.year - @person_birthdate.year - ((@event_date.month > @person_birthdate.month || (@event_date.month == @person_birthdate.month && @event_date.day >= @person_birthdate.day)) ? 0 : 1)
+		@age_cell_contents = @age_at_event >= 9 ? "#{@readable_age_at_event}" : "#{@readable_age_at_event} (#{@person_birthdate})" 
+		%>
+		<% unless reservation.is_deleted %>
+		  <tr>
+		    <td><%= reservation.person.firstname %> <%= reservation.person.lastname %> (<%= reservation.person.nickname %>)</td>
+		    <td><%= reservation.event.eventname %></td>
+			<td><%= reservation.event.event_dates%></td>
+		    <!-- <td><%= reservation.is_deleted %></td> -->
+		    <!-- <td><%= reservation.is_staffing %></td> -->
+		    <!-- <td><%= reservation.notes %></td> -->
+		    <td><%= @age_at_event %></td>
+		    <td><%= @age_cell_contents %></td>
+			<td><%= reservation.amount_due %></td>
+			<% if reservation.reservation_cart.try(:status) == 'new'%>
+				<td>Added to cart</td>
+			<% else %>
+				<% if reservation.reservation_cart.nil? && reservation.is_purchasable?!=true %>
+					<td>Expired</td>
+				<% elsif reservation.reservation_cart.nil? %>
+					<td>New</td>
+				<% else %>
+					<td><%= reservation.reservation_cart.try(:status) %></td>
+				<% end %>
 			<% end %>
+		    <td><%= link_to 'Show', reservation %></td>
+			<td>
+			<% if can? :update, reservation %>
+				<% unless reservation.locked==true %>
+		    		<%= link_to 'Edit', edit_reservation_path(reservation) %>
+				<% end %>
+			<% end %>
+			</td>
+			<td>
+				<% if (reservation.reservation_cart.nil?) and (reservation.locked != true) and (reservation.is_purchasable?)%>
+				 <%= link_to "Add to cart", {:controller=>"reservations", :id=>reservation.id, :action=>"add_to_cart"}, :method=>"post" %>
+				<% end %>			
+			</td>
+			<td>
+			<% if reservation.reservation_cart.nil? %>
+				<% if can? :destroy, reservation %>
+			    	<%= link_to 'Destroy', reservation, confirm: 'Are you sure?', method: :delete %>
+				<% else %>
+					<%= link_to "Delete", {:controller=>"reservations", :id=>reservation.id, :action=>"mark_as_removed"}, :method=>"post" %>
+				<% end %>
+			<% end %>
+			</td>
+		  </tr>
 		<% end %>
-		</td>
-		<td>
-			<% if (reservation.reservation_cart.nil?) and (reservation.locked != true) %>
-			 <%= link_to "Add to cart", {:controller=>"reservations", :id=>reservation.id, :action=>"add_to_cart"}, :method=>"post" %>
-			<% end %>			
-		</td>
-		<td>
-		<% if can? :destroy, reservation %>
-	    	<%= link_to 'Destroy', reservation, confirm: 'Are you sure?', method: :delete %>
-		<% end %>
-		</td>
-	  </tr>
 	<% end %>
 	</table>
 <% end %>

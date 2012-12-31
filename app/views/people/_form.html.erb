@@ -87,10 +87,31 @@
 			<fieldset><legend><b>Medical Information</b></legend>
 				<!-- Immunizations are current? Yes/No -->
 				<fieldset><legend>Medications</legend>
+					<!-- allow_tylenol
+					allow_sudafed
+					allow_ibuprofin
+					allow_mylanta
+					allow_cough_medicine
+					allow_benadryl -->
+					Please check the following over-counter-medications that you will ALLOW the nurse to administer to your child as needed:<br />
+					<table>
+						<tr>
+							<td class="med_checkbox"><%= f.check_box :allow_tylenol %></td><td class="med_label"><b><%= f.label :allow_tylenol %></b></td>
+							<td class="med_checkbox"><%= f.check_box :allow_sudafed %></td><td class="med_label"><b><%= f.label :allow_sudafed %></b></td>
+							<td class="med_checkbox"><%= f.check_box :allow_ibuprofin %></td><td class="med_label"><b><%= f.label :allow_ibuprofin %></b></td>
+						</tr>
+					
+						<tr>
+							<td class="med_checkbox"><%= f.check_box :allow_mylanta %></td><td class="med_label"><b><%= f.label :allow_mylanta %></b></td>
+							<td class="med_checkbox"><%= f.check_box :allow_cough_medicine %></td><td class="med_label"><b><%= f.label :allow_cough_medicine %></b></td>
+							<td class="med_checkbox"><%= f.check_box :allow_benadryl %></td><td class="med_label"><b><%= f.label :allow_benadryl %></b></td>
+						</tr>
+					</table>
+					<br />
 					<%= f.fields_for :person_medications do |builder| %>
 						<%= render "person_medication_fields", f: builder %>
 					<% end %>
-					<%= link_to_add_fields "Add Med", f, :person_medications %>		
+					<%= link_to_add_fields "Add Another Medication", f, :person_medications %>		
 				</fieldset>
 				<fieldset><legend>Allergies</legend>
 					<%= f.fields_for :person_allergies do |builder| %>

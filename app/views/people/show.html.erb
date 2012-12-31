@@ -97,7 +97,8 @@
 					 <b>Email: (<%= scemail.nickname %>) Address:</b> <%= scemail.emailaddress %><br/>
 				<% end %>
 				<% for scins in simplecontact.simple_contact_insurances %>
-					<fieldset><legend>Insurance: <b><%= scins.provider %></b></legend>
+					<fieldset>
+						<legend>Insurance: <b><%= scins.provider %><%= if scins.is_primary==true then " (Primary)" end %></b></legend>
 					 Employer: <%= scins.employer %> <br/>
 					Policy Number: <%= scins.policynumber %> &nbsp;&nbsp;Group Name: <%= scins.groupname %>&nbsp;&nbsp;Group Number: <%= scins.groupnumber %><br/>
 					</fieldset>
@@ -110,11 +111,19 @@
 		<fieldset><legend><b>Medical Information</b></legend>
 			<!-- Immunizations are current? Yes/No -->
 			<fieldset><legend>Medications</legend>
+
+				<% if @person.allow_tylenol==true %><br /><b>Med: Tylenol (Allowed)</b><% end %>
+				<% if @person.allow_sudafed==true %><br /><b>Med: Sudafed (Allowed)</b><% end %>
+				<% if @person.allow_ibuprofin==true %><br /><b>Med: Ibuprofin (Allowed)</b><% end %>
+				<% if @person.allow_mylanta==true %><br /><b>Med: Mylanta (Allowed)</b><% end %>
+				<% if @person.allow_cough_medicine==true %><br /><b>Med: Cough Medicine (Allowed)</b><% end %>
+				<% if @person.allow_benadryl==true %><br /><b>Med: Benadryl (Allowed)</b><% end %>
 				<% for meds in @person.person_medications %>
-					<fieldset>
-					 <b>Med: <%= meds.medicationname %> (<%= meds.medication_type %>)</b> - Notes: <%= meds.notes %> 
-					</fieldset>
+					<!-- <fieldset> -->
+					 <br /><b>Med: <%= meds.medicationname %> (<%= meds.medication_type %>)</b> - Notes: <%= meds.notes %> 
+					<!-- </fieldset> -->
 				<% end %>		
+				<br /><br />
 			</fieldset>
 			<fieldset><legend>Allergies</legend>
 				<% for allergy in @person.person_allergies %>

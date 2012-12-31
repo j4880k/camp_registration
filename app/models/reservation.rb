@@ -6,8 +6,15 @@ class Reservation < ActiveRecord::Base
   has_many :resources, :through => :reservation_resources
   has_one :reservation_cart
   accepts_nested_attributes_for :resources,:reservation_resources, :allow_destroy => true
+  validates_presence_of :event_id
+  validates_presence_of :person_id
   
   scope :date_desc, order("reservations.created_at DESC")
+
+  def is_purchasable?
+    self.event.still_open?
+  end
+  
   def amount_due
     number_to_currency( self.event.price.to_f + self.amountpaid.to_f + all_discounts.to_f )
   end

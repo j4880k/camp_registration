@@ -1,5 +1,13 @@
 class ReservationsController < ApplicationController
   load_and_authorize_resource
+  
+  def mark_as_removed
+    @reservation.is_deleted=true
+    @reservation.save
+    # render json: cart
+    redirect_to '/reservations/'    
+  end
+  
   def add_to_cart
     # Awesomesauce in the reservation view
     #   link_to_remote "Add to cart",

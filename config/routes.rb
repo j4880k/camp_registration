@@ -14,8 +14,10 @@ RegistrationManager::Application.routes.draw do
   resources :reservations
   resource :reservation do
     post 'add_to_cart'
-  end 
- 
+  # end 
+  # resource :reservation do
+    post 'mark_as_removed'
+  end
   resources :reservation_carts
   resource :reservation_cart do
     post 'proceed_to_checkout'
@@ -24,6 +26,7 @@ RegistrationManager::Application.routes.draw do
   resources :invoices
   resource :invoice do
     post 'apply_coupon_code'
+    post 'cancel_invoice'
   end
   # get 'reservation_carts/proceed_to_checkout'
    

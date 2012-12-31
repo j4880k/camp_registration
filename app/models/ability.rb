@@ -26,6 +26,7 @@ class Ability
               end
         can :create, Reservation
         can :add_to_cart, Reservation
+        can :mark_as_removed, Reservation
               
         can :read, ReservationCart do |rc| 
             (rc.try(:reservation).try(:person).try(:user) == user)
@@ -42,7 +43,8 @@ class Ability
           (inv.try(:user)== user)
         end
         can :apply_coupon_code, Invoice
-
+        can :cancel_invoice, Invoice
+        
       end
     #
     # The first argument to `can` is the action you are giving the user permission to do.

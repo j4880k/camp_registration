@@ -98,6 +98,10 @@
 													<% if (can? :read, Event) or (can? :create, Event) or (can? :update, Event) %>		
 														<li><%= link_to "View Events", events_path %></li>
 													<% end %>
+													
+													<% if (can? :read, Coupon) or (can? :create, Coupon) or (can? :update, Coupon) %>		
+														<li><%= link_to "View Coupons", coupons_path %></li>
+													<% end %>
 
 													<% if (can? :read, Resource) or (can? :create, Resource) or (can? :update, Resource) %>		
 														<li><%= link_to "View Resources", resources_path %></li>

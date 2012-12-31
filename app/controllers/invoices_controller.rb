@@ -1,6 +1,18 @@
 class InvoicesController < ApplicationController
   load_and_authorize_resource
   
+  def cancel_invoice
+    if @invoice.status=='new'
+      @invoice.reservation_carts.each do |cart|
+        cart.reservation.billing_status='cancelled'
+        cart.reservation.save
+        cart.destroy
+      end
+        @invoice.destroy
+    end
+    redirect_to "/reservation_carts/"
+  end
+  
   def items_matching_coupon
     @invoice.reservation_carts.joins(:reservation => :event).where( :events => {:id => @coupon.event_id})
   end
@@ -23,6 +35,7 @@ class InvoicesController < ApplicationController
           if @coupon.event_restricted? && 
             if invoice_has_items_for_coupon?
               notice_text += "You have #{items_matching_coupon.count} reservations in your basket that could use this coupon"
+              #we can't use the coupon more times than it's supposed to be used.
               @invoice.user_coupon_code = params[:user_coupon_code].upcase
               @invoice.save
             else

@@ -7,17 +7,29 @@ class Coupon < ActiveRecord::Base
   end 
   
   def number_used
-    numused = Invoice.where(:user_coupon_code => self.code, :status => "paid").count
-    puts "There are #{numused} coupons claimed."
-    numused
+    Invoice.where(:user_coupon_code => self.code, :status => "paid").count
   end 
   
-  def has_remaining?
-    if self.use_limit.to_i > 0 
-      number_used < self.use_limit
+  def number_remaining
+    if self.use_limit.to_i == 0
+      99
     else
-      true
+      realnum = self.use_limit - self.number_used
+      if realnum < 0 
+        0
+      else
+        realnum
+      end 
     end
+  end
+  
+  def has_remaining?
+    self.number_remaining > 0
+    # if self.use_limit.to_i > 0 
+    #   number_used < self.use_limit
+    # else
+    #   true
+    # end
   end
   
   def event_restricted?

@@ -3,7 +3,7 @@
 <fieldset class="simplecontactouter">
 	<div class="field">
 		<%= f.label "Contact Type:" %>
-	    <%= f.select :contacttype, ['Parent','Guardian','Emergency Contact', 'Pick-up'] %>
+	    <%= f.select :contacttype, [['Parent','parent'],['Guardian','guardian'],['Emergency Contact','emergency'], ['Pick-up','pickup']] %>
 		&nbsp;&nbsp;&nbsp;<br/>
 	  	<%= f.label "First Name: " %>
 	  	<%= f.text_field :firstname, :size => 25 %>

@@ -1,5 +1,5 @@
 <h1>New reservation</h1>
-<% @events_available = Event.where('date_begin > ?',  @today).count > 0 %>
+<% @events_available = Event.where('date_begin > ?',  Date.today).count > 0 %>
 <% @people_available = Person.where(:user_id => current_user.id).count > 0 %>
 <%= form_for(@reservation) do |f| %>
 	 <% if @reservation.errors.any? %>
@@ -26,7 +26,7 @@
 	 <div class="field">
 	   <%= f.label :event_id %><br />
 		<% if  @events_available %>
-			<%= f.collection_select(:event_id, Event.where('date_begin > ?',  @today), :id, :event_with_dates_and_price ) %>
+			<%= f.collection_select(:event_id, Event.where('date_begin >= ?',  Date.today), :id, :event_with_dates_and_price ) %>
 		<% else %>
 			There are no active events to register for.
 		<% end %>
