@@ -1,7 +1,7 @@
 class Coupon < ActiveRecord::Base
   belongs_to :event
   has_many :reservation_carts
-  
+  validates :code, :uniqueness => true
   def is_valid_today?
     (self.effective_start_date <= Date.today) and (self.effective_end_date >= Date.today)
   end 
