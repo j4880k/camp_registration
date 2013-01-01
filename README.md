@@ -15,4 +15,10 @@ Notes:
  From paranoia I left some files out that you will need to create if you build this up like :
  config/initializers/secret_token.rb
 
- 2012.12.12 - Decent progress on a simple shopping cart experience.
+ 2012.12.12 - Decent progress on a simple shopping cart experience.  
+
+ 2012.12.31 - 
+ * Progress checks for required fields, this way the person can save incomplete. Reservation links disabled until complete.
+ * Invoices can be cancelled.
+ * CHANGED : Limited use coupons now apply per line instead of per invoice. (so single use discounts will only apply to first line)
+ * Fixed quite a few reported bugs and feature requests.

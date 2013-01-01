@@ -31,7 +31,8 @@ class PeopleController < ApplicationController
   # GET /people/1.json
   def show
     # @person = Person.find(params[:id])
-
+    @person.pct_complete = @person.requirement_progress
+    @person.save
     respond_to do |format|
       format.html # show.html.erb
       format.json { render :json => @person }

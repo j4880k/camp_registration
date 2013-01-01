@@ -36,10 +36,10 @@ class Person < ActiveRecord::Base
     # end   
     
     #WE WILL WRITE THE PROGRESS ON SAVE 
-    before_save :apply_requirement_progress
+    # before_save :apply_requirement_progress
     after_create :apply_requirement_progress
-    # after_save :requirement_progress
-    
+    after_save :apply_requirement_progress
+    # after_commit :apply_requirement_progress
     
   def fullname
     fn = self.firstname || 'unknown_firstname'
