@@ -36,7 +36,12 @@
 			    <td><%= person.nickname %></td>
 			    <td><%= person.gender %></td>
 			    <td><%= person.created_at.in_time_zone("Eastern Time (US & Canada)")%></td>
-				<td>&nbsp;&nbsp;<%= person.requirement_progress %>%
+				<% @req_progress = person.requirement_progress %>
+				<% if @req_progress < 100 %>
+					<td class="warn_cell">
+				<% else %>
+					<td>
+				<% end %>&nbsp;&nbsp;<%= @req_progress %>%</td>
 			    <td><%= link_to 'Show', person %></td>
 			    <td>
 				<% if can? :update, person %>

@@ -273,3 +273,14 @@ table.contentpaneopen {width:98%; }
 .med_checkbox {
 	border:none;
 }
+
+.things_to_complete{
+	border: 1px solid red;
+	color: white;
+	background-color: red;
+}
+
+.warn_cell{
+	font-weight: bold;
+	color: red;
+}

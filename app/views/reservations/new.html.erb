@@ -17,7 +17,7 @@
 	 <div class="field">
 	   <%= f.label :person_id %><br />
 		<% if @people_available %>
-			<%= f.collection_select(:person_id, Person.where(:user_id => current_user.id), :id, :fullname ) %>
+			<%= f.collection_select(:person_id, Person.where(:user_id => current_user.id, :pct_complete => 100), :id, :fullname ) %>
 		<% else %>
 			You have not created any Registrants yet.
 		<% end %>

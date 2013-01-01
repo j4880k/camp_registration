@@ -45,6 +45,12 @@ class PeopleController < ApplicationController
     1.times do
       address = @person.addresses.build
     end
+    1.times do
+      email = @person.emails.build
+    end
+    1.times do
+      organization = @person.organizations.build
+    end
     respond_to do |format|
       format.html # new.html.erb
       format.json { render :json => @person }
@@ -61,7 +67,7 @@ class PeopleController < ApplicationController
   def create
     # @person = Person.new(params[:person])
     @person = Person.create(params[:person].merge(:user => current_user))
-    
+    # @person.pct_complete = @person.requirement_progress
     respond_to do |format|
       if @person.save
         format.html { redirect_to @person, :notice => 'Person was successfully created.' }
@@ -77,7 +83,7 @@ class PeopleController < ApplicationController
   # PUT /people/1.json
   def update
     # @person = Person.find(params[:id])
-
+    # @person.pct_complete = @person.requirement_progress
     respond_to do |format|
       if @person.update_attributes(params[:person])
         format.html { redirect_to @person, :notice => 'Person was successfully updated.' }

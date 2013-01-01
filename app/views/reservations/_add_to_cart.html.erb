@@ -1,5 +1,5 @@
 <div>
-	<% if (@reservation.reservation_cart.nil?) and (@reservation.locked != true) %>
+	<% if (@reservation.reservation_cart.nil?) and (@reservation.locked != true) and (@reservation.person.requirement_progress==100)%>
 	 <%= link_to "Add to cart", {:controller=>"reservations", :id=>@reservation.id, :action=>"add_to_cart"}, :method=>"post" %> 
 	<% end %>
 </div>

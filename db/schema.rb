@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121231141935) do
+ActiveRecord::Schema.define(:version => 20121231201300) do
 
   create_table "addresses", :force => true do |t|
     t.string   "Street1"
@@ -141,6 +141,7 @@ ActiveRecord::Schema.define(:version => 20121231141935) do
     t.boolean  "allow_mylanta"
     t.boolean  "allow_cough_medicine"
     t.boolean  "allow_benadryl"
+    t.integer  "pct_complete"
   end
 
   create_table "people_addresses", :force => true do |t|

@@ -31,14 +31,24 @@ class Person < ActiveRecord::Base
     # :reservations,
     # :allow_destroy => false
     #, :reject_if => lambda { |a| a[:content].blank? }, :allow_destroy => true
+    # def pct_complete=(pct_complete)
+    #   write_attribute(:pct_complete, requirement_progress)
+    # end   
     
- 
+    #WE WILL WRITE THE PROGRESS ON SAVE 
+    before_save :apply_requirement_progress
+    after_create :apply_requirement_progress
+    # after_save :requirement_progress
+    
+    
   def fullname
     fn = self.firstname || 'unknown_firstname'
     ln = self.lastname || 'unknown_lastname'
     [fn,ln].join(' ')
   end  
   
+  
+################ PROGRESS TRACKING ####################  
   def person_basics_complete?
     # 10% person info firstname, lastname, gender, birthdate & at least one person address
       did_pass = (self.firstname.blank? || self.lastname.blank? || self.gender.blank? || self.birthdate.blank?) ? false : true
@@ -69,85 +79,47 @@ class Person < ActiveRecord::Base
     @matched_complete
   end  
   
-  def requirement_progress
-    puts "****************** progress for #{self.fullname} ********************"
-    @progress_number=0
-    #this method is used to make sure all of the necessary requirements for a person are met before reservations take place. 
-    #It probably should keep invoices from being paid for if the information is incorrect.
-      @progress_number = person_basics_complete? ? @progress_number + 10 : @progress_number
-      #one valid address
-      @progress_number = person_has_valid_address? ? @progress_number + 10 : @progress_number
-      # unless self.addresses.empty?
-      #   @matched_complete=false
-      #   self.addresses.each do |pa|
-      #     unless (pa.Street1.blank?) || (pa.City.blank?) || (pa.State.blank?) || (pa.zipcode.blank?)
-      #       @matched_complete=true
-      #     end
-      #   end
-      #   @progress_number = @matched_complete==true ? @progress_number + 10 : @progress_number
-      # end
-     
-    # 10% at least one person organization
-    @progress_number = person_has_organization? ? @progress_number + 10 : @progress_number
-    # unless self.organizations.empty?
-    #   @matched_complete=false
-    #   self.organizations.each do |org|
-    #     unless(org.name.blank?)
-    #       @matched_complete=true end
-    #   end
-    #   @progress_number = @matched_complete==true ? @progress_number + 10 : @progress_number
-    # end
-    
-    # 10% at least one person email
+  def person_has_email?
+    @matched_complete=false
     unless self.emails.empty?
-      @matched_complete=false
       self.emails.each do |org|
         unless org.emailAddress.blank? then @matched_complete=true end
       end
-      @progress_number = @matched_complete==true ? @progress_number + 10 : @progress_number
+      # @progress_number = @matched_complete==true ? @progress_number + 10 : @progress_number
     end
-    
-    # 10% at least one parent/guardian contact
+    @matched_complete
+  end
+  
+  def person_has_parent?
+    @matched_complete=false
     unless self.simple_contacts.empty?
-      @matched_complete=false
       self.simple_contacts.each do |sc|
         if sc.contacttype=="parent" || sc.contacttype=="guardian"
           unless sc.firstname.blank? || sc.lastname.blank? || sc.relationship.blank? then @matched_complete=true end
         end
       end
-      @progress_number = @matched_complete==true ? @progress_number + 10 : @progress_number
+      # @progress_number = @matched_complete==true ? @progress_number + 10 : @progress_number
     end    
-    
-    # 10% at least one emergency contact (in case parent can't be reached)
+    @matched_complete
+  end
+ 
+  def person_has_pickup?
+    @matched_complete=false
     unless self.simple_contacts.empty?
-      @matched_complete=false
       self.simple_contacts.each do |sc|
-        if sc.contacttype=="emergency"
+        if sc.contacttype=="pickup"
           unless sc.firstname.blank? || sc.lastname.blank? || sc.relationship.blank? then @matched_complete=true end
         end
       end
-      @progress_number = @matched_complete==true ? @progress_number + 10 : @progress_number
+      # @progress_number = @matched_complete==true ? @progress_number + 10 : @progress_number
     end    
-    
-    # 10% at least one contact must have insurance information, this is the emergency room contact
+    @matched_complete    
+  end
+  
+  def person_important_contacts_have_email?
+    @checked_count=0
+    @valid_count=0
     unless self.simple_contacts.empty?
-      @matched_complete=false
-      self.simple_contacts.each do |sc|
-        unless sc.simple_contact_insurances.empty?
-          sc.simple_contact_insurances.each do |sci|
-            if sci.is_primary==true
-              @matched_complete=true 
-            end
-          end
-        end
-      end
-      @progress_number = @matched_complete==true ? @progress_number + 10 : @progress_number
-    end    
-    
-      # 10% at least one email for each parent/guardian/emergency contact
-    unless self.simple_contacts.empty?
-      @checked_count=0
-      @valid_count=0
       self.simple_contacts.each do |sc|
         if sc.contacttype=="parent" || sc.contacttype=="guardian" || sc.contacttype=="emergency"
           @found_emails=false
@@ -165,15 +137,99 @@ class Person < ActiveRecord::Base
           end
         end
       end
-      @progress_number = @checked_count==@valid_count ? @progress_number + 10 : @progress_number
-    end  
-         
-      # 20% at least 2 phone numbers on every contact
-      @progress_number = @progress_number + 10
-      
+      # @progress_number = @checked_count==@valid_count ? @progress_number + 10 : @progress_number
+    end   
+    (@checked_count==@valid_count) && (@checked_count>0)
+  end
+  
+  def person_has_emergency_contact?
+    @matched_complete=false
+    unless self.simple_contacts.empty?
+      self.simple_contacts.each do |sc|
+        if sc.contacttype=="emergency"
+          unless sc.firstname.blank? || sc.lastname.blank? || sc.relationship.blank? then @matched_complete=true end
+        end
+      end
+      # @progress_number = @matched_complete==true ? @progress_number + 10 : @progress_number
+    end   
+    @matched_complete 
+  end
+
+  def person_has_contact_with_insurance?
+    @matched_complete=false
+    unless self.simple_contacts.empty?
+      self.simple_contacts.each do |sc|
+        unless sc.simple_contact_insurances.empty?
+          sc.simple_contact_insurances.each do |sci|
+            if sci.is_primary==true
+              @matched_complete=true 
+            end
+          end
+        end
+      end
+      # @progress_number = @matched_complete==true ? @progress_number + 10 : @progress_number
+    end   
+    @matched_complete 
+  end
+
+  def person_contacts_have_phones?
+    @required_phones_per_contact=2
+    @checked_count=0
+    @valid_count=0
+    unless self.simple_contacts.empty?
+      self.simple_contacts.each do |sc|
+        @valid_count_for_contact=0
+          @found_phones=false
+          # @found_phone_value=false
+          @checked_count=@checked_count+1
+          @found_phones = sc.simple_contact_phones.empty? ? false : true
+          if @found_phones
+            #we have phone so now we need to see if one has a value
+            sc.simple_contact_phones.each do |sce|
+              unless sce.scphonenumber.blank?
+                @valid_count_for_contact=@valid_count_for_contact+1 
+              end
+            end
+            @valid_count = @valid_count_for_contact>=2 ? @valid_count + 1 : @valid_count
+          end
+      end
+      # @progress_number = @checked_count==@valid_count ? @progress_number + 10 : @progress_number
+    end   
+    (@checked_count==@valid_count) && (@checked_count>0)    
+  end 
+  
+  def apply_requirement_progress
+    self.pct_complete = self.requirement_progress
+  end
+  
+  def requirement_progress
+    puts "****************** progress for #{self.fullname} ********************"
+    @progress_number=0
+    #this method is used to make sure all of the necessary requirements for a person are met before reservations take place. 
+    #It probably should keep invoices from being paid for if the information is incorrect.
+    # 10% basic name/gender/birthday info
+      @progress_number = person_basics_complete? ? @progress_number + 10 : @progress_number
+    # 10% one valid address
+    @progress_number = person_has_valid_address? ? @progress_number + 10 : @progress_number     
+    # 10% at least one person organization
+    @progress_number = person_has_organization? ? @progress_number + 10 : @progress_number    
+    # 10% at least one person email
+    @progress_number = person_has_email? ? @progress_number + 10 : @progress_number
+    # 10% at least one parent/guardian contact
+    @progress_number = person_has_parent? ? @progress_number + 10 : @progress_number
+    # 10% at least one emergency contact (in case parent can't be reached)
+    @progress_number = person_has_emergency_contact? ? @progress_number + 10 : @progress_number
+    # 10% at least one contact must have insurance information, this is the emergency room contact
+    @progress_number = person_has_contact_with_insurance? ? @progress_number + 10 : @progress_number
+    # 10% at least one email for each parent/guardian/emergency contact
+    @progress_number = person_important_contacts_have_email? ? @progress_number + 10 : @progress_number
+    # 10% at least 2 phone numbers on every contact
+    @progress_number = person_contacts_have_phones? ? @progress_number + 10 : @progress_number
     # 10% at least one pickup person
-    @progress_number = @progress_number + 10
+    @progress_number = person_has_pickup? ? @progress_number + 10 : @progress_number
+    
     puts"#{@progress_number}"
     @progress_number
   end
+################## END PROGRESS TRACKING ###########################
 end
