@@ -21,7 +21,7 @@
 		<% @stub_id = 0 %>
 		<% @reservation_carts.each do |reservation_cart| %>
 			<% @stub_id = reservation_cart.id %>
-			<% if reservation_cart.status=="new" %>
+			<% if (reservation_cart.status=="new") || (current_user.role?=='admin') %>
 				<% @total_amount = @total_amount + reservation_cart.reservation.event.price %>
 				<% @total_discount = @total_discount + reservation_cart.reservation.all_discounts %>			
 			  <tr>

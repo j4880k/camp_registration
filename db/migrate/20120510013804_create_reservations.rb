@@ -8,7 +8,7 @@ class CreateReservations < ActiveRecord::Migration
       t.text :notes
       t.float :discount
       t.float :amountpaid
-
+      
       t.timestamps
     end
   end
