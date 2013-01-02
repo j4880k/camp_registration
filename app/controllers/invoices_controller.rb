@@ -75,7 +75,9 @@ class InvoicesController < ApplicationController
   # GET /invoices.json
   def index
     @invoices = Invoice.where( :user_id => current_user.id).all
-
+    if current_user.role? :admin 
+      @invoices = Invoice.all
+    end
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @invoices }

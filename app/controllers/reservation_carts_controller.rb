@@ -60,6 +60,9 @@ class ReservationCartsController < ApplicationController
   # GET /reservation_carts.json
   def index
     @reservation_carts = ReservationCart.joins(:reservation => {:person => :user}).where(:users => {:id => current_user.id}, :status=>'new')
+    if current_user.role? :admin 
+      @reservation_carts = ReservationCart.all
+    end
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @reservation_carts }
