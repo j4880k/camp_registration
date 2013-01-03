@@ -44,6 +44,7 @@ class Ability
         end
         can :apply_coupon_code, Invoice
         can :cancel_invoice, Invoice
+        can :submit_transaction_to_firstdata, Invoice
         
       end
     #

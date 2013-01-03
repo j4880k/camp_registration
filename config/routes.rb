@@ -1,4 +1,6 @@
 RegistrationManager::Application.routes.draw do
+  resources :payment_notifications
+
   devise_for :users
   resources :resources
   resources :addresses
@@ -27,6 +29,7 @@ RegistrationManager::Application.routes.draw do
   resource :invoice do
     post 'apply_coupon_code'
     post 'cancel_invoice'
+    post 'submit_transaction_to_firstdata'
   end
   # get 'reservation_carts/proceed_to_checkout'
    

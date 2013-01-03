@@ -40,6 +40,7 @@ gem 'capistrano' , :group => :development
 
 # To use debugger
 # gem 'ruby-debug'
+gem "nifty-generators", :group => :development
 
 group :test, :development do
 	gem 'capybara'
@@ -54,3 +55,5 @@ end
 
 gem 'devise', '~> 1.4.3'
 gem 'cancan'
+
+gem "mocha", :group => :test

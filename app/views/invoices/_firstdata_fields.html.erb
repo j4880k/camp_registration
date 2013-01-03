@@ -1,0 +1,21 @@
+<form method="post" action="<%= FD_URL %>" name="os_form" id="os_form">
+
+	<% @fd_params = {"storename"=> "#{FD_STORENAME}",
+	"mode"=>"payonly",
+	"txntype"=>"sale",
+	"timezone"=>"EST",
+	"chargetotal"=>"#{@total_due}",
+	"subtotal"=>"#{@total_due}",
+	"responseURL"=>"#{url_for(:controller => :payment_notifications, :only_path => false)}",
+	"oid"=>"#{@invoice.id}",
+	"email"=>"#{current_user.email}"}%>
+	<% @fd_params.each do |fld, val| %>
+		<%= hidden_field_tag  "#{fld}", "#{val}" %>
+	<% end %>
+	<div class="action">
+		<% if (@invoice.status=='new') %>
+		 <% link_to "Pay this Invoice", {:controller=>"invoices", :id=>@invoice.id, :action=>"submit_transaction_to_firstdata"}, :method=>"post" %>
+		<%= submit_tag "Pay this Invoice" %>
+		<% end %>
+	</div>	
+</form>

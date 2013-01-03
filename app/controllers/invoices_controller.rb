@@ -1,5 +1,44 @@
 class InvoicesController < ApplicationController
   load_and_authorize_resource
+ 
+  def submit_transaction_to_firstdata
+    # require "open-uri"
+    # require "net/https"
+    # 
+    # params = {
+    #   "storename" => "#{FD_STORENAME}",
+    #   "mode" => "payonly",
+    #   "txntype" => "sale",
+    #   "chargetotal" => "199",
+    #   "oid" => @invoice.reference_code,
+    #   "responseURL" => "#{url_for(:controller => :payment_notifications, :only_path => false)}"
+    #   
+    # }
+    # puts "using params #{params.inspect}"
+    # # x = Net::HTTP.post_form(URI.parse('https://www.staging.linkpointcentral.com/lpc/servlet/lppay'), params)
+    # url = URI.parse('https://www.staging.linkpointcentral.com/lpc/servlet/lppay')
+    # req = Net::HTTP::Post.new(url.path)
+    # req.form_data = params
+    # con = Net::HTTP.new(url.host)
+    # con.use_ssl = true
+    # res = con.start{|http| http.request(req)}
+    # puts res.body
+    # x = Net::HTTP.new(URI.parse('https://www.staging.linkpointcentral.com/lpc/servlet/lppay'), params)
+    # puts x.body
+    # x.submit
+    
+    # https://www.staging.linkpointcentral.com/lpc/servlet/lpcpay?storename=1909009697&mode=payonly&txntype=sale&chargetotal=199&oid=AMA-2345ggggisnt
+    # require 'net/https'
+    # require 'open-uri'
+
+    # url = URI.parse('https://MY_URL')
+    # req = Net::HTTP::Post.new(url.path)
+    # req.form_data = data
+    # req.basic_auth url.user, url.password if url.user
+    # con = Net::HTTP.new(url.host, url.port)
+    # con.use_ssl = true
+    # con.start {|http| http.request(req)}    
+  end 
   
   def cancel_invoice
     if @invoice.status=='new'
