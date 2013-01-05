@@ -59,8 +59,8 @@
 	"mode"=>"payonly",
 	"txntype"=>"sale",
 	"timezone"=>"EST",
-	"txndatetime" => "#{@tdt}", #Date and time of the transaction in YYYY:MM:DD- hh:mm:ss format.
-	"hash" => "#{@hash}", #The SHA2 hash of the following values: storename + txndatetime + chargetotal + Shared Secret. 
+	"txndatetime" => "#{@tdt}",
+	"hash" => "#{@hash}", 
 	"chargetotal"=> "#{@tdround}",
 	"subtotal"=> "#{@tdround}",
 	"responseURL"=>"#{url_for(:controller => :payment_notifications, :only_path => false)}",
