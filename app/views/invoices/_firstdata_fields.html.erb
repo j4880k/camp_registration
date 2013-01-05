@@ -1,14 +1,73 @@
 <form method="post" action="<%= FD_URL %>" name="os_form" id="os_form">
+	<%
+	require 'date'
+	require 'digest/sha2'
+	def for_digit( dig, rad )
+		# Returns the char that represents a specified digit in a specific radix.
+		# 	If the value of radix is not a valid radix, 
+		# 	or the value of digit is not a valid digit in the specified radix, 
+		# 	the null character is returned.
+		chr_dig=""
+		#ruby to_s supports 2 - 36 for a radix
+		validr = (rad >= 2) && (rad <= 36) ? true : false
 
+	  if validr
+	    chr_dig = dig.to_s(rad)
+	  end
+		chr_dig
+	end
+	def to_bytearray( the_string )
+		ba = the_string.bytes.to_a
+		ba
+	end
+	def create_hash( chg )
+		charge = chg.to_s
+		#rails has the config for server timezone, so pick your poison:
+		#server timezone:
+		# time_zone = Time.zone.now.zone #server timezone
+		#local timezone:
+		# time_zone = Time.now.zone
+		#or... hardcode it
+		time_zone = "EST"
+		string_to_hash = "#{FD_STORENAME}#{@tdt}#{chg}#{FD_SHAREDSECRET}"
+
+		hashed = calculate_hash_from_hex( string_to_hash )
+		hashed
+	end
+	def calculate_hash_from_hex( buffer )
+		message_digest = Digest::SHA256.new
+		sb = []
+		bytes = to_bytearray(buffer)
+		bytes.each do |bit|
+	    sb << for_digit( ((bit&240)>>4), 16 )
+	    sb << for_digit( (bit&15), 16)
+		end
+
+	  sb.each do |sbi|
+	      message_digest << sbi.to_s 
+	  end
+	  message_digest.hexdigest
+	end				
+	%>
+	<%
+	@tdt = "#{DateTime.now.strftime('%Y:%m:%d-%H:%M:%S')}"
+	@tdround = "#{(sprintf('%.2f', @total_due))}"
+	@pieces = "#{FD_STORENAME}#{@tdt}#{@tdround}#{FD_SHAREDSECRET}"
+	@hash = create_hash(@tdround)
+	 %>
 	<% @fd_params = {"storename"=> "#{FD_STORENAME}",
 	"mode"=>"payonly",
 	"txntype"=>"sale",
 	"timezone"=>"EST",
-	"chargetotal"=>"#{@total_due}",
-	"subtotal"=>"#{@total_due}",
+	"txndatetime" => "#{@tdt}", #Date and time of the transaction in YYYY:MM:DD- hh:mm:ss format.
+	"hash" => "#{@hash}", #The SHA2 hash of the following values: storename + txndatetime + chargetotal + Shared Secret. 
+	"chargetotal"=> "#{@tdround}",
+	"subtotal"=> "#{@tdround}",
 	"responseURL"=>"#{url_for(:controller => :payment_notifications, :only_path => false)}",
 	"oid"=>"#{@invoice.id}",
-	"email"=>"#{current_user.email}"}%>
+	"trxOrigin" => "ECI",
+	"email"=>"#{current_user.email}",
+	"shared_secret" => "#{FD_SHAREDSECRET}"}%>
 	<% @fd_params.each do |fld, val| %>
 		<%= hidden_field_tag  "#{fld}", "#{val}" %>
 	<% end %>
