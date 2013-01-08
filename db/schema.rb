@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130102215834) do
+ActiveRecord::Schema.define(:version => 20130108210843) do
 
   create_table "addresses", :force => true do |t|
     t.string   "Street1"
@@ -129,6 +129,7 @@ ActiveRecord::Schema.define(:version => 20130102215834) do
     t.string   "transaction_id"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+    t.text     "env_headers"
   end
 
   create_table "people", :force => true do |t|
@@ -324,6 +325,20 @@ ActiveRecord::Schema.define(:version => 20130102215834) do
     t.text     "notes"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+  end
+
+  create_table "system_messages", :force => true do |t|
+    t.text     "message"
+    t.string   "reference_class_type"
+    t.integer  "reference_id"
+    t.string   "calling_method"
+    t.text     "exception_audit"
+    t.string   "priority"
+    t.string   "status"
+    t.integer  "last_modified_by"
+    t.datetime "last_modified_dt"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
   end
 
   create_table "user_event_assignments", :force => true do |t|

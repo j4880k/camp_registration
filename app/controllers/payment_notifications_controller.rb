@@ -11,33 +11,36 @@ class PaymentNotificationsController < ApplicationController
     puts params.inspect
     redirect_to "/reservation_carts/"
   end
-  
-  # invoice_fields:
-  # id
-  # user_id
-  # reference_code
-  # items_hash
-  # payment_type
-  # payment_date
-  # is_confirmed
-  # broker_stream
-  # status
-  # created_at
-  # updated_at
-  # user_coupon_code
-  #nifty_scaffold payment_notification params:text reference_code:string invoice_id:integer payment_status:string transaction_id:string create  
-  #curl -d "txn_id=3XC103945N720211C&invoice=923204115&payment_status=Completed" http://localhost:3000/payment_notifications
+
   def create
-    PaymentNotification.create!(:params => params, :reference_code => params[:invoice], :payment_status => params[:payment_status], :transaction_id => params[:txn_id])
-      render :nothing => true    
+    trans_id_parts = "#{params[:approval_code].split(':')[1]}-#{params[:tdate]}"
+    is_approved = trans_id_parts[0]=="Y" ? true : false
+    headers=[]
+    for header in request.env.select { |key, val| key.match("^HTTP.*")}
+      headers << "#{header[0]}  #{header[1]}"
+    end
+    for header in request.env.select { |key, val| key.match("^REMOTE.*")}
+      headers << "#{header[0]}  #{header[1]}"
+    end
+    for header in request.env.select { |key, val| key.match("^REQUEST.*")}
+      headers << "#{header[0]}  #{header[1]}"
+    end
+    for header in request.env.select { |key, val| key.match("^SERVER.*")}
+      headers << "#{header[0]}  #{header[1]}"
+    end
+    header_string = headers.join("<!!@!!>")
+    PaymentNotification.create!(:params => params, :reference_code => params[:oid], :payment_status => params[:status], :transaction_id => trans_id_parts, :env_headers => header_string )
     
-    # @payment_notification = PaymentNotification.new(params[:payment_notification])
-    # if @payment_notification.save
-    #   redirect_to root_url, :notice => "Successfully created payment notification."
-    # else
-    #   render :action => 'new'
-    # end
-    puts params.inspect
-    # redirect_to "/reservation_carts/"
+    if is_approved
+      unless current_user.nil? 
+        firstdata_success end
+    else
+       unless current_user.nil? 
+         firstdata_failure end
+    end
+      # render :nothing => true  
+    if current_user.nil? 
+        redirect_to "/" end      
+
   end
 end

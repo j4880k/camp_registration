@@ -1,0 +1,44 @@
+<% title "System Message" %>
+
+<p>
+  <strong>Message:</strong>
+  <%= @system_message.message %>
+</p>
+<p>
+  <strong>Reference Class Type:</strong>
+  <%= @system_message.reference_class_type %>
+</p>
+<p>
+  <strong>Reference:</strong>
+  <%= @system_message.reference_id %>
+</p>
+<p>
+  <strong>Calling Method:</strong>
+  <%= @system_message.calling_method %>
+</p>
+<p>
+  <strong>Exception Audit:</strong>
+  <%= @system_message.exception_audit %>
+</p>
+<p>
+  <strong>Priority:</strong>
+  <%= @system_message.priority %>
+</p>
+<p>
+  <strong>Status:</strong>
+  <%= @system_message.status %>
+</p>
+<p>
+  <strong>Last Modified By:</strong>
+  <%= @system_message.last_modified_by %>
+</p>
+<p>
+  <strong>Last Modified Dt:</strong>
+  <%= @system_message.last_modified_dt %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_system_message_path(@system_message) %> |
+  <%= link_to "Destroy", @system_message, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", system_messages_path %>
+</p>

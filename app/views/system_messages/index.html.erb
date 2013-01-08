@@ -1,0 +1,33 @@
+<% title "System Messages" %>
+
+<table>
+  <tr>
+    <th>Message</th>
+    <th>Reference Class Type</th>
+    <th>Reference</th>
+    <th>Calling Method</th>
+    <th>Exception Audit</th>
+    <th>Priority</th>
+    <th>Status</th>
+    <th>Last Modified By</th>
+    <th>Last Modified Dt</th>
+  </tr>
+  <% for system_message in @system_messages %>
+    <tr>
+      <td><%= system_message.message %></td>
+      <td><%= system_message.reference_class_type %></td>
+      <td><%= system_message.reference_id %></td>
+      <td><%= system_message.calling_method %></td>
+      <td><%= system_message.exception_audit %></td>
+      <td><%= system_message.priority %></td>
+      <td><%= system_message.status %></td>
+      <td><%= system_message.last_modified_by %></td>
+      <td><%= system_message.last_modified_dt %></td>
+      <td><%= link_to "Show", system_message %></td>
+      <td><%= link_to "Edit", edit_system_message_path(system_message) %></td>
+      <td><%= link_to "Destroy", system_message, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New System Message", new_system_message_path %></p>

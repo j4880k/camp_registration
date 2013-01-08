@@ -1,4 +1,6 @@
 RegistrationManager::Application.routes.draw do
+  resources :system_messages
+
   resources :payment_notifications
 
   devise_for :users

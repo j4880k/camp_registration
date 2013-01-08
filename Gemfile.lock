@@ -204,7 +204,7 @@ DEPENDENCIES
   mocha
   nifty-generators
   rails (= 3.2.1)
-  rspec-rails (~> 2.5)
+  rspec-rails (~> 2.9)
   sass-rails (~> 3.2.3)
   sequel (= 3.42.0)
   sqlite3

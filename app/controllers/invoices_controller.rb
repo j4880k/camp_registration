@@ -89,22 +89,6 @@ class InvoicesController < ApplicationController
           notice_text += " The coupon code you used is not valid."
         end
         
-        #Is the coupon for this date?
-        # if @coupon.is_valid_today?
-        #   notice_text += " The coupon's effective date range makes it valid today."
-        # else
-        #   notice_text += " The coupon is not currently active."
-        # end 
-        
-        #Is the coupon restricted in uses?
-        # if @coupon.has_remaining?
-        #    notice_text += " There are coupons still available"
-        #  else
-        #    notice_text += " There are no more coupons left for this code."
-        #  end
-        
-        #Coupon type appled to amount due
-        
       end
       redirect_to @invoice, notice: notice_text
     end

@@ -12,20 +12,6 @@ class PeopleController < ApplicationController
       format.json { render :json => @people }
     end
   end
-
-  # GET /people
-  # GET /people.json  
-  # def get_people
-  #   @people = Person.select( :current_user.people #start out minimal context
-  #   if current_user.admin 
-  #     @people = Person.all
-  #   end
-  #   # if current_user.role? director
-  #   respond_to do |format|
-  #     format.html # index.html.erb
-  #     format.json { render :json => @people }
-  #   end    
-  # end
   
   # GET /people/1
   # GET /people/1.json

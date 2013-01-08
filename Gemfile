@@ -43,14 +43,16 @@ gem 'capistrano' , :group => :development
 gem "nifty-generators", :group => :development
 
 group :test, :development do
-	gem 'capybara'
+  gem 'rspec-rails', '~> 2.9'
+	# gem 'capybara'
 	gem 'database_cleaner'
 	gem 'email_spec'
 end
 
 group :test do
-	gem 'cucumber-rails'#, '1.0.6'
-	gem 'rspec-rails', '~> 2.5'
+  gem 'capybara'
+	gem 'cucumber-rails'#, '1.0.6', :require false
+  # gem 'rspec-rails', '~> 2.5'
 end
 
 gem 'devise', '~> 1.4.3'

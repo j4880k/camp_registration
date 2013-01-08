@@ -1,0 +1,21 @@
+one:
+  message: MyText
+  reference_class_type: MyString
+  reference_id: 1
+  calling_method: MyString
+  exception_audit: MyText
+  priority: MyString
+  status: MyString
+  last_modified_by: 1
+  last_modified_dt: 2013-01-06 14:37:52
+
+two:
+  message: MyText
+  reference_class_type: MyString
+  reference_id: 1
+  calling_method: MyString
+  exception_audit: MyText
+  priority: MyString
+  status: MyString
+  last_modified_by: 1
+  last_modified_dt: 2013-01-06 14:37:52
