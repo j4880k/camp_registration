@@ -94,17 +94,20 @@
 													<% if ((can? :read, ReservationCart) or (can? :create, ReservationCart) or (can? :update, ReservationCart)) and (current_user.role != "admin") %>		
 														<li><%= link_to "Your Cart", reservation_carts_path %></li>
 													<% end %>
-
-													<% if (can? :read, Event) or (can? :create, Event) or (can? :update, Event) %>		
-														<li><%= link_to "View Events", events_path %></li>
-													<% end %>
+													<% if current_user.role? :admin %>
+														<li><a href="#">Admin Stuff</a> <ul class="menu">
+														<% if (can? :read, Event) or (can? :create, Event) or (can? :update, Event) %>		
+															<li><%= link_to "View Events", events_path %></li>
+														<% end %>
 													
-													<% if (can? :read, Coupon) or (can? :create, Coupon) or (can? :update, Coupon) %>		
-														<li><%= link_to "View Coupons", coupons_path %></li>
-													<% end %>
+														<% if (can? :read, Coupon) or (can? :create, Coupon) or (can? :update, Coupon) %>		
+															<li><%= link_to "View Coupons", coupons_path %></li>
+														<% end %>
 
-													<% if (can? :read, Resource) or (can? :create, Resource) or (can? :update, Resource) %>		
-														<li><%= link_to "View Resources", resources_path %></li>
+														<% if (can? :read, Resource) or (can? :create, Resource) or (can? :update, Resource) %>		
+															<li><%= link_to "View Resources", resources_path %></li>
+														<% end %>
+														</ul></li>
 													<% end %>
 													<!-- li -->
 														<!-- a href="#">You are at the Event Registration and Reservation site for ::The Camp::</a -->

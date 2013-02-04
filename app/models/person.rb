@@ -1,8 +1,8 @@
 class Person < ActiveRecord::Base
-  validates :firstname,  :presence => true
-  validates :lastname,  :presence => true
-  validates :birthdate,  :presence => true
-  validates :gender,  :presence => true
+  # validates :firstname,  :presence => true
+  # validates :lastname,  :presence => true
+  # validates :birthdate,  :presence => true
+  # validates :gender,  :presence => true
   has_many :person_addresses
   has_many :addresses, :through => :person_addresses
   has_many :person_emails
@@ -197,7 +197,8 @@ class Person < ActiveRecord::Base
     end   
     (@checked_count==@valid_count) && (@checked_count>0)    
   end 
-  
+######################### End of progress builder #####################################
+
   def apply_requirement_progress
     self.pct_complete = self.requirement_progress
   end

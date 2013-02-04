@@ -284,3 +284,18 @@ table.contentpaneopen {width:98%; }
 	font-weight: bold;
 	color: red;
 }
+
+// override the jquery progressbar widget
+.ui-progressbar { 
+    height:20px;
+    // width:300px;
+    margin:0 auto;
+}   
+
+.ui-progressbar span { 
+    width:940px;
+    position:absolute;
+    text-align:center;
+    font-weight:bold;
+	margin: 0 auto;
+}

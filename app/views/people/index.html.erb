@@ -10,51 +10,54 @@
 			<h2> You haven't created any registrants yet</h2>
 
 		<% else %>		
-			<table>
-			  <tr>
-			    <th>Firstname</th>
-			    <th>Lastname</th>
-			    <th>Middleinit</th>
-			    <th>Birthdate</th>
-			    <!-- <th>Age at camp</th> -->
-			    <th>Nickname</th>
-			    <th>Gender</th>
-			    <th>Date created</th>
-				<th>% complete</th>
-			    <th></th>
-			    <th></th>
-			    <th></th>
-			  </tr>
-
-			<% @people.each do |person| %>
-			  <tr>
-			    <td><%= person.firstname %></td>
-			    <td><%= person.lastname %></td>
-			    <td><%= person.middleinit %></td>
-			    <td><%= person.birthdate %></td>
-			    <!-- <td></td> -->
-			    <td><%= person.nickname %></td>
-			    <td><%= person.gender %></td>
-			    <td><%= person.created_at.in_time_zone("Eastern Time (US & Canada)")%></td>
-				<% @req_progress = person.requirement_progress %>
-				<% if @req_progress < 100 %>
-					<td class="warn_cell">
-				<% else %>
-					<td>
-				<% end %>&nbsp;&nbsp;<%= @req_progress %>%</td>
-			    <td><%= link_to 'Show', person %></td>
-			    <td>
-				<% if can? :update, person %>
-					<%= link_to 'Edit', edit_person_path(person) %>
-				<% end %>
-				</td>
-			    <td>
-					<% if can? :destroy, person %>		
-						<%= link_to 'Destroy', person, :confirm => 'Are you sure?', :method => :delete %>
+			<table id="people" class="display">
+				<thead>
+					<tr>
+						<th>Firstname</th>
+						<th>Lastname</th>
+						<th>Middleinit</th>
+						<th>Birthdate</th>
+						<!-- <th>Age at camp</th> -->
+						<th>Nickname</th>
+						<th>Gender</th>
+						<th>Date created</th>
+						<th>% complete</th>
+						<th></th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<% @people.each do |person| %>
+					  <tr>
+					    <td><%= person.firstname %></td>
+					    <td><%= person.lastname %></td>
+					    <td><%= person.middleinit %></td>
+					    <td><%= person.birthdate %></td>
+					    <!-- <td></td> -->
+					    <td><%= person.nickname %></td>
+					    <td><%= person.gender %></td>
+					    <td><%= person.created_at.in_time_zone("Eastern Time (US & Canada)")%></td>
+						<% @req_progress = person.requirement_progress %>
+						<% if @req_progress < 100 %>
+							<td class="warn_cell">
+						<% else %>
+							<td>
+						<% end %>&nbsp;&nbsp;<%= @req_progress %>%</td>
+					    <td><%= link_to 'Show', person %></td>
+					    <td>
+						<% if can? :update, person %>
+							<%= link_to 'Edit', edit_person_path(person) %>
+						<% end %>
+						</td>
+					    <td>
+							<% if can? :destroy, person %>		
+								<%= link_to 'Destroy', person, :confirm => 'Are you sure?', :method => :delete %>
+							<% end %>
+						</td>
+					  </tr>
 					<% end %>
-				</td>
-			  </tr>
-			<% end %>
+				</tbody>
 			</table>
 		<% end %>
 		<br />

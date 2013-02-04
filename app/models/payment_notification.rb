@@ -60,9 +60,10 @@ class PaymentNotification < ActiveRecord::Base
           :priority => "WARN"
           ).save
         else
-          self.invoice_id = invoice_object.id
-          self.save
+         
           if self.payment_status=="APPROVED" 
+            self.invoice_id = invoice_object.id
+            self.save
             invoice_object.reservation_carts.each do |cart|
               cart.status='paid'
               cart.reservation.locked = true

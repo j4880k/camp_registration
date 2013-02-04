@@ -44,7 +44,7 @@
 	"hash" => "#{@hash}", 
 	"chargetotal"=> "#{@tdround}",
 	"subtotal"=> "#{@tdround}",
-	"responseURL"=> "http://www.inagehi.harkerscorner.net/payment_notifications/", # "#{url_for(:controller => :payment_notifications, :only_path => false)}",
+	"responseURL"=> "http://inagehi.harkerscorner.net/payment_notifications/", # "#{url_for(:controller => :payment_notifications, :only_path => false)}",
 	"oid"=>"#{@invoice.reference_code}",
 	"trxOrigin" => "ECI",
 	"email"=>"#{current_user.email}",
@@ -52,8 +52,8 @@
 	"shared_secret" => "#{FD_SHAREDSECRET}",
 	"reference" => "Camp Registration",
 	"comments" => invoice_items,
-	"responseSuccessURL" => "http://www.inagehi.harkerscorner.net/payment_notifications",  # "#{root_url}",
-	"responseFailURL" => "http://www.inagehi.harkerscorner.net/payment_notifications"
+	"responseSuccessURL" => "http://inagehi.harkerscorner.net/payment_notifications",  # "#{root_url}",
+	"responseFailURL" => "http://inagehi.harkerscorner.net/payment_notifications"
 	} # "#{root_url}",
 	%>
 	<% @fd_params.each do |fld, val| %>

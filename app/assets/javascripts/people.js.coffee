@@ -12,3 +12,9 @@ jQuery ->
 		regexp = new RegExp($(this).data('id'), 'g')
 		$(this).before($(this).data('fields').replace(regexp, time))
 		event.preventDefault()	
+		
+	$('#people').dataTable
+		bFilter: false
+		bPaginate: false
+		bJQueryUI: true
+		

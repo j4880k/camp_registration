@@ -13,7 +13,11 @@ class PaymentNotificationsController < ApplicationController
   end
 
   def create
-    trans_id_parts = "#{params[:approval_code].split(':')[1]}-#{params[:tdate]}"
+    
+    trans_id_parts = params[:approval_code].nil? ? ["N","#{params[:status]}-NO-CODE"] : params[:approval_code].split(':')
+    
+    trans_id_code = "#{trans_id_parts[1]}-#{params[:tdate]}"
+    
     is_approved = trans_id_parts[0]=="Y" ? true : false
     headers=[]
     for header in request.env.select { |key, val| key.match("^HTTP.*")}
@@ -29,7 +33,7 @@ class PaymentNotificationsController < ApplicationController
       headers << "#{header[0]}  #{header[1]}"
     end
     header_string = headers.join("<!!@!!>")
-    PaymentNotification.create!(:params => params, :reference_code => params[:oid], :payment_status => params[:status], :transaction_id => trans_id_parts, :env_headers => header_string )
+    PaymentNotification.create!(:params => params, :reference_code => params[:oid], :payment_status => params[:status], :transaction_id => trans_id_code, :env_headers => header_string )
     
     if is_approved
       unless current_user.nil? 

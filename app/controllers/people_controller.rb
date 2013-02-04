@@ -29,6 +29,7 @@ class PeopleController < ApplicationController
   # GET /people/new.json
   def new
     # @person = Person.new
+    # this might come in handy -> has_one :account_address, :class_name => 'Address', :conditions => ['address_type=?', 'Account']
     1.times do
       address = @person.addresses.build
     end
