@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 <br/>
-<h1>Checkout</h1>
+<h1><% if @invoice.reservation_carts.first.status="paid" %>Paid Invoice<% else %>Check Out<% end %></h1>
 <table>
 	
 	<table>

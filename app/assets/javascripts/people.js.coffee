@@ -13,8 +13,14 @@ jQuery ->
 		$(this).before($(this).data('fields').replace(regexp, time))
 		event.preventDefault()	
 		
-	$('#people').dataTable
+	$('#people_index').dataTable
 		bFilter: false
 		bPaginate: false
 		bJQueryUI: true
+		aoColumnDefs: [
+		  {
+		     bSortable: false,
+		     aTargets: [ -1,-2,-3]
+		  }
+		]
 		
