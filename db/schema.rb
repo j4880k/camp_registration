@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130108210843) do
+ActiveRecord::Schema.define(:version => 20130204141445) do
 
   create_table "addresses", :force => true do |t|
     t.string   "Street1"
@@ -237,11 +237,11 @@ ActiveRecord::Schema.define(:version => 20130108210843) do
   end
 
   create_table "phones", :force => true do |t|
-    t.integer  "phoneNumber"
+    t.integer  "phoneNumber", :limit => 8
     t.string   "phoneType"
     t.string   "notes"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
   end
 
   create_table "reservation_carts", :force => true do |t|
@@ -310,11 +310,11 @@ ActiveRecord::Schema.define(:version => 20130108210843) do
   create_table "simple_contact_phones", :force => true do |t|
     t.integer  "simple_contact_id"
     t.integer  "phone_id"
-    t.integer  "scphonenumber"
+    t.integer  "scphonenumber",     :limit => 8
     t.string   "scphonetype"
     t.string   "notes"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
   end
 
   create_table "simple_contacts", :force => true do |t|

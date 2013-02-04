@@ -6,9 +6,10 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+gem 'pg'
 gem 'sequel', '3.42.0'
 gem 'json' , '1.6.6'
+gem 'yaml_db'
 
 # Gems used only for assets and not required
 # in production environments by default.
