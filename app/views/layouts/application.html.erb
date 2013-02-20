@@ -107,6 +107,9 @@
 														<% if (can? :read, Resource) or (can? :create, Resource) or (can? :update, Resource) %>		
 															<li><%= link_to "View Resources", resources_path %></li>
 														<% end %>
+														<% if (can? :read, PaymentNotification) or (can? :create, PaymentNotification) or (can? :update, PaymentNotification) %>		
+															<li><%= link_to "View Payment Notifications", payment_notifications_path %></li>
+														<% end %>
 														</ul></li>
 													<% end %>
 													<!-- li -->

@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   #   http://railscasts.com/episodes/189-embedded-association
   #   admin = super user, see all, update all, create all, delete all
   #   registrar = see all, update all, create all
-  #   director = see their own context(events) and can link reservations to resources, add any notes
+  #   event_manager (director) = see their own context(events) and can link reservations to resources, add any notes
   #   priviledged = sees all records for an assigned event and can add notes
   
   ROLES = %w[admin registrar event_manager priviledged]

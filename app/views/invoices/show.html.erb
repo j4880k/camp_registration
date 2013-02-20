@@ -1,37 +1,58 @@
 <p id="notice"><%= notice %></p>
 <br/>
-<h1><% if @invoice.reservation_carts.first.status="paid" %>Paid Invoice<% else %>Check Out<% end %></h1>
-<table>
-	
+<h1><% if @invoice.reservation_carts.first.status=="paid" %>Paid Invoice<% else %>Check Out<% end %></h1>
 	<table>
-	  <tr>
-	    <th>Reservation Event</th>
+		<tr>
+		<th>Reservation Event</th>
 		<th>Registrant</th>
-	    <th>Status</th>
-	    <th>Reference code</th>
-	    <th>Event Price</th>
-	  </tr>
+		<th>Status</th>
+		<th>Reference code</th>
+		<th>Event Price</th>
+		</tr>
 		<% @total_amount = 0 %>
 		<% @total_discount = @invoice.discount_total %>
 		<% @stub_id = 0 %>
-	<% ReservationCart.where( :invoice_id => @invoice.id ).each do |rescart| %>
+		<% ReservationCart.where( :invoice_id => @invoice.id ).each do |rescart| %>
 		<% @total_amount = @total_amount + rescart.reservation.event.price %>
-	  <tr>
-	    <td><%= link_to rescart.reservation.event.eventname, rescart.reservation %></td>
-		<td><%= link_to rescart.reservation.person.fullname, rescart.reservation.person  %> </td>
-	    <td><%= rescart.status %></td>
-	    <td><%= rescart.reference_code %></td>
-	    <td><%= number_to_currency(rescart.reservation.event.price) %></td>
-	  </tr>
-	  <tr>
-	  </tr>
+		<tr>
+			<td><%= link_to rescart.reservation.event.eventname, rescart.reservation %></td>
+			<td><%= link_to rescart.reservation.person.fullname, rescart.reservation.person  %> </td>
+			<td><%= rescart.status %></td>
+			<td><%= rescart.reference_code %></td>
+			<td><%= number_to_currency(rescart.reservation.event.price) %></td>
+		</tr>
+		<tr>
+		</tr>
 	<% end %>
 	<% @total_due = @total_amount - @total_discount %>
-	<tr><td colspan="4" align="right"><b>Discounts applied</b></td><td> <%= number_to_currency(@total_discount) %> </td></tr>
-	<tr><td colspan="4" align="right"><b>Total Due</b></td><td><%=number_to_currency(@total_due)  %></td></tr>
+		<tr><td colspan="4" align="right"><b>Discounts applied</b></td><td> <%= number_to_currency(@total_discount) %> </td></tr>
+		<tr><td colspan="4" align="right"><b>Total Due</b></td><td><%=number_to_currency(@total_due)  %></td></tr>
 	</table>
 
 <br/><br/>
+	<% if @invoice.payment_notifications.count > 0 %>
+	<h2>Transaction History:</h2>
+	<table>
+		<th>Transaction ID</th>
+		<th>Status</th>
+		<th>Card Hint</th>
+		<th>Expire Info</th>
+		<th>Total Charged</th>
+		<th>Processed Date</th>
+		<th>Txn Notes</th>
+		<% @invoice.payment_notifications.each do |pn| %>
+			<tr>
+				<td><%= "#{pn.transaction_id}" %></td>
+				<td><%= "#{pn.params[:status]}" %></td>
+				<td><%= "#{pn.params[:cardnumber]}" %></td>
+				<td><%= "#{pn.params[:expmonth]}/#{pn.params[:expyear]}" %></td>
+				<td><%= "#{pn.params[:chargetotal]}"%></td>
+				<td><%= "#{pn.params[:txndate_processed]}"%></td>
+				<td><%= "#{pn.params[:comments]}"%></td>
+			</tr>
+		<% end %>
+	</table>
+	<% end %>
 <%= form_for(@invoice) do |f| %>
 <script>
     function coupon_url_patch() {

@@ -12,8 +12,6 @@
   <% end %>
 
 <table>
-
-	<table>
 	  <tr>
 	    <th>Reservation Event</th>
 		<th>Registrant</th>
@@ -52,39 +50,30 @@
 	<% end %>
 </div>
 
-  <!-- <div class="field">
-    <%= f.label :user_id %><br />
-    <%= f.number_field :user_id %>
-  </div>
-  <div class="field">
-    <%= f.label :reference_code %><br />
-    <%= f.text_field :reference_code %>
-  </div>
-  <div class="field">
-    <%= f.label :items_hash %><br />
-    <%= f.text_area :items_hash %>
-  </div>
-  <div class="field">
-    <%= f.label :payment_type %><br />
-    <%= f.text_field :payment_type %>
-  </div>
-  <div class="field">
-    <%= f.label :payment_date %><br />
-    <%= f.date_select :payment_date %>
-  </div>
-  <div class="field">
-    <%= f.label :is_confirmed %><br />
-    <%= f.check_box :is_confirmed %>
-  </div>
-  <div class="field">
-    <%= f.label :broker_stream %><br />
-    <%= f.text_area :broker_stream %>
-  </div>
-  <div class="field">
-    <%= f.label :status %><br />
-    <%= f.text_field :status %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div> -->
+<div>
+<% if @invoice.payment_notifications.count > 0 %>
+<h2>Transaction History:</h2>
+<table>
+	<th>Transaction ID</th>
+	<th>Status</th>
+	<th>Card Hint</th>
+	<th>Expire Info</th>
+	<th>Total Charged</th>
+	<th>Processed Date</th>
+	<th>Txn Notes</th>
+	<% @invoice.payment_notifications.each do |pn| %>
+		<tr>
+			<td><%= "#{pn.transaction_id}" %></td>
+			<td><%= "#{pn.params[:status]}" %></td>
+			<td><%= "#{pn.params[:cardnumber]}" %></td>
+			<td><%= "#{pn.params[:expmonth]}/#{pn.params[:expyear]}" %></td>
+			<td><%= "#{pn.params[:chargetotal]}"%></td>
+			<td><%= "#{pn.params[:txndate_processed]}"%></td>
+			<td><%= "#{pn.params[:comments]}"%></td>
+		</tr>
+	<% end %>
+</table>
+<% end %>
+</div>
+
 <% end %>

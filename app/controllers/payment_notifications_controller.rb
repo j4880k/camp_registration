@@ -12,6 +12,19 @@ class PaymentNotificationsController < ApplicationController
     redirect_to "/reservation_carts/"
   end
 
+  # GET /people
+  # GET /people.json
+  def index
+    @payment_notifications = []
+    if current_user.role? :admin 
+      @payment_notifications = PaymentNotification.all
+    end
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render :json => @payment_notifications }
+    end
+  end
+
   def create
     
     trans_id_parts = params[:approval_code].nil? ? ["N","#{params[:status]}-NO-CODE"] : params[:approval_code].split(':')
@@ -45,6 +58,7 @@ class PaymentNotificationsController < ApplicationController
       # render :nothing => true  
     if current_user.nil? 
         redirect_to "/" end      
-
   end
+  
+  
 end

@@ -45,7 +45,7 @@
 				    <!-- <td><%= reservation.notes %></td> -->
 				    <td><%= @age_at_event %></td>
 				    <td><%= @age_cell_contents %></td>
-					<td><%= reservation.amount_due %></td>
+					<td><%= number_to_currency(reservation.event.price) %></td>
 					<% if reservation.reservation_cart.try(:status) == 'new'%>
 						<td>Added to cart</td>
 					<% else %>

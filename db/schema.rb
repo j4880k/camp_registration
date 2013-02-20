@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130204141445) do
+ActiveRecord::Schema.define(:version => 20130219153421) do
 
   create_table "addresses", :force => true do |t|
     t.string   "Street1"
@@ -264,14 +264,14 @@ ActiveRecord::Schema.define(:version => 20130204141445) do
   create_table "reservations", :force => true do |t|
     t.integer  "person_id"
     t.integer  "event_id"
-    t.boolean  "is_deleted"
-    t.boolean  "is_staffing"
+    t.boolean  "is_deleted",     :default => false
+    t.boolean  "is_staffing",    :default => false
     t.text     "notes"
     t.float    "discount"
     t.float    "amountpaid"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-    t.boolean  "locked"
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+    t.boolean  "locked",         :default => false
     t.integer  "updated_by"
     t.string   "billing_status"
   end

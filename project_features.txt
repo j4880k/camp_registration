@@ -9,3 +9,20 @@ These don't all have tests written, but should
 	- create simple contact from account preferences
 * User Can Create Registration [Person/Registration association]
 * User Can 
+
+
+http://inagehi.harkerscorner.net
+Sign-in or Sign-up
+
+Theme = "The cross faxtor"
+
+Overflow trailer - 
+
+Directors need
+	* realtime info
+	* cabin assignment
+	* Discalimer
+	* nurse notes - new role in can: abilities???
+	
+
+	

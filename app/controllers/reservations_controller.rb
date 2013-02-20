@@ -2,10 +2,18 @@ class ReservationsController < ApplicationController
   load_and_authorize_resource
   
   def mark_as_removed
-    @reservation.is_deleted=true
-    @reservation.save
+    rem_msg = ""
+    @existing_instance = ReservationCart.find_by_reservation_id(params[:id])
+    if @existing_instance.nil?
+      @reservation.is_deleted=true
+      @reservation.save rem_msg = "Reservation #{@reservation.person.fullname} - #{@reservation.event.eventname} has been removed from the list."
+      
+    else
+        rem_msg = "Reservation #{@reservation.person.fullname} - #{@reservation.event.eventname} can not be removed"  
+    end
+
     # render json: cart
-    redirect_to '/reservations/'    
+    redirect_to '/reservations/', notice: rem_msg 
   end
   
   def add_to_cart
@@ -95,7 +103,9 @@ class ReservationsController < ApplicationController
   # POST /reservations.json
   def create
     # @reservation = Reservation.new(params[:reservation])
-    if @reservation.person.reservations.where(:event_id => @reservation.event_id).count > 0
+    #Client.where("orders_count = ? AND locked = ?", params[:orders], false)
+    if @reservation.person.reservations.where("event_id = ? AND is_deleted = ?" , @reservation.event_id , false ).count > 0
+    # if @reservation.person.reservations.where(:event_id => @reservation.event_id).count > 0
       @reservation.errors.add(:base, "A #{@reservation.event.event_with_dates} reservation already exists for #{@reservation.person.fullname}" )
       respond_to do |format|
           format.html { render action: "new" }

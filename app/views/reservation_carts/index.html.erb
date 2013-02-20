@@ -23,8 +23,7 @@
 			<% @reservation_carts.each do |reservation_cart| %>
 				<% @stub_id = reservation_cart.id %>
 				<% if (reservation_cart.status=="new") || (current_user.role? :admin) %>
-					<% @total_amount = @total_amount + reservation_cart.reservation.event.price %>
-					<% @total_discount = @total_discount + reservation_cart.reservation.all_discounts %>			
+					<% @total_amount = @total_amount + reservation_cart.reservation.event.price %>			
 				  <tr>
 				    <td><%= link_to reservation_cart.reservation.event.eventname, reservation_cart.reservation %></td>
 					<td><%= link_to reservation_cart.reservation.person.fullname, reservation_cart.reservation.person  %> </td>
@@ -54,14 +53,14 @@
 	<div class="paid_invoice_list">
 	<b>You have the following invoices that need to be paid:</b>
 	<% @unpaid_user_invoices.each do |uinv| %>
-		<br/><%= link_to uinv.reference_code, uinv %> - Balance: <%= uinv.total_balance %>
+		<br/><%= link_to uinv.reference_code, uinv %> - Balance: <%= number_to_currency(uinv.total_balance) %>
 	<% end %>
 	</div>	
 <% end %>
 <% unless @paid_user_invoices.empty? %>
 	<div class="unpaid_invoice_list"><b>You have the following PAID Invoices:</b>
 	<% @paid_user_invoices.each do |pinv| %>
-		<br/><%= link_to pinv.reference_code, pinv %> - Balance: <%= pinv.total_balance %>
+		<br/><%= link_to pinv.reference_code, pinv %> - Amount: <%= number_to_currency(pinv.total_balance) %>
 	<% end %>
 	</div>	
 <% end %>

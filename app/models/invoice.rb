@@ -1,6 +1,7 @@
 class Invoice < ActiveRecord::Base
   belongs_to :user
   has_many :reservation_carts
+  has_many :payment_notifications
 
   #   def firstdata_url(return_url, notify_url)
   #     values = {

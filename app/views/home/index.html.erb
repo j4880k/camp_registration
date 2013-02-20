@@ -4,7 +4,7 @@
 	</div>
 	<div id="landing_announcement">
 		<h2>THIS IS A DEVELOPMENT ENVIRONMENT</h2><br/><hr/>
-		<p>In the absence of a workflow manager this will be a completely manual process driven workflow for now.</p>
+		<p>Welcome to our camp event system. <br/><br/>Here you will have an opportunity to review upcoming events, register yourself and other people for events and transact a payment for your reservations.</p>
 		<p>
 			<b>If there are any mission critical pieces missing please let Rich or Chris know so they can get worked in.</b>
 		</p>
@@ -14,9 +14,9 @@
 			<p><b>Currently the following activity is functional:</b>
 			<ul>
 			<li>User Can Create Account [User]</li>
-			<li>User Can Login to Account</li>
-			<li>User Can Create Participants (campers) [Person]</li>
-			<li>User Can create contacts [SimpleContact] and associated items like phones, emails and insurances</li>
+			<li>User Can Login to Account - If you are reading this page then you have signed up (created user account) and logged in.</li>
+			<li>User Can Create Participants (campers) [Person] - To review your existing registrants or to create new ones please click the "View Registrants" menu item above.</li>
+			<li>User Can create contacts [SimpleContact] and associated items like phones, emails and insurances - Each camper has a list of contacts associated with their record. These contacts are used by camp staff for emergency contacts and other purposes.</li>
 			<li>User Can Create Reservation for an event [Person/Registration association]</li>
 			<li>User Can Add Reservations to cart &amp; remove them from the cart (before proceeding to checkout)</li>
 			<li>User Can Apply coupons to Invoice (checkout phase)</li>
@@ -36,7 +36,7 @@
 				
 			</p>
 		<% else %>
-			<b>You must log in to access data</b><br/><br/>
+			<b>You must log in or sign up to access data</b><br/><br/>
 			<%= link_to "Sign up", new_user_registration_path %><br/><br/>
 			<%= link_to "Sign in", new_user_session_path %>
 		<% end %>
