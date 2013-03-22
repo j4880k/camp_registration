@@ -37,8 +37,6 @@
 
 		
 	<% end %>
-<!-- %= render "layouts/sidebarnav" % -->
-<!-- div id="split_content" -->
 	<div id="persontabs">
 	    <ul>
 	        <li><a href="#fragment-1"><span>Attendee Info</span></a></li>
@@ -72,13 +70,12 @@
 								<td></td><td></td>
 							</tr>
 						</table>						
-					</p>  <!-- </div> -->
+					</p>
 				</fieldset><br/>
 				<fieldset><legend><b>Address Information</b></legend>
 				  <%= f.fields_for :addresses do |builder| %>
 				    <%= render "address_fields", f: builder %>
 				  <% end %>
-					<!-- %= link_to_add_fields "Add Address", f , :addresses % -->
 				</fieldset>
 				<fieldset><legend><b>Email</b></legend>
 					<%= f.fields_for :emails do |builder| %>
@@ -93,7 +90,7 @@
 					<%= link_to_add_fields "Add Home Church / Organization Name", f, :organizations %>	
 				</fieldset>
 				<fieldset><legend><b>Camp Media Permission</b></legend>
-					<%= f.check_box :photo_allowed %>
+					<%= f.check_box :forbid_photos %>
 					I DO NOT give permission for the registrant's image (either by video or photograph) to be
 					used in any manner by Atlanta Bible Camp for promotional or informational purposes.
 				</fieldset>
@@ -110,14 +107,7 @@
 		<div id="fragment-3">
 
 			<fieldset><legend><b>Medical Information</b></legend>
-				<!-- Immunizations are current? Yes/No -->
 				<fieldset><legend>Medications</legend>
-					<!-- allow_tylenol
-					allow_sudafed
-					allow_ibuprofin
-					allow_mylanta
-					allow_cough_medicine
-					allow_benadryl -->
 					Please check the following over-counter-medications that you will ALLOW the nurse to administer to your child as needed:<br />
 					<table>
 						<tr>
@@ -171,7 +161,6 @@
 							<br/> <b>Description:</b> <%= lres.event.notes %>
 							<% @res_status = lres.reservation_cart.nil? ? 'new' : lres.reservation_cart.try(:status) %>
 							<br /><b>Status:</b> <%= @res_status %>
-							<!-- <br/> <b>Your Notes:</b><br/><%= lres.notes %> -->
 						</p>			
 					<% end %>
 				</div>	

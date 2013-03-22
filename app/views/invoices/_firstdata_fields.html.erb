@@ -61,7 +61,7 @@
 	<% end %>
 	<div class="action">
 		<% if (@invoice.status=='new') %>
-		 <% link_to "Pay this Invoice", {:controller=>"invoices", :id=>@invoice.id, :action=>"submit_transaction_to_firstdata"}, :method=>"post" %>
+		 <% link_to "Confirm", {:controller=>"invoices", :id=>@invoice.id, :action=>"submit_transaction_to_firstdata"}, :method=>"post" %>
 		<%= submit_tag "Pay this Invoice" %>
 		<% end %>
 	</div>	

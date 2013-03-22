@@ -25,11 +25,6 @@ class Coupon < ActiveRecord::Base
   
   def has_remaining?
     self.number_remaining > 0
-    # if self.use_limit.to_i > 0 
-    #   number_used < self.use_limit
-    # else
-    #   true
-    # end
   end
   
   def event_restricted?

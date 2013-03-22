@@ -73,6 +73,9 @@ class PaymentNotification < ActiveRecord::Base
                end
              end
             end
+          else
+            # do nothing more than link it up, we need them to see all transactions attempted
+            self.invoice_id = invoice_object.id          
           end
           invoice_object.save
           self.save

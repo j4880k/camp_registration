@@ -29,7 +29,7 @@
 
 				<p>
 				  <b>Birthdate:</b>
-				  <%= @person.birthdate %>
+				  <%= @person.birthdate.strftime("%m/%d/%Y") %>
 				&nbsp;&nbsp;
 				  <b>Gender:</b>
 				  <%= @person.gender %>
@@ -37,11 +37,6 @@
 					<b>Shirt Size:</b>
 					<%= @person.shirtsize %>
 				</p>
-
-				<!-- <p> -->
-				  <!-- <b>Password:</b> -->
-				  <!-- <%= @person.password %> -->
-				<!-- </p> -->
 			</fieldset>
 			<br/>
 			<fieldset><legend><b>Address Information</b></legend>
@@ -76,7 +71,7 @@
 				<% end %>	
 			</fieldset>
 			<fieldset><legend><b>Camp Media Permission</b></legend>
-				<% if @person.photo_allowed == true %>
+				<% if !@person.forbid_photos %>
 				  Promotional Photos Allowed
 				<% else %>
 				<b>I DO NOT give permission for my child’s image (either by video or photograph) to be
@@ -109,7 +104,6 @@
     </div>
     <div id="fragment-3">
 		<fieldset><legend><b>Medical Information</b></legend>
-			<!-- Immunizations are current? Yes/No -->
 			<fieldset><legend>Medications</legend>
 
 				<% if @person.allow_tylenol==true %><br /><b>Med: Tylenol (Allowed)</b><% end %>
@@ -119,9 +113,7 @@
 				<% if @person.allow_cough_medicine==true %><br /><b>Med: Cough Medicine (Allowed)</b><% end %>
 				<% if @person.allow_benadryl==true %><br /><b>Med: Benadryl (Allowed)</b><% end %>
 				<% for meds in @person.person_medications %>
-					<!-- <fieldset> -->
 					 <br /><b>Med: <%= meds.medicationname %> (<%= meds.medication_type %>)</b> - Notes: <%= meds.notes %> 
-					<!-- </fieldset> -->
 				<% end %>		
 				<br /><br />
 			</fieldset>

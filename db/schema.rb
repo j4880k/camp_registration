@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130219153421) do
+ActiveRecord::Schema.define(:version => 20130322023248) do
 
   create_table "addresses", :force => true do |t|
     t.string   "Street1"
@@ -141,11 +141,11 @@ ActiveRecord::Schema.define(:version => 20130219153421) do
     t.string   "gender"
     t.date     "date_created"
     t.string   "password"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.string   "shirtsize"
     t.integer  "user_id"
-    t.boolean  "photo_allowed"
+    t.boolean  "forbid_photos",        :default => true
     t.boolean  "allow_tylenol"
     t.boolean  "allow_sudafed"
     t.boolean  "allow_ibuprofin"
