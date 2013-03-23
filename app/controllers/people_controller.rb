@@ -39,6 +39,55 @@ class PeopleController < ApplicationController
     1.times do
       organization = @person.organizations.build
     end
+    #create the parent stub
+    1.times do
+      parent = @person.simple_contacts.build 
+      1.times do
+        homephone = parent.simple_contact_phones.build
+        homephone.scphonetype = "Home"
+      end
+      1.times do
+        workphone = parent.simple_contact_phones.build
+        workphone.scphonetype = "Work"
+      end
+      1.times do
+        defaultemail = parent.simple_contact_emails.build
+        defaultemail.nickname = "Home email"
+      end
+      1.times do
+        primaryinsurance = parent.simple_contact_insurances.build
+      end
+    end
+    #create the emergency contact
+    1.times do
+      emergencycontact = @person.simple_contacts.build 
+      emergencycontact.contacttype = "emergency"
+      1.times do
+        echomephone = emergencycontact.simple_contact_phones.build
+        echomephone.scphonetype = "Home"
+      end
+      1.times do
+        ecworkphone = emergencycontact.simple_contact_phones.build
+        ecworkphone.scphonetype = "Work"
+      end
+      1.times do
+        ecdefaultemail = emergencycontact.simple_contact_emails.build
+        ecdefaultemail.nickname = "Home email"
+      end    
+    end
+    #create the pickup contact
+    1.times do
+      pickupperson = @person.simple_contacts.build 
+      pickupperson.contacttype = "pickup"
+      1.times do
+        puhomephone = pickupperson.simple_contact_phones.build
+        puhomephone.scphonetype = "Home"
+      end
+      1.times do
+        puworkphone = pickupperson.simple_contact_phones.build
+        puworkphone.scphonetype = "Work"
+      end  
+    end    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render :json => @person }

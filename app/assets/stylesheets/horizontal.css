@@ -34,9 +34,12 @@
 	margin: 0px;
 	width: 180px;
 	background-image:none;
-	background: #a0c629;
-	border-bottom: solid 1px #8fbc03;
-	color:#fff;
+/*	background: #a0c629;*/
+	background: #c0c0c0;
+/*	border-bottom: solid 1px #8fbc03;*/
+	border-bottom: solid 1px navy;
+/*	color:#fff;*/
+	color: navy ;
 	filter:alpha(opacity=90);
 	-moz-opacity:.90;opacity:.90;
 }
@@ -47,7 +50,8 @@
  */
 .menu a {
 	text-decoration: none;
-	color: #fff;
+/*	color: #fff;*/
+	color: navy;
 	line-height: 30px;
 	cursor: pointer;
 	padding:0px 14px;
@@ -60,7 +64,8 @@
  */
 .menu ul a {
 background-image:none;
-color:#fff;
+/*color:#fff;*/
+color:navy;
 font-weight:bold;
 line-height:25px;
 padding:0px 5px;
@@ -87,6 +92,7 @@ text-transform: none;
  */
 .menu ul li.hover {
 	background: #8fbc03;
+/*	background: #c0c0c0;*/
 }
 
 /*
@@ -94,7 +100,8 @@ text-transform: none;
  * Applies to all links in all menu items
  */
 .menu a.hover {
-	color:#ffe201 !important;
+/*	color:#ffe201 !important;*/
+	color:blue !important;
 	background: none;	
 	text-decoration:none; 	
 
@@ -106,8 +113,10 @@ text-transform: none;
  * Applies to links located in the second (or more) level menu items
  */
 .menu ul a.hover {
-  	color:#fff !important;
-	background: #8fbc03;
+/*  	color:#fff !important;*/
+	color:navy !important;
+/*	background: #8fbc03;*/
+	background: #DFDFDF;
 	line-height:25px;
 	padding:0px 5px;
 	 text-decoration:none;
@@ -137,7 +146,8 @@ text-transform: none;
  * Applies to selected links in all menu items
  */
 .menu a.selected {
-	color:#fff;
+/*	color:#fff;*/
+	color:navy;
 }
 
 /*
@@ -145,7 +155,8 @@ text-transform: none;
  * Applies to selected links located in the second (or more) level menu items
  */
 .menu ul a.selected {
-	color: #fff;
+/*	color: #fff;*/
+	color:navy;
 	}
 
 

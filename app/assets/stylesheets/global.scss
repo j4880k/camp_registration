@@ -5,9 +5,9 @@ $app_headercolor: #f0f0f0;
 $yield_color: #B8C2F7;
 $theme_medium: #A6CD58;
 $theme_default_border: #858D68;
-$global_background: image-url("djlandscape/bg.jpg");
-$header_background:	image-url("djlandscape/header.jpg");
-$header_shadow: image-url("djlandscape/header_shadow.png");
+$global_background: image-url("xdjlandscape/bg.jpg");
+$header_background:	image-url("xdjlandscape/header.jpg");
+$header_shadow: image-url("xdjlandscape/header_shadow.png");
 
 html, body { 
 	background-image: $global_background;
@@ -30,6 +30,7 @@ fieldset {
 #empty  { 
 	width: 1000px; 
 	height: 209px;
+	background:image-url("registration_bg.png");
 	}
 	
 #header { 
@@ -45,9 +46,10 @@ fieldset {
 	}
 	
 #header_r { 
+	// visibility: hidden;
 	width: 1000px; 
 	height: 209px;  
-	background:image-url("djlandscape/header_window.png") top center no-repeat;
+	background:image-url("xdjlandscape/header_window.png") top center no-repeat;
 	}
 	
 #header_in  { 
@@ -93,8 +95,8 @@ fieldset {
 	overflow: hidden;
 	}
 	
-#top_l { width: 1000px; background:image-url("djlandscape/top_l.jpg") top left no-repeat;}
-#top_r { width: 1000px; background: image-url("djlandscape/top_r.jpg") top right no-repeat;}
+#top_l { width: 1000px; background:image-url("xdjlandscape/top_l.jpg") top left no-repeat;}
+#top_r { width: 1000px; background: image-url("xdjlandscape/top_r.jpg") top right no-repeat;}
 #top { width: 936px; height: 73px; }
 #menu_box { float: left; width: 700px;}
 #menu { height: 30px; margin-top: 5px; padding: 0 10px;  float: left;}
@@ -107,8 +109,8 @@ table.contentpaneopen {
 }
 table.contentpaneopen {width:98%; }
 
-#foot_l { width: 1000px; background: url("djlandscape/foot_l.jpg") top left no-repeat;}
-#foot_r { width: 1000px; background: url("djlandscape/foot_r.jpg") top right no-repeat;}
+#foot_l { width: 1000px; background: url("xdjlandscape/foot_l.jpg") top left no-repeat;}
+#foot_r { width: 1000px; background: url("xdjlandscape/foot_r.jpg") top right no-repeat;}
 #foot { width: 936px; height: 83px; color: #ffffff; text-align: left;}
 #license_box { float: left; width: 468px;}
 #license { padding: 40px 0 0 10px; text-align: left; float: left;}
