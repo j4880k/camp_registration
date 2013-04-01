@@ -1,0 +1,53 @@
+<%= form_for(@content_partial) do |f| %>
+  <% if @content_partial.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@content_partial.errors.count, "error") %> prohibited this content_partial from being saved:</h2>
+
+      <ul>
+      <% @content_partial.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :keyval %><br />
+    <%= f.text_field :keyval %>
+  </div>
+  <div class="field">
+    <%= f.label :priority_index %><br />
+    <%= f.number_field :priority_index %>
+  </div>
+  <div class="field">
+    <%= f.label :is_active %><br />
+    <%= f.check_box :is_active %>
+  </div>
+  <div class="field">
+    <%= f.label :content %><br />
+    <%= f.text_area :content %>
+  </div>
+  <div class="field">
+    <%= f.label :rendered_content %><br />
+    <%= f.text_area :rendered_content %>
+  </div>
+  <div class="field">
+    <%= f.label :pub_start %><br />
+    <%= f.date_select :pub_start %>
+  </div>
+  <div class="field">
+    <%= f.label :pub_end %><br />
+    <%= f.date_select :pub_end %>
+  </div>
+  <div class="field">
+    <%= f.label :user_id %><br />
+    <%= f.number_field :user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :notes %><br />
+    <%= f.text_area :notes %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

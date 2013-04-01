@@ -56,7 +56,8 @@
 								</tr>
 							<tr>
 								<td class="person_info_label"><%= f.label "Nickname" %></td><td><%= f.text_field :nickname %></td>
-								<td class="person_info_label"><%= f.label :birthdate %></td><td> <%= f.date_select :birthdate, :start_year=>1935, :order => [:month, :day, :year] %></td>
+								<td class="person_info_label">
+								<%= f.label :birthdate %></td><td> <%= f.date_select :birthdate, :start_year=>1935, :order => [:month, :day, :year] %></td>
 								<td></td><td></td>
 							</tr>
 							<tr>
@@ -65,13 +66,14 @@
 								<td></td><td></td>
 							</tr>
 							<tr>
-								<td class="person_info_label"><%= f.label "T-Shirt Size" %><br /></td><td> <%= f.select :shirtsize, ['YS','YM','YL','S','M','L','XL','XXL'] %></td>
+								<td class="person_info_label">
+								<%= f.label "T-Shirt Size" %><br /></td><td> <%= f.select :shirtsize, ['YS','YM','YL','S','M','L','XL','XXL'] %></td>
 								<td></td><td></td>
 								<td></td><td></td>
 							</tr>
 						</table>						
 					</p>
-				</fieldset><br/>
+				</fieldset>
 				<fieldset><legend><b>Address Information</b></legend>
 				  <%= f.fields_for :addresses do |builder| %>
 				    <%= render "address_fields", f: builder %>
@@ -90,9 +92,10 @@
 					<%= link_to_add_fields "Add Home Church / Organization Name", f, :organizations %>	
 				</fieldset>
 				<fieldset><legend><b>Camp Media Permission</b></legend>
+					<div><br/>
 					<%= f.check_box :forbid_photos %>
 					I DO NOT give permission for the registrant's image (either by video or photograph) to be
-					used in any manner by Atlanta Bible Camp for promotional or informational purposes.
+					used in any manner by Atlanta Bible Camp for promotional or informational purposes.</div>
 				</fieldset>
 			</fieldset>	
 		</div>
@@ -126,13 +129,13 @@
 					<%= f.fields_for :person_medications do |builder| %>
 						<%= render "person_medication_fields", f: builder %>
 					<% end %>
-					<%= link_to_add_fields "Add Another Medication", f, :person_medications %>		
+					<br/><%= link_to_add_fields "Add Another Medication", f, :person_medications %>		
 				</fieldset>
 				<fieldset><legend>Allergies</legend>
 					<%= f.fields_for :person_allergies do |builder| %>
 						<%= render "person_allergy_fields", f: builder %>
 					<% end %>
-					<%= link_to_add_fields "Add Allergy", f, :person_allergies %>		
+					<br /><%= link_to_add_fields "Add Allergy", f, :person_allergies %>		
 				</fieldset>
 				<fieldset><legend>Medical Notes</legend>
 					<p>Due to the nature of medical notes they are committed and locked at each save</p>
@@ -147,7 +150,7 @@
 					<%= f.fields_for :person_medical_notes, @person.person_medical_notes.select{|ref|ref.new_record?} do |builder| %>
 						<%= render "person_medical_note_fields", f: builder, :locals => {:builder => builder } %>
 					<% end %>
-					<%= link_to_add_fields "Add Note", f, :person_medical_notes %>		
+					<br /><%= link_to_add_fields "Add Note", f, :person_medical_notes %>		
 				</fieldset>
 			</fieldset>		
 		</div>

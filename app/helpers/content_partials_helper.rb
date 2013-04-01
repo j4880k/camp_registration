@@ -1,0 +1,2 @@
+module ContentPartialsHelper
+end

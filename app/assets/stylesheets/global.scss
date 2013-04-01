@@ -5,12 +5,13 @@ $app_headercolor: #f0f0f0;
 $yield_color: #B8C2F7;
 $theme_medium: #A6CD58;
 $theme_default_border: #858D68;
-$global_background: image-url("xdjlandscape/bg.jpg");
-$header_background:	image-url("xdjlandscape/header.jpg");
-$header_shadow: image-url("xdjlandscape/header_shadow.png");
+// $global_background: image-url("xdjlandscape/bg.jpg");
+$header_background:	image-url("registration_bg.png");
+// image-url("djlandscape/header.jpg");
+// $header_shadow: image-url("djlandscape/header_shadow.png");
 
 html, body { 
-	background-image: $global_background;
+	// background-image: $global_background;
 	background-repeat: repeat-x;
 	margin: 0; 
 	padding: 0;
@@ -20,22 +21,43 @@ html, body {
 	color: #858585;
 }
 
-fieldset {
-	border: 1px solid $theme_default_border;
-	
+
+// minimalist fieldsets
+fieldset{
+  border-top:1px solid #ccc;
+  border-left:0;
+  border-bottom:0;
+  border-right:0;
+  padding:6px;
+  margin:0px 30px 0px 0px;
 }
+
+legend{
+  text-align:left;
+  color: #6A7F95; //#c0c0c0;
+  font-size:18px;
+  padding:0px 4px 0px 4px;
+  margin-left:20px;
+}
+/****************Change some jquery.datatable css*************************/
+table.dataTable td.sorting_1{ color: #000; font-weight:bold; background-color: #fff;} // border:1px lightgrey; }
+table.dataTable td{ background-color: white;} //  border:1px lightgrey;}
+table.dataTable tr.even td.sorting_1{ background-color: #EDEDED; } //border:1px lightgrey; }
+table.dataTable tr.even td{ background-color: #EDEDED; } // border:1px lightgrey;}
+table.dataTable tr.even{ background-color: white; } //border:1px lightgrey; }
+
 /****************************** IMPORTED STYLES **************************/
 /***These are styles I brought into the application.html.erb *************/
 /***for a **somewhat** global scheme**************************************/
 #empty  { 
 	width: 1000px; 
 	height: 209px;
-	background:image-url("registration_bg.png");
+	background: $header_background no-repeat; //image-url("registration_bg.png") no-repeat;
 	}
 	
 #header { 
 	width: 1000px; 
-	background: $header_shadow top left no-repeat; 
+	// background: $header_shadow top left no-repeat; 
 	height: 302px;}
 	
 #header_l { 
@@ -49,7 +71,7 @@ fieldset {
 	// visibility: hidden;
 	width: 1000px; 
 	height: 209px;  
-	background:image-url("xdjlandscape/header_window.png") top center no-repeat;
+	// background:image-url("xdjlandscape/header_window.png") top center no-repeat;
 	}
 	
 #header_in  { 
@@ -67,9 +89,9 @@ fieldset {
 	
 #logo a {
 	float: left;  
-	height: 58px; 
-	width: 185px; 
-	background:url("djlandscape/logo.png") top left no-repeat; cursor: pointer;
+	height: 210px; 
+	width: 300px; 
+	background:url("logo.png") top left no-repeat; cursor: pointer;
 	}
 	
 #logo a span { display: none;}
@@ -79,7 +101,7 @@ fieldset {
 	height: 209px; 
 	// padding-top: 18px;
 	margin-top: 18px;
-	background: $header_background no-repeat;
+	// background: $header_background no-repeat;
 	h1 {
 		font-style: verdana;
 	}
@@ -95,8 +117,12 @@ fieldset {
 	overflow: hidden;
 	}
 	
-#top_l { width: 1000px; background:image-url("xdjlandscape/top_l.jpg") top left no-repeat;}
-#top_r { width: 1000px; background: image-url("xdjlandscape/top_r.jpg") top right no-repeat;}
+#top_l { width: 1000px; 
+	// background:image-url("xdjlandscape/top_l.jpg") top left no-repeat;
+	}
+#top_r { width: 1000px; 
+	// background: image-url("xdjlandscape/top_r.jpg") top right no-repeat;
+	}
 #top { width: 936px; height: 73px; }
 #menu_box { float: left; width: 700px;}
 #menu { height: 30px; margin-top: 5px; padding: 0 10px;  float: left;}
@@ -109,9 +135,14 @@ table.contentpaneopen {
 }
 table.contentpaneopen {width:98%; }
 
-#foot_l { width: 1000px; background: url("xdjlandscape/foot_l.jpg") top left no-repeat;}
-#foot_r { width: 1000px; background: url("xdjlandscape/foot_r.jpg") top right no-repeat;}
-#foot { width: 936px; height: 83px; color: #ffffff; text-align: left;}
+#foot_l { width: 1000px; 
+	// background: url("xdjlandscape/foot_l.jpg") top left no-repeat;
+	}
+#foot_r { width: 1000px; 
+	// background: url("xdjlandscape/foot_r.jpg") top right no-repeat;
+	}
+// #foot { width: 936px; height: 83px; color: #ffffff; text-align: left;}
+#foot { width: 936px; height: 83px; color: navy; text-align: left;}
 #license_box { float: left; width: 468px;}
 #license { padding: 40px 0 0 10px; text-align: left; float: left;}
 #copyright_box { float: right; width: 468px;}

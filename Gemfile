@@ -45,6 +45,8 @@ gem 'capistrano' , :group => :development
 # To use debugger
 # gem 'ruby-debug'
 gem "nifty-generators", :group => :development
+#2013.03.23 -- adding recaptcha
+gem "recaptcha", :require => "recaptcha/rails"
 
 group :test, :development do
   gem 'rspec-rails', '~> 2.9'

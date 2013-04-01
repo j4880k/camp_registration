@@ -1,0 +1,52 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Keyval:</b>
+  <%= @content_partial.keyval %>
+</p>
+
+<p>
+  <b>Priority:</b>
+  <%= @content_partial.priority_index %>
+</p>
+
+<p>
+  <b>Ia active:</b>
+  <%= @content_partial.is_active %>
+</p>
+
+<p>
+  <b>Content:</b><br/>
+  <b>********** Content below this line ***************</b>
+  <%= @content_partial.content.html_safe %>
+  <b>********** Content above this line ***************</b>
+</p>
+
+<p>
+  <b>Rendered content:</b>
+  <%= @content_partial.rendered_content %>
+</p>
+
+<p>
+  <b>Pub start:</b>
+  <%= @content_partial.pub_start %>
+</p>
+
+<p>
+  <b>Pub end:</b>
+  <%= @content_partial.pub_end %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @content_partial.user_id %>
+</p>
+
+<p>
+  <b>Notes:</b>
+  <%= @content_partial.notes %>
+</p>
+
+
+<%= link_to 'Edit', edit_content_partial_path(@content_partial) %> |
+<%= link_to 'Back', content_partials_path %>

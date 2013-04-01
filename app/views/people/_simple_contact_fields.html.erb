@@ -18,29 +18,29 @@
 		<%= f.text_area :notes, "rows"=>4, "cols"=>100 %><br/> -->
 		<%= f.hidden_field :_destroy %>
 		<fieldset><legend>Phone Numbers</legend>
-		<b>Please create at least 2 contact phone numbers</b><br />
+		<b>We need at least 2 phone numbers</b><br />
 		<%= f.fields_for :simple_contact_phones do |builder| %>
 			<%= render "simple_contact_phone_fields", f: builder %>
 		<% end %>
-		<%= link_to_add_fields "Add Phone", f, :simple_contact_phones %>
+		<br/><%= link_to_add_fields "Add Phone", f, :simple_contact_phones %>
 		</fieldset>
 		<fieldset><legend>Email Addresses</legend>
 		<%= f.fields_for :simple_contact_emails do |builder| %>
 			<%= render "simple_contact_email_fields", f: builder %>
 		<% end %>
-		<%= link_to_add_fields "Add Email", f, :simple_contact_emails %>
+		<br/><%= link_to_add_fields "Add Email", f, :simple_contact_emails %>
 		</fieldset>
 		<fieldset><legend>Insurance</legend>
 		<%= f.fields_for :simple_contact_insurances do |builder| %>
 			<%= render "simple_contact_insurance_fields", f: builder %>
 		<% end %>
-		<%= link_to_add_fields "Add Insurance", f, :simple_contact_insurances %>
+		<br/><%= link_to_add_fields "Add Insurance", f, :simple_contact_insurances %>
 		</fieldset>
 		
 		
 		&nbsp;&nbsp;
 		
-		<%= link_to "Remove this contact and its information", '#', class: "remove_fields" %>
+		<br/><%= link_to "Remove this contact and its information", '#', class: "remove_fields" %>
 		&nbsp;&nbsp;
 		
 			

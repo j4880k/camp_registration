@@ -39,10 +39,9 @@
 						<div id="header_box">
 							<div id="logo_box">
 								<div id="logo">
-									<h1>
-										<a onfocus="blur()" href="<%= root_path %>">
-											<span>::The Camp:: Tidbits</span></a>
-									</h1>
+									
+										<a onfocus="blur()" href="<%= root_path %>">&nbsp;</a>
+									
 								</div> <!-- end logo -->
 							</div> <!-- end logo_box -->
 							<div id="topmod_box">
@@ -109,6 +108,9 @@
 														<% end %>
 														<% if (can? :read, PaymentNotification) or (can? :create, PaymentNotification) or (can? :update, PaymentNotification) %>		
 															<li><%= link_to "View Payment Notifications", payment_notifications_path %></li>
+														<% end %>
+														<% if (can? :read, ContentPartial ) or (can? :create, ContentPartial ) or (can? :update, ContentPartial) %>		
+															<li><%= link_to "View Content Partials", content_partials_path %></li>
 														<% end %>
 														</ul></li>
 													<% end %>
@@ -206,7 +208,7 @@
 							</div>
 							<div id="copyright_box">
 								<div id="copyright">
-									Copyright 2012 <a href="#">::The Camp::</a>, Inc. All rights reserved.
+									Copyright <%= Time.now.year %> <a href="#">::The Camp::</a>, Inc. All rights reserved.
 								</div>
 							</div>
 						</div>

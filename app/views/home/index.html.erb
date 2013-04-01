@@ -1,45 +1,44 @@
 <div id="landing_shell">
 	<div id="landing_banner">
-		<h1>Registration Landing page</h1>
+		<% banner = ContentPartial.where("keyval = ?", "LANDING_BANNER")%>
+		<% if banner and banner.count %>
+			<%= banner.first.content.html_safe %>
+		<% elsif banner %>
+			<%= banner.content.html_safe%>
+		<% end %>
 	</div>
 	<div id="landing_announcement">
-		<h2>THIS IS A DEVELOPMENT ENVIRONMENT</h2><br/><hr/>
-		<p>Welcome to our camp event system. <br/><br/>Here you will have an opportunity to review upcoming events, register yourself and other people for events and transact a payment for your reservations.</p>
-		<p>
-			<b>If there are any mission critical pieces missing please let Rich or Chris know so they can get worked in.</b>
-		</p>
+		<% announce = ContentPartial.where("keyval = ?", "LANDING_PUBLIC_ANNOUNCE")%>
+		<% if announce and announce.count %>
+		<% announce.each do |r| %>
+			<%= r.content.html_safe %>
+		<% end %>
+		<% elsif announce %>
+			<%= announce.content.html_safe if cont %>
+		<% end %>
 	</div>
-	<div id="landing_content"></div>
+	<div id="landing_content"></div>	
 		<% if user_signed_in? %>
-			<p><b>Currently the following activity is functional:</b>
-			<ul>
-			<li>User Can Create Account [User]</li>
-			<li>User Can Login to Account - If you are reading this page then you have signed up (created user account) and logged in.</li>
-			<li>User Can Create Participants (campers) [Person] - To review your existing registrants or to create new ones please click the "View Registrants" menu item above.</li>
-			<li>User Can create contacts [SimpleContact] and associated items like phones, emails and insurances - Each camper has a list of contacts associated with their record. These contacts are used by camp staff for emergency contacts and other purposes.</li>
-			<li>User Can Create Reservation for an event [Person/Registration association]</li>
-			<li>User Can Add Reservations to cart &amp; remove them from the cart (before proceeding to checkout)</li>
-			<li>User Can Apply coupons to Invoice (checkout phase)</li>
-			<li>User Can Cancel Invoices</li>
-			<li>Registrant (Person) progress tracked through required fields. This allows incomplete saves but no Reservations until 100%</li>
-			</ul>
-			<br/> There could be a number of requests and observations about the app that should be considered. Please direct your feedback to Rich and Chris.
-			<br/> Thank you for your time and help as we bring the application together. 
-			<br/> As a programmer there are probably a lot of things I take for granted that you might not. 
-			</p>
-			<p>
-				Next Steps:
-				<ul>
-					<li> Primary focus is getting the invoice/payment portion implemented.</li>
-					<li> Continually respond to data and workflow improvements. (with your help)</li>
-				</ul>
-				
-			</p>
+			<% cont = ContentPartial.where("keyval = ?", "LANDING_PAGE_AUTH_ONLY")%>
+			<% if cont and cont.count %>
+			<% cont.each do |r| %>
+				<%= r.content.html_safe %>
+			<% end %>
+			<% elsif cont %>
+				<%= cont.content.html_safe if cont %>
+			<% end %>
 		<% else %>
-			<b>You must log in or sign up to access data</b><br/><br/>
+			<% cont = ContentPartial.where("keyval = ?", "LANDING_PAGE_PUBLIC")%>
+			<% if cont and cont.count %>
+			<% cont.each do |r| %>
+				<%= r.content.html_safe %>
+			<% end %>
+			<% elsif cont %>
+				<%= cont.content.html_safe if cont%>
+			<% end %>
 			<%= link_to "Sign up", new_user_registration_path %><br/><br/>
 			<%= link_to "Sign in", new_user_session_path %>
 		<% end %>
-
+		<hr/>
 	</div>
 </div>

@@ -1,0 +1,39 @@
+<h1>Listing content_partials</h1>
+
+<table>
+  <tr>
+    <th>Keyval</th>
+    <th>Priority</th>
+    <th>Ia active</th>
+    <th>Content</th>
+    <th>Rendered content</th>
+    <th>Pub start</th>
+    <th>Pub end</th>
+    <th>User</th>
+    <th>Notes</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @content_partials.each do |content_partial| %>
+  <tr>
+    <td><%= content_partial.keyval %></td>
+    <td><%= content_partial.priority_index %></td>
+    <td><%= content_partial.is_active %></td>
+    <td><%= content_partial.content.html_safe %></td>
+    <td><%= content_partial.rendered_content %></td>
+    <td><%= content_partial.pub_start %></td>
+    <td><%= content_partial.pub_end %></td>
+    <td><%= content_partial.user_id %></td>
+    <td><%= content_partial.notes %></td>
+    <td><%= link_to 'Show', content_partial %></td>
+    <td><%= link_to 'Edit', edit_content_partial_path(content_partial) %></td>
+    <td><%= link_to 'Destroy', content_partial, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Content partial', new_content_partial_path %>

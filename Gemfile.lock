@@ -149,6 +149,7 @@ GEM
     rake (10.0.2)
     rdoc (3.12)
       json (~> 1.4)
+    recaptcha (0.3.5)
     ref (1.0.2)
     rspec-core (2.12.1)
     rspec-expectations (2.12.0)
@@ -218,6 +219,7 @@ DEPENDENCIES
   nifty-generators
   pg
   rails (= 3.2.1)
+  recaptcha
   rspec-rails (~> 2.9)
   sass-rails (~> 3.2.3)
   sequel (= 3.42.0)

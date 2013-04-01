@@ -1,4 +1,8 @@
 RegistrationManager::Application.routes.draw do
+  resources :content_partials
+
+  resources :keywords
+
   resources :system_messages
 
   resources :payment_notifications

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130322023248) do
+ActiveRecord::Schema.define(:version => 20130331195417) do
 
   create_table "addresses", :force => true do |t|
     t.string   "Street1"
@@ -31,6 +31,20 @@ ActiveRecord::Schema.define(:version => 20130322023248) do
     t.string   "notes"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "content_partials", :force => true do |t|
+    t.string   "keyval"
+    t.integer  "priority_index",   :default => 0
+    t.boolean  "is_active",        :default => false
+    t.text     "content"
+    t.text     "rendered_content"
+    t.date     "pub_start",        :default => '2013-03-31'
+    t.date     "pub_end",          :default => '2014-03-31'
+    t.integer  "user_id"
+    t.text     "notes"
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
   end
 
   create_table "coupons", :force => true do |t|
@@ -141,11 +155,11 @@ ActiveRecord::Schema.define(:version => 20130322023248) do
     t.string   "gender"
     t.date     "date_created"
     t.string   "password"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
     t.string   "shirtsize"
     t.integer  "user_id"
-    t.boolean  "forbid_photos",        :default => true
+    t.boolean  "forbid_photos",        :default => false
     t.boolean  "allow_tylenol"
     t.boolean  "allow_sudafed"
     t.boolean  "allow_ibuprofin"

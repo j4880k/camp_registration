@@ -24,5 +24,27 @@ Directors need
 	* Discalimer
 	* nurse notes - new role in can: abilities???
 	
-
+2013.03.30 - Need to add a little content management mechanism
+	*** I want to have the ability to use markdown here, though I likely will end up someday stripping out HTML***
+	*** RedCarpet = Markdown to HTML
+	*** Pygments = Syntax highlighting
+	*** so to gather the text we need a field the user enters text into, then a rendered_text field that is 
+	*** 	updated in the before_save filter (see outdated http://railscasts.com/episodes/272-markdown-with-redcarpet )
+	***		also printed Rails3_markdown_pygments_redcarpet.pdf in inagehi folder.
+	---> This feature is stubbed so it can be controlled with start/effective dates.
+	---> This feature is stubbed for rendered_content (maybe using redcarpet)
+	Table MarkdownFragment
+	columns:
+		id:integer 
+		key:string #this is a direct lookup value
+		priority:number default=>1 #this helps to arrange competing displays if necessary
+		is_active:boolean => default:false
+		content:text (this will be displayed)
+		rendered_content: text (this is where markdown is converted to HTML)
+		publish_start:date # (for being able to just code and forget)
+		publish_end:date # (for being able to just code and forget)
+		created_by:number
+		notes:text (this is details, usage etc.)
+		
+		
 	

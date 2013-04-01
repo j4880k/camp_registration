@@ -3,10 +3,11 @@ class FixPhotoAllowedColumnName < ActiveRecord::Migration
   end
 
   def down
+    
   end
   
   def change
     rename_column :people, :photo_allowed, :forbid_photos
-    change_column :people, :forbid_photos, :boolean, :default => true
+    change_column :people, :forbid_photos, :boolean, :default => false
   end
 end
