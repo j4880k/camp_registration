@@ -2,19 +2,20 @@
 	<div id="landing_banner">
 		<% banner = ContentPartial.where("keyval = ?", "LANDING_BANNER")%>
 		<% if banner and banner.count %>
-			<%= banner.first.content.html_safe %>
+		<% ban = banner.first %>
+			<%= ban.content.html_safe if ban.is_usable? %>
 		<% elsif banner %>
-			<%= banner.content.html_safe%>
+			<%= banner.content.html_safe if banner.is_usable? %>
 		<% end %>
 	</div>
 	<div id="landing_announcement">
 		<% announce = ContentPartial.where("keyval = ?", "LANDING_PUBLIC_ANNOUNCE")%>
 		<% if announce and announce.count %>
 		<% announce.each do |r| %>
-			<%= r.content.html_safe %>
+			<%= r.content.html_safe if r.is_usable?  %>
 		<% end %>
 		<% elsif announce %>
-			<%= announce.content.html_safe if cont %>
+			<%= announce.content.html_safe if cont and cont.is_usable? %>
 		<% end %>
 	</div>
 	<div id="landing_content"></div>	
@@ -22,19 +23,19 @@
 			<% cont = ContentPartial.where("keyval = ?", "LANDING_PAGE_AUTH_ONLY")%>
 			<% if cont and cont.count %>
 			<% cont.each do |r| %>
-				<%= r.content.html_safe %>
+				<%= r.content.html_safe if r.is_usable?  %>
 			<% end %>
 			<% elsif cont %>
-				<%= cont.content.html_safe if cont %>
+				<%= cont.content.html_safe if cont and cont.is_usable? %>
 			<% end %>
 		<% else %>
 			<% cont = ContentPartial.where("keyval = ?", "LANDING_PAGE_PUBLIC")%>
 			<% if cont and cont.count %>
 			<% cont.each do |r| %>
-				<%= r.content.html_safe %>
+				<%= r.content.html_safe if r.is_usable?  %>
 			<% end %>
 			<% elsif cont %>
-				<%= cont.content.html_safe if cont%>
+				<%= cont.content.html_safe if cont and cont.is_usable? %>
 			<% end %>
 			<%= link_to "Sign up", new_user_registration_path %><br/><br/>
 			<%= link_to "Sign in", new_user_session_path %>

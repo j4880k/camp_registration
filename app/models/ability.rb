@@ -45,7 +45,7 @@ class Ability
         can :apply_coupon_code, Invoice
         can :cancel_invoice, Invoice
         can :submit_transaction_to_firstdata, Invoice
-        
+        can :is_usable?, ContentPartial
       end
     #
     # The first argument to `can` is the action you are giving the user permission to do.

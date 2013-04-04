@@ -1,5 +1,6 @@
 class ContentPartialsController < ApplicationController
   load_and_authorize_resource
+  
   # GET /content_partials
   # GET /content_partials.json
   def index
