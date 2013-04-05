@@ -89,8 +89,10 @@ table.dataTable tr.even{ background-color: white; } //border:1px lightgrey; }
 	
 #logo a {
 	float: left;  
-	height: 210px; 
-	width: 300px; 
+	// height: 210px; 
+	// width: 300px;
+	height:75px;
+	width:200px; 
 	background:url("logo.png") top left no-repeat; cursor: pointer;
 	}
 	
