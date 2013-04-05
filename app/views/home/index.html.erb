@@ -5,7 +5,7 @@
 		<% ban = banner.first %>
 			<%= ban.content.html_safe if ban.is_usable? %>
 		<% elsif banner %>
-			<%= banner.content.html_safe if banner.is_usable? %>
+			<%= banner.content.html_safe if banner and banner.is_usable? %>
 		<% end %>
 	</div>
 	<div id="landing_announcement">

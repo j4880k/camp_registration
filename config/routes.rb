@@ -7,7 +7,8 @@ RegistrationManager::Application.routes.draw do
 
   resources :payment_notifications
 
-  devise_for :users
+  # devise_for :users
+  devise_for :users, controllers: { registrations: 'users/registrations', passwords: 'users/passwords' }
   resources :resources
   resources :addresses
   resources :person_addresses

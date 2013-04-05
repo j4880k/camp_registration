@@ -19,6 +19,7 @@
 .DS_Store
 /config/initializers/secret_token.rb
 /config/initializers/firstdata_constants.rb
+/config/initializers/devise.rb
 
 #from https://github.com/github/gitignore/blob/master/Rails.gitignore
 *.rbc
