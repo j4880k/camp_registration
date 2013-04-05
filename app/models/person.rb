@@ -131,12 +131,12 @@ class Person < ActiveRecord::Base
             sc.simple_contact_emails.each do |sce|
               unless sce.emailaddress.blank?
                 @found_email_value=true 
-              end
-            end
+              end ## unless blank
+            end #sc emails.each
             @valid_count = @found_email_value==true ? @valid_count + 1 : @valid_count
-          end
-        end
-      end
+          end #  if @found_emails
+        end # if sc is important type
+      end # unless simplecontacts empty
       # @progress_number = @checked_count==@valid_count ? @progress_number + 10 : @progress_number
     end   
     (@checked_count==@valid_count) && (@checked_count>0)

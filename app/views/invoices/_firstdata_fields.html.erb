@@ -63,7 +63,7 @@
 	<div class="action">
 		<% if (@invoice.status=='new') %>
 		 <% link_to "Confirm", {:controller=>"invoices", :id=>@invoice.id, :action=>"submit_transaction_to_firstdata"}, :method=>"post" %>
-		<%= submit_tag "Pay this Invoice" %>
+		<%= submit_tag "Confirm Reservation Payment" %>
 		<% end %>
 	</div>	
 </form>

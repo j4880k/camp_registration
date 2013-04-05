@@ -4,6 +4,8 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile ~/.gitignore_global
 
+## ALWAYS ADD IT TO GITIGNORE BEFORE YOU DO AN ADD/COMMIT OR IT WILL SNEAK IN ##
+
 # Ignore bundler config
 /.bundle
 

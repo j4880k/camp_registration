@@ -87,8 +87,7 @@
 			<% if (@invoice.status=='new') %>
 			 <%= link_to "Cancel this Invoice", {:controller=>"invoices", :id=>@invoice.id, :action=>"cancel_invoice"}, :method=>"post" %>
 			<% end %>
-		</div>
-		<div class="action">
+&nbsp;|&nbsp;
 			<% if (@invoice.status=='new') %>
 			 <%= link_to "Pay this Invoice", {:controller=>"invoices", :id=>@invoice.id, :action=>"submit_transaction_to_firstdata"}, :method=>"post" %>
 			<% end %>

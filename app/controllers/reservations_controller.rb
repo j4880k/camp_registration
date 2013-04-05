@@ -6,7 +6,9 @@ class ReservationsController < ApplicationController
     @existing_instance = ReservationCart.find_by_reservation_id(params[:id])
     if @existing_instance.nil?
       @reservation.is_deleted=true
-      @reservation.save rem_msg = "Reservation #{@reservation.person.fullname} - #{@reservation.event.eventname} has been removed from the list."
+      if @reservation.save 
+        rem_msg = "Reservation #{@reservation.person.fullname} - #{@reservation.event.eventname} has been removed from the list."
+      end
       
     else
         rem_msg = "Reservation #{@reservation.person.fullname} - #{@reservation.event.eventname} can not be removed"  
