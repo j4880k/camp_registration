@@ -6,13 +6,13 @@ class PaymentNotification < ActiveRecord::Base
   serialize :params
   after_create :synchronize_with_system
 
-  private
+ 
 
   def synchronize_with_system
     #get the invoice lined up.
     link_to_and_marshall_invoice
   end
-  
+   private
   # SystemMessage struct
   # t.text :message
   # t.string :reference_class_type

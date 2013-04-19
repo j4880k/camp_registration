@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+<!-- p id="notice"><%= notice %></p -->
 <br/>
 <h1><% if @invoice.reservation_carts.first.status=="paid" %>Paid Invoice<% else %>Check Out<% end %></h1>
 	<table>
@@ -10,7 +10,8 @@
 		<th>Event Price</th>
 		</tr>
 		<% @total_amount = 0 %>
-		<% @total_discount = @invoice.discount_total %>
+		<% @total_discount = 0 %>
+		
 		<% @stub_id = 0 %>
 		<% ReservationCart.where( :invoice_id => @invoice.id ).each do |rescart| %>
 		<% @total_amount = @total_amount + rescart.reservation.event.price %>
@@ -24,7 +25,20 @@
 		<tr>
 		</tr>
 	<% end %>
-	<% @total_due = @total_amount - @total_discount %>
+	<% if @invoice.status=='paid'%>
+		<% if @invoice.paid_subtotal.nil? or @invoice.paid_discount_total.nil? or @invoice.paid_total_balance.nil? %>
+			<% @total_discount = @invoice.discount_total %>	
+			<% @total_due = @total_amount - @total_discount %>
+		<% else %>
+			<% @total_amount = @invoice.paid_subtotal %>
+			<% @total_discount = @invoice.paid_discount_total %>
+			<% @total_due = @invoice.paid_total_balance %>
+		<% end %>
+
+	<% else %>
+		<% @total_discount = @invoice.discount_total %>	
+		<% @total_due = @total_amount - @total_discount %>
+	<% end %>
 		<tr><td colspan="4" align="right"><b>Discounts applied</b></td><td> <%= number_to_currency(@total_discount) %> </td></tr>
 		<tr><td colspan="4" align="right"><b>Total Due</b></td><td><%=number_to_currency(@total_due)  %></td></tr>
 	</table>
@@ -69,7 +83,7 @@
 </script>
 	<div>
 		<p>
-	<% unless @invoice.user_coupon_code.nil? %>
+	<% unless @invoice.user_coupon_code.blank? %>
 		You have applied a coupon to this invoice : <b><%= "#{@invoice.user_coupon_code}"%></b>
 	<% end %>
 		</p>
@@ -88,10 +102,13 @@
 			 <%= link_to "Cancel this Invoice", {:controller=>"invoices", :id=>@invoice.id, :action=>"cancel_invoice"}, :method=>"post" %>
 			<% end %>
 &nbsp;|&nbsp;
-			<% if (@invoice.status=='new') %>
-			 <%= link_to "Pay this Invoice", {:controller=>"invoices", :id=>@invoice.id, :action=>"submit_transaction_to_firstdata"}, :method=>"post" %>
+			<% if (@invoice.status=='new') and @invoice.total_balance>0.00 %>
+			 <%= link_to "Pay this Invoice", {:controller=>"invoices", :action=>"submit_transaction_to_firstdata", :id=>@invoice.id}, :method=>"post" %>
+			<% elsif (@invoice.status=='new') and @invoice.total_balance <= 0.00 %>
+				<%= link_to "Finalize this zero balance Invoice", {:controller=>"invoices", :id=>@invoice.id, :action=>"finalize_zero_balance_transaction"}, :method=>"post" %>
 			<% end %>
 		</div>
+		
 	<% end %>
 <% end %>
 <!-- <p>

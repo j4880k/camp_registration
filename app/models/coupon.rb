@@ -27,6 +27,13 @@ class Coupon < ActiveRecord::Base
     self.number_remaining > 0
   end
   
+  def is_valid_for_this_paid_transaction?( some_invoice )
+    #if the coupon actually got applied then we have to assume everything is okay
+    #TODO: Rework this so that the invoice actually holds some persistent information once paid, that way we one day can purge 
+    #       old data
+    (some_invoice.status == 'paid') and (some_invoice.user_coupon_code.upcase == self.code.upcase) ? true : false
+  end
+  
   def event_restricted?
     self.event_id.to_i > 0
   end

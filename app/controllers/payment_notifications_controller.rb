@@ -1,6 +1,8 @@
 class PaymentNotificationsController < ApplicationController
   protect_from_forgery :except => [:create]
-  
+  def new_payment_notification_from_system
+    
+  end
   
   def firstdata_success
     puts params.inspect

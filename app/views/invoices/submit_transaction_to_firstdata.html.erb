@@ -48,7 +48,9 @@
 </script>
 	<div>
 		<p>
-	<% unless @invoice.user_coupon_code.nil? %>
+	<% if @invoice.user_coupon_code.blank? %>
+		<b>No Coupons are applied to this order</b>
+	<% else %>
 		You have applied a coupon to this invoice : <b><%= "#{@invoice.user_coupon_code}"%></b>
 	<% end %>
 		</p>

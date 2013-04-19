@@ -1,43 +1,48 @@
 class InvoicesController < ApplicationController
   load_and_authorize_resource
- 
-  def submit_transaction_to_firstdata
-    # require "open-uri"
-    # require "net/https"
-    # 
-    # params = {
-    #   "storename" => "#{FD_STORENAME}",
-    #   "mode" => "payonly",
-    #   "txntype" => "sale",
-    #   "chargetotal" => "199",
-    #   "oid" => @invoice.reference_code,
-    #   "responseURL" => "#{url_for(:controller => :payment_notifications, :only_path => false)}"
-    #   
-    # }
-    # puts "using params #{params.inspect}"
-    # # x = Net::HTTP.post_form(URI.parse('https://www.staging.linkpointcentral.com/lpc/servlet/lppay'), params)
-    # url = URI.parse('https://www.staging.linkpointcentral.com/lpc/servlet/lppay')
-    # req = Net::HTTP::Post.new(url.path)
-    # req.form_data = params
-    # con = Net::HTTP.new(url.host)
-    # con.use_ssl = true
-    # res = con.start{|http| http.request(req)}
-    # puts res.body
-    # x = Net::HTTP.new(URI.parse('https://www.staging.linkpointcentral.com/lpc/servlet/lppay'), params)
-    # puts x.body
-    # x.submit
-    
-    # https://www.staging.linkpointcentral.com/lpc/servlet/lpcpay?storename=1909009697&mode=payonly&txntype=sale&chargetotal=199&oid=AMA-2345ggggisnt
-    # require 'net/https'
-    # require 'open-uri'
+  
+  def finalize_zero_balance_transaction
+    if @invoice.status=='new' and (@invoice.total_balance<=0)
+      ##let's just make a new payment notification for it!!
+      @tdt = "#{DateTime.now.strftime('%Y:%m:%d-%H:%M:%S')}"
+    	@tdround = "#{(sprintf('%.2f', 0.00))}"
+    	@pieces = "INTERNALSTORE-#{@tdt}#{@tdround}-NOSECRETID"
+    	@hash = "nohash-internally-resoved"
+    	@invoice_items = @invoice.reservation_carts
+      @fd_params = {"storename"=> "INTERNALSTORE",
+    	"mode"=>"payonly",
+    	"txntype"=>"sale",
+    	"timezone"=>"EST",
+    	"txndatetime" => "#{@tdt}",
+    	"hash" => "#{@hash}", 
+    	"chargetotal"=> "#{@tdround}",
+    	"subtotal"=> "#{@tdround}",
+    	"responseURL"=> "SELF-SERV", # "#{url_for(:controller => :payment_notifications, :only_path => false)}",
+    	"oid"=>"#{@invoice.reference_code}",
+    	"trxOrigin" => "ECI",
+    	"email"=>"#{@invoice.user.email}",
+    	# "userid" => "#{current_user.email}",
+    	"userid" => "#{@invoice.reference_code}",
+    	"shared_secret" => "NOSECRETID",
+    	"reference" => "Camp Registration",
+    	"comments" => @invoice_items,
+    	"responseSuccessURL" => "SELF-SERV",  # "#{root_url}",
+    	"responseFailURL" => "SELF-SERV",
+    	"status" => "APPROVED"
+    	} # "#{root_url}",
+    	@trans_id_parts = ["Y","APPROVED-ZERO-BALANCE"]
 
-    # url = URI.parse('https://MY_URL')
-    # req = Net::HTTP::Post.new(url.path)
-    # req.form_data = data
-    # req.basic_auth url.user, url.password if url.user
-    # con = Net::HTTP.new(url.host, url.port)
-    # con.use_ssl = true
-    # con.start {|http| http.request(req)}    
+      @trans_id_code = "#{@trans_id_parts[1]}-#{params[:txndatetime]}"
+
+      @is_approved = @trans_id_parts[0]=="Y" ? true : false
+      
+    	@pn = PaymentNotification.new(:params => @fd_params, :reference_code => @fd_params["oid"], :payment_status => @fd_params["status"], :transaction_id => @trans_id_code, :env_headers => "" )
+    	@pn.save
+    	
+    	@pn.synchronize_with_system
+      @invoice.commit_invoice_prices    	
+      # redirect_to "/reservation_carts/"
+    end  
   end 
   
   def cancel_invoice
@@ -60,15 +65,27 @@ class InvoicesController < ApplicationController
      items_matching_coupon.count > 0
   end
   
+  def calculate_coupon_and_save(params)
+    # params = @params
+  
+  end
+
+  def submit_transaction_to_firstdata
+    #we're going to just set the line totals on our carts
+    @invoice.commit_invoice_prices
+  end
+  
   def apply_coupon_code
     note="Error: nothing sent in"
+    # @params = params
     unless params[:user_coupon_code].nil?
+      is_valid = false
       @coupon=Coupon.find_by_code(params[:user_coupon_code].upcase)
       notice_text = "There was a problem retrieving your coupon. #{params[:user_coupon_code]} does not appear to be valid at this time."
       unless @coupon.nil?
         coupon_tag = @coupon.code_mask ? "**SPECIAL DISCOUNT**" : @coupon.code
         notice_text= "Coupon #{params[:user_coupon_code]} has returned a coupon described as '#{@coupon.description_with_dates}' "
-        
+
         #Is the coupon restricted for certain event?
         if @coupon.usable_coupon?
           if @coupon.event_restricted? && 
@@ -76,22 +93,28 @@ class InvoicesController < ApplicationController
               notice_text += "You have #{items_matching_coupon.count} reservations in your basket that could use this coupon"
               #we can't use the coupon more times than it's supposed to be used.
               @invoice.user_coupon_code = params[:user_coupon_code].upcase
-              @invoice.save
+              # @invoice.save
+              is_valid = true
             else
               notice_text += "There are no items in your cart eligible for the coupon"
             end
           else
             @invoice.user_coupon_code = params[:user_coupon_code].upcase
-            @invoice.save
+            # @invoice.save
+            is_valid = true
             notice_text += "You have #{@invoice.reservation_carts.count} reservations in your basket that this coupon applies to"     
           end
         else
           notice_text += " The coupon code you used is not valid."
-        end
-        
-      end
-      redirect_to @invoice, notice: notice_text
+        end     
+      end 
+      notice_text
     end
+    unless is_valid
+      @invoice.user_coupon_code = ""
+    end
+    @invoice.save
+    redirect_to @invoice, notice: notice_text
   end
 
   # GET /invoices

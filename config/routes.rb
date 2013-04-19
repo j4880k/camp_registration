@@ -37,6 +37,7 @@ RegistrationManager::Application.routes.draw do
     post 'apply_coupon_code'
     post 'cancel_invoice'
     post 'submit_transaction_to_firstdata'
+    post 'finalize_zero_balance_transaction'
   end
   # get 'reservation_carts/proceed_to_checkout'
    

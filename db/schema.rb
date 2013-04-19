@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130331195417) do
+ActiveRecord::Schema.define(:version => 20130419032538) do
 
   create_table "addresses", :force => true do |t|
     t.string   "Street1"
@@ -263,9 +263,11 @@ ActiveRecord::Schema.define(:version => 20130331195417) do
     t.string   "status"
     t.string   "reference_code"
     t.integer  "invoice_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
     t.integer  "coupon_id"
+    t.decimal  "line_discount",  :precision => 8, :scale => 2
+    t.decimal  "line_price",     :precision => 8, :scale => 2
   end
 
   create_table "reservation_resources", :force => true do |t|
