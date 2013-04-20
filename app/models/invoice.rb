@@ -131,7 +131,7 @@ class Invoice < ActiveRecord::Base
          @total_price += ii.line_price
        end
       end
-      realTotal = @total_price - paid_discount_total #@total_discount
+      realTotal = @total_price - self.paid_discount_total #@total_discount
       if realTotal > 0 then realTotal else realTotal=0 end
     realTotal   
   end
