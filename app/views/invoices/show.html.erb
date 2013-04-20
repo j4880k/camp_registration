@@ -42,9 +42,6 @@
 		<tr><td colspan="4" align="right"><b>Discounts applied</b></td><td> <%= number_to_currency(@total_discount) %> </td></tr>
 		<tr><td colspan="4" align="right"><b>Total Due</b></td><td><%=number_to_currency(@total_due)  %></td></tr>
 	</table>
-	<%= @total_amount = @invoice.paid_subtotal %> is paid_subtotal<br/>
-	<%= @total_discount = @invoice.paid_discount_total %> is paid_discount_total<br/>
-	<%= @total_due = @invoice.paid_total_balance %> is paid_total_balance<br/>
 <br/><br/>
 	<% if @invoice.payment_notifications.count > 0 %>
 	<h2>Transaction History:</h2>

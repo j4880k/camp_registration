@@ -112,7 +112,7 @@ class Invoice < ActiveRecord::Base
   def paid_discount_total
     @discount=nil
     self.reservation_carts.each do |ci|
-      unless ci.coupon_id.nil? or ci.coupon_id=0
+      unless ci.coupon_id.nil? or ci.coupon_id==0
         unless ci.line_discount.nil? 
           if @discount.nil? then @discount=0 end
           @discount += ci.line_discount
@@ -123,7 +123,7 @@ class Invoice < ActiveRecord::Base
   end
   
   def paid_total_balance
-      # @total_price
+      @total_price=nil
       # @total_discount=nil
       self.reservation_carts.each do |ii|
        unless ii.line_price.nil? 
@@ -135,13 +135,13 @@ class Invoice < ActiveRecord::Base
         pdtot = paid_discount_total
         pdtotal = pdtot.nil? ? 0.00 : pdtot
         @realTotal = @total_price - pdtotal #@total_discount
-        @totalprice = @realTotal > 0 ? @realTotal : 0
+        if @realTotal > 0 then @total_price=@realTotal else @total_price=0 end
       end
       @total_price    
   end
   
   def paid_subtotal
-    # @subtotal = nil
+    @subtotal = nil
     self.reservation_carts.each do |rc|
       unless rc.line_price.nil? 
         if @subtotal.nil? then @subtotal=0 end
