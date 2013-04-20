@@ -7,7 +7,14 @@ class Coupon < ActiveRecord::Base
   end 
   
   def number_used
-    Invoice.where(:user_coupon_code => self.code, :status => "paid").count
+    used_count=0
+    # Invoice.where(:user_coupon_code => self.code, :status => "paid").count
+    ReservationCart.where(:coupon_id => self.id).each do |rc|
+      if rc.invoice.status == 'paid'
+        used_count+=1
+      end
+    end
+    used_count
   end 
   
   def number_remaining
@@ -51,7 +58,7 @@ class Coupon < ActiveRecord::Base
     if self.use_limit.to_i>0
       #coupon_tag = @coupon.code_mask ? "**SPECIAL DISCOUNT**" : @coupon.code
       numused = number_used > self.use_limit ? self.use_limit : number_used
-      txt += " #{numused} of #{self.use_limit} coupons have been claimed"
+      txt += " #{numused} of #{self.use_limit} coupons have been claimed. (NOTE: This type of coupon is consumed at a per-line basis)"
     end
       
     txt
