@@ -76,12 +76,12 @@ class InvoicesController < ApplicationController
   end
   
   def apply_coupon_code
-    note="Error: nothing sent in"
+    note="Error: You did not enter a coupon code"
     # @params = params
     unless params[:user_coupon_code].nil?
       is_valid = false
       @coupon=Coupon.find_by_code(params[:user_coupon_code].upcase)
-      notice_text = "There was a problem retrieving your coupon. #{params[:user_coupon_code]} does not appear to be valid at this time."
+      notice_text = @invoice.user_coupon_code.blank? ? note : "There was a problem retrieving your coupon. #{params[:user_coupon_code]} does not appear to be valid at this time."
       unless @coupon.nil?
         coupon_tag = @coupon.code_mask ? "**SPECIAL DISCOUNT**" : @coupon.code
         notice_text= "Coupon #{params[:user_coupon_code]} has returned a coupon described as '#{@coupon.description_with_dates}' "
