@@ -149,17 +149,17 @@ class Invoice < ActiveRecord::Base
   def commit_invoice_prices
     #get all the items that match this coupon.. THIS IS A PAYMENT TIME METHOD, in an attempt to have transaction agree with lines
     @discount_amount = 0.00
-    if self.user_coupon_code.blank?
-      self.reservation_carts.each do |ci|
-        ci.line_discount=0
-        ci.line_price=ci.reservation.event.price
-        ci.coupon_id=nil
-        ci.save
-      end
-    else #no coupon code
+    ## clear the old coupons out
+    self.reservation_carts.each do |ci|
+      ci.line_discount=0
+      ci.line_price=ci.reservation.event.price
+      ci.coupon_id=nil
+      ci.save
+    end
+    unless self.user_coupon_code.blank?
       # puts "we will apply discount for #{self.user_coupon_code} "
       coupon_collection = Coupon.where( "code = ?", self.user_coupon_code)
-      if coupon_collection.empty?
+      if coupon_collection.empty?  #then we don't have a coupon any more, maybe it was deleted , changed or fraud?
         self.reservation_carts.each do |ci|
           ci.line_discount=0
           ci.line_price=ci.reservation.event.price
