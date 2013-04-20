@@ -133,7 +133,8 @@ class Invoice < ActiveRecord::Base
       end
       unless @total_price.nil? 
         pdtot = paid_discount_total
-        @realTotal = @total_price - pdtot.nil? ? 0 : pdt #@total_discount
+        pdtotal = pdtot.nil? ? 0.00 : pdtot
+        @realTotal = @total_price - pdtotal #@total_discount
         @totalprice = @realTotal > 0 ? @realTotal : 0
       end
       @total_price    
