@@ -59,7 +59,7 @@ class PeopleController < ApplicationController
       end
     end
     #create the emergency contact
-    1.times do
+    2.times do
       emergencycontact = @person.simple_contacts.build 
       emergencycontact.contacttype = "emergency"
       1.times do
@@ -76,7 +76,7 @@ class PeopleController < ApplicationController
       end    
     end
     #create the pickup contact
-    1.times do
+    2.times do
       pickupperson = @person.simple_contacts.build 
       pickupperson.contacttype = "pickup"
       1.times do

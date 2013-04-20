@@ -105,15 +105,32 @@ class Person < ActiveRecord::Base
  
   def person_has_pickup?
     @matched_complete=false
+    @matched_count = 0
     unless self.simple_contacts.empty?
       self.simple_contacts.each do |sc|
         if sc.contacttype=="pickup"
-          unless sc.firstname.blank? || sc.lastname.blank? || sc.relationship.blank? then @matched_complete=true end
+          unless sc.firstname.blank? || sc.lastname.blank? || sc.relationship.blank? then @matched_count += 1 end
         end
       end
       # @progress_number = @matched_complete==true ? @progress_number + 10 : @progress_number
+      @matched_complete = @matched_count>=2 ? true : false
     end    
     @matched_complete    
+  end
+  
+  def person_has_emergency_contact?
+    @matched_complete=false
+    @matched_count=0
+    unless self.simple_contacts.empty?
+      self.simple_contacts.each do |sc|
+        if sc.contacttype=="emergency"
+          unless sc.firstname.blank? || sc.lastname.blank? || sc.relationship.blank? then @matched_count += 1 end
+        end
+      end
+      # @progress_number = @matched_complete==true ? @progress_number + 10 : @progress_number
+      @matched_complete = @matched_count>=2 ? true : false
+    end   
+    @matched_complete 
   end
   
   def person_important_contacts_have_email?
@@ -140,19 +157,6 @@ class Person < ActiveRecord::Base
       # @progress_number = @checked_count==@valid_count ? @progress_number + 10 : @progress_number
     end   
     (@checked_count==@valid_count) && (@checked_count>0)
-  end
-  
-  def person_has_emergency_contact?
-    @matched_complete=false
-    unless self.simple_contacts.empty?
-      self.simple_contacts.each do |sc|
-        if sc.contacttype=="emergency"
-          unless sc.firstname.blank? || sc.lastname.blank? || sc.relationship.blank? then @matched_complete=true end
-        end
-      end
-      # @progress_number = @matched_complete==true ? @progress_number + 10 : @progress_number
-    end   
-    @matched_complete 
   end
 
   def person_has_contact_with_insurance?

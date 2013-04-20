@@ -29,7 +29,7 @@ fieldset{
   border-bottom:0;
   border-right:0;
   padding:6px;
-  margin:0px 30px 0px 0px;
+  // margin:0px 10px 0px 0px;
 }
 
 legend{
@@ -91,12 +91,14 @@ table.dataTable tr.even{ background-color: white; } //border:1px lightgrey; }
 	float: left;  
 	// height: 210px; 
 	// width: 300px;
-	height:75px;
-	width:200px; 
+	height:190px;
+	width:270px;
 	background:url("logo.png") top left no-repeat; cursor: pointer;
 	}
 	
-#logo a span { display: none;}
+#logo a span { 
+	display: none;	
+	}
 
 #header_mod{
 	width: 936px; 

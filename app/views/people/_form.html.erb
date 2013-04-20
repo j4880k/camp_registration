@@ -11,32 +11,7 @@
       </ul>
     </div>
   <% end %>
-	<% if @person.requirement_progress<100 %>
-		<% progressnum = @person.requirement_progress %>
-		  <script>
-		  $(function() {
-		    $( "#progressbar" ).progressbar({
-		      value: <%= progressnum %>
-		    });
-		  });
-		  </script>
-		<div class="things_to_complete"><b>Things to be done before your registration is complete</b>
-			<% unless @person.person_basics_complete? %><br/><b>Attendee Info Tab:</b> The Registrant's First Name, Last Name, Gender and Birthdate are required<% end %>
-			<% unless @person.person_has_valid_address? %><br/><b>Attendee Info Tab:</b> The Registrant's Address is required.<% end %>
-			<% unless @person.person_has_organization? %><br/><b>Attendee Info Tab:</b> A Church/Organization is required.<% end %>
-			<% unless @person.person_has_email? %><br/><b>Attendee Info Tab:</b> The Registrant's email is required.<% end %>
-			<% unless @person.person_has_parent? %><br/><b>Contacts Tab:</b> Add a Parent or Guardian contact with name, relationship, at least one email, two phone numbers and primary insurance.<% end %>
-			<% unless @person.person_has_emergency_contact? %><br/><b>Contacts Tab:</b> Add an Emergency contact with name, relationship, at least one email and two phone numbers.<% end %>
-			<% unless @person.person_has_pickup? %><br/><b>Contacts Tab:</b> Add a Pick-Up contact with Name, relationship and two phone numbers.<% end %>
-			<% unless @person.person_has_contact_with_insurance? %><br/><b>Contacts Tab:</b> A Contact with primary insurance info is required.<% end %>
-			<% unless @person.person_important_contacts_have_email? %><br/><b>Contacts Tab:</b> Parent, Guardian and Emergency contacts must have at least one email.<% end %>
-			<% unless @person.person_contacts_have_phones? %><br/><b>Contacts Tab:</b> Every Contact must have at least two phone numbers.<% end %>
-			<div id="progressbar"><span><%= progressnum %>% Complete</span></div>
-		</div>
-
-
-		
-	<% end %>
+ <%= render 'person_progress' %>
 	<div id="persontabs">
 	    <ul>
 	        <li><a href="#fragment-1"><span>Attendee Info</span></a></li>
@@ -45,7 +20,7 @@
 	        <li><a href="#fragment-4"><span>Session Reservation</span></a></li>
 	    </ul>
 	    <div id="fragment-1">
-			<fieldset><legend><b>Registrant Information</b></legend>
+			<fieldset><legend><b>Camper Information</b></legend>
 				<fieldset><legend><b>Personal Information</b></legend>
 				  <p class="field">
 						<table class="person_info">
@@ -94,7 +69,7 @@
 				<fieldset><legend><b>Camp Media Permission</b></legend>
 					<div><br/>
 					<%= f.check_box :forbid_photos %>
-					I DO NOT give permission for the registrant's image (either by video or photograph) to be
+					I DO NOT give permission for the camper's image (either by video or photograph) to be
 					used in any manner by Atlanta Bible Camp for promotional or informational purposes.</div>
 				</fieldset>
 			</fieldset>	
