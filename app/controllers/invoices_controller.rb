@@ -102,7 +102,12 @@ class InvoicesController < ApplicationController
             @invoice.user_coupon_code = params[:user_coupon_code].upcase
             # @invoice.save
             is_valid = true
-            notice_text += "You have #{@invoice.reservation_carts.count} reservations in your basket that this coupon applies to"     
+            number_available = @coupon.number_remaining
+            if number_available < @invoice.reservation_carts.count
+              notice_text += "You have #{number_available} reservations in your basket that this coupon can be applied to. (coupons used up)"
+            else
+              notice_text += "You have #{@invoice.reservation_carts.count} reservations in your basket that this coupon could be applied to right now."
+            end                 
           end
         else
           notice_text += " The coupon code you used is not valid."
