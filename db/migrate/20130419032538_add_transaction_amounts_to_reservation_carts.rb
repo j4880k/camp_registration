@@ -3,4 +3,5 @@ class AddTransactionAmountsToReservationCarts < ActiveRecord::Migration
     add_column :reservation_carts, :line_discount, :decimal, :precision => 8, :scale => 2
     add_column :reservation_carts, :line_price, :decimal, :precision => 8, :scale => 2
   end
+  #addme
 end
