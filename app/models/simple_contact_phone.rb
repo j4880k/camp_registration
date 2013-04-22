@@ -7,7 +7,10 @@ class SimpleContactPhone < ActiveRecord::Base
   # before_validation :format_phone
   # so we override the default setter for the field
   def scphonenumber=(scphonenumber)
-    write_attribute(:scphonenumber, scphonenumber.to_s.gsub(/[^0-9]/, "").to_i)
+    scphone_calc = scphonenumber.to_s.gsub(/[^0-9]/, "").to_i
+    unless scphone_calc = 0 or scphone_calc > 9999999999
+      write_attribute(:scphonenumber, scphonenumber.to_s.gsub(/[^0-9]/, "").to_i)
+    end
   end
   
   #this is left behind for posterity sake and as a personal reference in the project.

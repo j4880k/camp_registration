@@ -47,7 +47,7 @@
 				    <td><%= @age_cell_contents %></td>
 					<td>
 					<% if reservation.reservation_cart.try(:status)=='paid' %>
-						<% if reservation.reservation_cart.invoice.paid_subtotal.nil? or reservation.reservation_cart.invoice.paid_discount_total.nil? or reservation.invoice.paid_total_balance.nil? %>
+						<% if reservation.reservation_cart.invoice.paid_subtotal.nil? or reservation.reservation_cart.invoice.paid_discount_total.nil? or reservation.reservation_cart.invoice.paid_total_balance.nil? %>
 							<%= reservation.reservation_cart.invoice.total_balance %>
 						<% else %>
 							<%= reservation.reservation_cart.invoice.paid_total_balance %>
@@ -55,10 +55,7 @@
 					<% else %>
 						<%= number_to_currency(reservation.event.price) %>
 					<% end %>
-					
-						
-						
-						</td>
+					</td>
 					<% if reservation.reservation_cart.try(:status) == 'new'%>
 						<td>Added to cart</td>
 					<% else %>

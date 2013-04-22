@@ -3,5 +3,9 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @person %> |
+
+<%= link_to 'Show', @person, :confirm => 'Any unsaved changes will be lost. 
+If you do not want to keep your changes then click OK, otherwise cancel and click "Save". 
+
+Note:Clicking "Save" will also put the document into read mode'%> |
 <%= link_to 'Back to Person Listing', people_path %>

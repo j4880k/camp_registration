@@ -1,4 +1,7 @@
 <%= form_for(@person) do |f| %>
+ <script type="text/javascript">
+	$("div").remove("#cssMenu1");
+</script>
 <!-- THIS IS THE FIELD FORM FOR PERSON (PEOPLE) -->
   <% if @person.errors.any? %>
     <div id="error_explanation">
